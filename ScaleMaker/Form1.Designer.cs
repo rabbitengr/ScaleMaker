@@ -28,12 +28,47 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
+            this.button1 = new System.Windows.Forms.Button();
+            this.picturePreview = new System.Windows.Forms.PictureBox();
+            ((System.ComponentModel.ISupportInitialize)(this.picturePreview)).BeginInit();
+            this.SuspendLayout();
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(1101, 919);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(112, 34);
+            this.button1.TabIndex = 0;
+            this.button1.Text = "button1";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // picturePreview
+            // 
+            this.picturePreview.Location = new System.Drawing.Point(433, 12);
+            this.picturePreview.Name = "picturePreview";
+            this.picturePreview.Size = new System.Drawing.Size(800, 800);
+            this.picturePreview.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picturePreview.TabIndex = 1;
+            this.picturePreview.TabStop = false;
+            // 
+            // Form1
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(1259, 989);
+            this.Controls.Add(this.picturePreview);
+            this.Controls.Add(this.button1);
+            this.Name = "Form1";
             this.Text = "Form1";
+            ((System.ComponentModel.ISupportInitialize)(this.picturePreview)).EndInit();
+            this.ResumeLayout(false);
+
         }
 
         #endregion
+
+        private Button button1;
+        private PictureBox picturePreview;
     }
 }
