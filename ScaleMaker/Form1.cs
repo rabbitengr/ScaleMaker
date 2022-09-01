@@ -3,6 +3,7 @@ using static System.Windows.Forms.DataFormats;
 using System.IO;
 using System.Drawing.Drawing2D;
 using Microsoft.Win32;
+using System.Runtime.CompilerServices;
 
 namespace ScaleMaker
 {
@@ -19,11 +20,12 @@ namespace ScaleMaker
         private int CY;
         private Graphics g;
         private Bitmap bmp;
+        private Bitmap undoBmp;
         private string regPath = "software\\Rabbit Engineering\\ScaleMaker";
         private string appTitle = "ScaleMaker build 8/31/2022";
 
 
-        private void DrawLine(Color col, int linew, float angle, float radius_outer, float radius_inner)
+        private void DrawLine(Color col, int linew, double angle, float radius_outer, float radius_inner)
         {
             using (Pen p = new Pen(col, linew))
             {
@@ -85,7 +87,7 @@ namespace ScaleMaker
             CX = W / 2;
             CY = H / 2;
             bmp = new Bitmap(W, H);
-            g = Graphics.FromImage(bmp);
+            g = Graphics.FromImage(bmp);            
             g.Clear(Color.Transparent);
             g.SmoothingMode = SmoothingMode.HighQuality;
             using (SolidBrush b = new SolidBrush(Color.Red))
@@ -93,28 +95,7 @@ namespace ScaleMaker
                 Rectangle r = new Rectangle(CX, CY, 1, 1);
                 g.FillRectangle(b, r);
             }
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            int w = 122;
-            int h = 122;
-            PrepScale(w, h);
-            for (int i = 0; i < 12; i++)
-            {
-                DrawLine(Color.Red, 2, i * 30, 58, 52);
-            }
-            for (int i = 0; i < 12; i++)
-            {
-                DrawLine(Color.Red, 2, i * 30 + 15, 58, 56);
-            }
-            for (int i = 0; i < 12; i++)
-            {
-                DrawNumber(Color.Blue, i * 30, 43, "Arial", 10, String.Format("{0}", i * 3));
-            }
-           
             picturePreview.Image = bmp;
-            picturePreview.Invalidate();
         }
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
@@ -130,15 +111,87 @@ namespace ScaleMaker
             if (this.saveFileDialog1.ShowDialog() != DialogResult.OK) return;
 
             bmp.Save(this.saveFileDialog1.FileName);
-            WriteRegKey("pngpath", this.saveFileDialog1.FileName);
-            
+            WriteRegKey("pngpath", this.saveFileDialog1.FileName);            
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            picturePreview.Image = System.Drawing.SystemIcons.Question.ToBitmap();
             this.Text = appTitle;
             string s = ReadRegKey("pngpath");
             if (!string.IsNullOrEmpty(s)) this.saveFileDialog1.FileName = s;
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            if (string.IsNullOrEmpty(textImageW.Text)) return;
+            if (string.IsNullOrEmpty(textImageH.Text)) return;
+            
+            PrepScale(Convert.ToInt32(textImageW.Text), Convert.ToInt32(textImageH.Text));
+        }
+
+        private void PrepUndo()
+        {
+            if (bmp == null) return;
+            undoBmp = (Bitmap)bmp.Clone();
+        }
+        private void Undo()
+        {
+            if (undoBmp == null) return;
+
+            bmp = (Bitmap)undoBmp.Clone();
+            g = Graphics.FromImage(bmp);
+        }
+
+        private bool CheckTickMarkData()
+        {
+            if (bmp == null) return false;
+            if (g == null) return false;
+            if (string.IsNullOrEmpty(textInnerRadius.Text)) return false;
+            if (string.IsNullOrEmpty(textOuterRadius.Text)) return false;
+            if (string.IsNullOrEmpty(textTickWidth.Text)) return false;
+            if (string.IsNullOrEmpty(textStartAngle.Text)) return false;
+            if (string.IsNullOrEmpty(textDegsPerTick.Text)) return false;
+            if (string.IsNullOrEmpty(textNumTicks.Text)) return false;
+
+            return true;
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            if (!CheckTickMarkData()) return;
+
+            PrepUndo();
+
+            int inrad = Convert.ToInt32(textInnerRadius.Text);
+            int outrad = Convert.ToInt32(textOuterRadius.Text);
+            int lw = Convert.ToInt32(textTickWidth.Text);
+            int numticks = Convert.ToInt32(textNumTicks.Text);
+            double degspertick = Convert.ToDouble(textDegsPerTick.Text);
+            double startangle = Convert.ToDouble(textStartAngle.Text);
+
+            for (int t = 0; t < numticks; t++)
+            {
+                    DrawLine(buttonTickColor.BackColor, lw, startangle + (double)t * degspertick, outrad, inrad);
+            }
+
+            picturePreview.Image = bmp;
+            picturePreview.Invalidate();
+
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            if (colorTicks.ShowDialog() == DialogResult.Cancel) return;
+            buttonTickColor.BackColor = colorTicks.Color;
+
+        }
+
+        private void button5_Click_1(object sender, EventArgs e)
+        {
+            Undo();
+            picturePreview.Image = bmp;
+            picturePreview.Invalidate();
         }
     }
 }
