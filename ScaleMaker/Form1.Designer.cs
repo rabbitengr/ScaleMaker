@@ -55,6 +55,8 @@
             this.button3 = new System.Windows.Forms.Button();
             this.colorTicks = new System.Windows.Forms.ColorDialog();
             this.button5 = new System.Windows.Forms.Button();
+            this.textTickName = new System.Windows.Forms.TextBox();
+            this.label10 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.picturePreview)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
@@ -86,16 +88,16 @@
             // 
             // textInnerRadius
             // 
-            this.textInnerRadius.Location = new System.Drawing.Point(166, 52);
+            this.textInnerRadius.Location = new System.Drawing.Point(166, 108);
             this.textInnerRadius.Name = "textInnerRadius";
             this.textInnerRadius.Size = new System.Drawing.Size(150, 31);
-            this.textInnerRadius.TabIndex = 3;
+            this.textInnerRadius.TabIndex = 4;
             this.textInnerRadius.Text = "58";
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(39, 55);
+            this.label1.Location = new System.Drawing.Point(39, 111);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(110, 25);
             this.label1.TabIndex = 4;
@@ -103,6 +105,8 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.textTickName);
+            this.groupBox1.Controls.Add(this.label10);
             this.groupBox1.Controls.Add(this.label9);
             this.groupBox1.Controls.Add(this.buttonTickColor);
             this.groupBox1.Controls.Add(this.textNumTicks);
@@ -120,7 +124,7 @@
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Location = new System.Drawing.Point(30, 143);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(745, 294);
+            this.groupBox1.Size = new System.Drawing.Size(745, 353);
             this.groupBox1.TabIndex = 5;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Tickmarks";
@@ -128,7 +132,7 @@
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(280, 112);
+            this.label9.Location = new System.Drawing.Point(280, 168);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(90, 25);
             this.label9.TabIndex = 17;
@@ -137,25 +141,25 @@
             // buttonTickColor
             // 
             this.buttonTickColor.BackColor = System.Drawing.Color.White;
-            this.buttonTickColor.Location = new System.Drawing.Point(376, 107);
+            this.buttonTickColor.Location = new System.Drawing.Point(376, 163);
             this.buttonTickColor.Name = "buttonTickColor";
             this.buttonTickColor.Size = new System.Drawing.Size(97, 34);
-            this.buttonTickColor.TabIndex = 6;
+            this.buttonTickColor.TabIndex = 7;
             this.buttonTickColor.UseVisualStyleBackColor = false;
             this.buttonTickColor.Click += new System.EventHandler(this.button5_Click);
             // 
             // textNumTicks
             // 
-            this.textNumTicks.Location = new System.Drawing.Point(625, 158);
+            this.textNumTicks.Location = new System.Drawing.Point(625, 214);
             this.textNumTicks.Name = "textNumTicks";
             this.textNumTicks.Size = new System.Drawing.Size(97, 31);
-            this.textNumTicks.TabIndex = 9;
+            this.textNumTicks.TabIndex = 10;
             this.textNumTicks.Text = "12";
             // 
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(529, 161);
+            this.label8.Location = new System.Drawing.Point(529, 217);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(94, 25);
             this.label8.TabIndex = 15;
@@ -163,16 +167,16 @@
             // 
             // textStartAngle
             // 
-            this.textStartAngle.Location = new System.Drawing.Point(127, 158);
+            this.textStartAngle.Location = new System.Drawing.Point(127, 214);
             this.textStartAngle.Name = "textStartAngle";
             this.textStartAngle.Size = new System.Drawing.Size(97, 31);
-            this.textStartAngle.TabIndex = 7;
+            this.textStartAngle.TabIndex = 8;
             this.textStartAngle.Text = "0";
             // 
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(19, 161);
+            this.label7.Location = new System.Drawing.Point(19, 217);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(99, 25);
             this.label7.TabIndex = 13;
@@ -180,16 +184,16 @@
             // 
             // textDegsPerTick
             // 
-            this.textDegsPerTick.Location = new System.Drawing.Point(376, 158);
+            this.textDegsPerTick.Location = new System.Drawing.Point(376, 214);
             this.textDegsPerTick.Name = "textDegsPerTick";
             this.textDegsPerTick.Size = new System.Drawing.Size(97, 31);
-            this.textDegsPerTick.TabIndex = 8;
+            this.textDegsPerTick.TabIndex = 9;
             this.textDegsPerTick.Text = "30";
             // 
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(280, 161);
+            this.label6.Location = new System.Drawing.Point(280, 217);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(90, 25);
             this.label6.TabIndex = 11;
@@ -197,16 +201,16 @@
             // 
             // textTickWidth
             // 
-            this.textTickWidth.Location = new System.Drawing.Point(127, 109);
+            this.textTickWidth.Location = new System.Drawing.Point(127, 165);
             this.textTickWidth.Name = "textTickWidth";
             this.textTickWidth.Size = new System.Drawing.Size(97, 31);
-            this.textTickWidth.TabIndex = 5;
+            this.textTickWidth.TabIndex = 6;
             this.textTickWidth.Text = "1";
             // 
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(19, 112);
+            this.label5.Location = new System.Drawing.Point(19, 168);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(91, 25);
             this.label5.TabIndex = 9;
@@ -214,26 +218,26 @@
             // 
             // button4
             // 
-            this.button4.Location = new System.Drawing.Point(559, 228);
+            this.button4.Location = new System.Drawing.Point(559, 284);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(163, 34);
-            this.button4.TabIndex = 10;
+            this.button4.TabIndex = 11;
             this.button4.Text = "Add";
             this.button4.UseVisualStyleBackColor = true;
             this.button4.Click += new System.EventHandler(this.button4_Click);
             // 
             // textOuterRadius
             // 
-            this.textOuterRadius.Location = new System.Drawing.Point(480, 52);
+            this.textOuterRadius.Location = new System.Drawing.Point(480, 108);
             this.textOuterRadius.Name = "textOuterRadius";
             this.textOuterRadius.Size = new System.Drawing.Size(150, 31);
-            this.textOuterRadius.TabIndex = 4;
+            this.textOuterRadius.TabIndex = 5;
             this.textOuterRadius.Text = "63";
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(353, 55);
+            this.label4.Location = new System.Drawing.Point(353, 111);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(115, 25);
             this.label4.TabIndex = 6;
@@ -294,9 +298,25 @@
             this.button5.Name = "button5";
             this.button5.Size = new System.Drawing.Size(163, 34);
             this.button5.TabIndex = 30;
-            this.button5.Text = "Undo!";
+            this.button5.Text = "Redraw";
             this.button5.UseVisualStyleBackColor = true;
             this.button5.Click += new System.EventHandler(this.button5_Click_1);
+            // 
+            // textTickName
+            // 
+            this.textTickName.Location = new System.Drawing.Point(104, 49);
+            this.textTickName.Name = "textTickName";
+            this.textTickName.Size = new System.Drawing.Size(320, 31);
+            this.textTickName.TabIndex = 18;
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(39, 52);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(59, 25);
+            this.label10.TabIndex = 19;
+            this.label10.Text = "Name";
             // 
             // Form1
             // 
@@ -352,5 +372,7 @@
         private Button buttonTickColor;
         private ColorDialog colorTicks;
         private Button button5;
+        private TextBox textTickName;
+        private Label label10;
     }
 }

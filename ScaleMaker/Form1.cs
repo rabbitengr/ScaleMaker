@@ -23,7 +23,7 @@ namespace ScaleMaker
         private Bitmap undoBmp;
         private string regPath = "software\\Rabbit Engineering\\ScaleMaker";
         private string appTitle = "ScaleMaker build 8/31/2022";
-
+        List<tick_layer> tick_layers;
 
         private void DrawLine(Color col, int linew, double angle, float radius_outer, float radius_inner)
         {
@@ -120,6 +120,19 @@ namespace ScaleMaker
             this.Text = appTitle;
             string s = ReadRegKey("pngpath");
             if (!string.IsNullOrEmpty(s)) this.saveFileDialog1.FileName = s;
+            tick_layers = new List<tick_layer>();
+        }
+
+        private void RenderTickLayers()
+        {
+
+            foreach (tick_layer tl in tick_layers)
+            {
+                for (int t = 0; t < tl.numticks; t++)
+                {
+                    DrawLine(tl.col, tl.width, tl.startangle + (double)t * tl.degspertick, tl.outer_radius, tl.inner_radius);
+                }
+            }
         }
 
         private void button3_Click(object sender, EventArgs e)
@@ -161,7 +174,7 @@ namespace ScaleMaker
         {
             if (!CheckTickMarkData()) return;
 
-            PrepUndo();
+            //PrepUndo();
 
             int inrad = Convert.ToInt32(textInnerRadius.Text);
             int outrad = Convert.ToInt32(textOuterRadius.Text);
@@ -170,10 +183,26 @@ namespace ScaleMaker
             double degspertick = Convert.ToDouble(textDegsPerTick.Text);
             double startangle = Convert.ToDouble(textStartAngle.Text);
 
-            for (int t = 0; t < numticks; t++)
+            tick_layer t = new tick_layer();
+            if (string.IsNullOrEmpty(textTickName.Text))
             {
-                    DrawLine(buttonTickColor.BackColor, lw, startangle + (double)t * degspertick, outrad, inrad);
+                t.name = string.Format("Tick Layer {0}", tick_layers.Count);
             }
+            else
+            {
+                t.name = textTickName.Text;
+            }
+            t.inner_radius = inrad;
+            t.outer_radius = outrad;
+            t.width = lw;
+            t.numticks = numticks;
+            t.degspertick = degspertick;
+            t.startangle = startangle;
+            t.active = true;
+            t.col = buttonTickColor.BackColor;
+            tick_layers.Add(t);
+
+            RenderTickLayers();
 
             picturePreview.Image = bmp;
             picturePreview.Invalidate();
@@ -189,9 +218,33 @@ namespace ScaleMaker
 
         private void button5_Click_1(object sender, EventArgs e)
         {
-            Undo();
+            //Undo();
+            g.Clear(Color.Transparent);
+            RenderTickLayers();
             picturePreview.Image = bmp;
             picturePreview.Invalidate();
+        }
+    }
+
+    public class tick_layer
+    {
+        public string name;     
+        public bool active;
+        public int inner_radius;
+        public int outer_radius;
+        public int width;
+        public Color col;
+        public double startangle;
+        public double degspertick;
+        public int numticks;
+
+        public void read(TextReader read)
+        {
+
+        }
+        public void write(TextWriter write)
+        {
+
         }
     }
 }
