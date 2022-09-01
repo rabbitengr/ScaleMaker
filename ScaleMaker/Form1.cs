@@ -82,6 +82,8 @@ namespace ScaleMaker
             if (g != null) g.Dispose();
             if (bmp != null) bmp.Dispose();
 
+            groupTicks.Enabled = true;
+
             W = _w; 
             H = _h;
             CX = W / 2;
@@ -121,6 +123,7 @@ namespace ScaleMaker
             string s = ReadRegKey("pngpath");
             if (!string.IsNullOrEmpty(s)) this.saveFileDialog1.FileName = s;
             tick_layers = new List<tick_layer>();
+            groupTicks.Enabled = false;
         }
 
         private void RenderTickLayers()
@@ -128,6 +131,8 @@ namespace ScaleMaker
 
             foreach (tick_layer tl in tick_layers)
             {
+                if (!tl.active) continue;
+
                 for (int t = 0; t < tl.numticks; t++)
                 {
                     DrawLine(tl.col, tl.width, tl.startangle + (double)t * tl.degspertick, tl.outer_radius, tl.inner_radius);
@@ -170,6 +175,42 @@ namespace ScaleMaker
             return true;
         }
 
+        void RefreshListboxes()
+        {
+            listTickLayers.Items.Clear();
+            foreach(tick_layer tl in tick_layers)
+            {
+                listTickLayers.Items.Add(tl.name);
+            }
+            listTickLayers.Invalidate();
+
+            listTextLayers.Items.Clear();
+            //foreach (tick_layer tl in tick_layers)
+            {
+              //  listTickLayers.Items.Add(tl.name);
+            }
+            listTextLayers.Invalidate();
+        }
+        private void SetTickLayer(tick_layer tl)
+        {
+            textTickName.Text = tl.name;
+            if (tl.active)
+            {
+                checkTickActive.Checked = true;
+            }
+            else
+            {
+                checkTickActive.Checked = false;
+            }
+            textInnerRadius.Text = Convert.ToString(tl.inner_radius);
+            textOuterRadius.Text = Convert.ToString(tl.outer_radius);
+            textStartAngle.Text = Convert.ToString(tl.startangle);
+            buttonTickColor.BackColor = tl.col;
+            textNumTicks.Text = Convert.ToString(tl.numticks);
+            textDegsPerTick.Text = Convert.ToString(tl.degspertick);
+            textTickWidth.Text = Convert.ToString(tl.width);            
+        }
+
         private void button4_Click(object sender, EventArgs e)
         {
             if (!CheckTickMarkData()) return;
@@ -198,10 +239,12 @@ namespace ScaleMaker
             t.numticks = numticks;
             t.degspertick = degspertick;
             t.startangle = startangle;
-            t.active = true;
+            t.active = checkTickActive.Checked;
             t.col = buttonTickColor.BackColor;
             tick_layers.Add(t);
+            RefreshListboxes();
 
+            g.Clear(Color.Transparent);
             RenderTickLayers();
 
             picturePreview.Image = bmp;
@@ -216,13 +259,33 @@ namespace ScaleMaker
 
         }
 
-        private void button5_Click_1(object sender, EventArgs e)
+        private void PreviewRedraw()
         {
-            //Undo();
             g.Clear(Color.Transparent);
             RenderTickLayers();
             picturePreview.Image = bmp;
             picturePreview.Invalidate();
+        }
+
+        private void button5_Click_1(object sender, EventArgs e)
+        {
+            //Undo();
+            PreviewRedraw();            
+        }
+
+        private void listTickLayers_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            tick_layer tl = tick_layers[listTickLayers.SelectedIndex];
+            SetTickLayer(tl);
+        }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            if (listTickLayers.SelectedIndex < 0) return;
+            tick_layer tl = tick_layers[listTickLayers.SelectedIndex];
+            tick_layers.Remove(tl);
+            RefreshListboxes();
+            PreviewRedraw();
         }
     }
 

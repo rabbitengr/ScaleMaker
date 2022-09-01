@@ -34,7 +34,10 @@
             this.button2 = new System.Windows.Forms.Button();
             this.textInnerRadius = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.groupTicks = new System.Windows.Forms.GroupBox();
+            this.checkTickActive = new System.Windows.Forms.CheckBox();
+            this.textTickName = new System.Windows.Forms.TextBox();
+            this.label10 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.buttonTickColor = new System.Windows.Forms.Button();
             this.textNumTicks = new System.Windows.Forms.TextBox();
@@ -55,10 +58,16 @@
             this.button3 = new System.Windows.Forms.Button();
             this.colorTicks = new System.Windows.Forms.ColorDialog();
             this.button5 = new System.Windows.Forms.Button();
-            this.textTickName = new System.Windows.Forms.TextBox();
-            this.label10 = new System.Windows.Forms.Label();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.button6 = new System.Windows.Forms.Button();
+            this.listTickLayers = new System.Windows.Forms.ListBox();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.button1 = new System.Windows.Forms.Button();
+            this.listTextLayers = new System.Windows.Forms.ListBox();
             ((System.ComponentModel.ISupportInitialize)(this.picturePreview)).BeginInit();
-            this.groupBox1.SuspendLayout();
+            this.groupTicks.SuspendLayout();
+            this.groupBox2.SuspendLayout();
+            this.groupBox3.SuspendLayout();
             this.SuspendLayout();
             // 
             // picturePreview
@@ -103,31 +112,60 @@
             this.label1.TabIndex = 4;
             this.label1.Text = "Inner Radius";
             // 
-            // groupBox1
+            // groupTicks
             // 
-            this.groupBox1.Controls.Add(this.textTickName);
-            this.groupBox1.Controls.Add(this.label10);
-            this.groupBox1.Controls.Add(this.label9);
-            this.groupBox1.Controls.Add(this.buttonTickColor);
-            this.groupBox1.Controls.Add(this.textNumTicks);
-            this.groupBox1.Controls.Add(this.label8);
-            this.groupBox1.Controls.Add(this.textStartAngle);
-            this.groupBox1.Controls.Add(this.label7);
-            this.groupBox1.Controls.Add(this.textDegsPerTick);
-            this.groupBox1.Controls.Add(this.label6);
-            this.groupBox1.Controls.Add(this.textTickWidth);
-            this.groupBox1.Controls.Add(this.label5);
-            this.groupBox1.Controls.Add(this.button4);
-            this.groupBox1.Controls.Add(this.textOuterRadius);
-            this.groupBox1.Controls.Add(this.label4);
-            this.groupBox1.Controls.Add(this.textInnerRadius);
-            this.groupBox1.Controls.Add(this.label1);
-            this.groupBox1.Location = new System.Drawing.Point(30, 143);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(745, 353);
-            this.groupBox1.TabIndex = 5;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Tickmarks";
+            this.groupTicks.Controls.Add(this.checkTickActive);
+            this.groupTicks.Controls.Add(this.textTickName);
+            this.groupTicks.Controls.Add(this.label10);
+            this.groupTicks.Controls.Add(this.label9);
+            this.groupTicks.Controls.Add(this.buttonTickColor);
+            this.groupTicks.Controls.Add(this.textNumTicks);
+            this.groupTicks.Controls.Add(this.label8);
+            this.groupTicks.Controls.Add(this.textStartAngle);
+            this.groupTicks.Controls.Add(this.label7);
+            this.groupTicks.Controls.Add(this.textDegsPerTick);
+            this.groupTicks.Controls.Add(this.label6);
+            this.groupTicks.Controls.Add(this.textTickWidth);
+            this.groupTicks.Controls.Add(this.label5);
+            this.groupTicks.Controls.Add(this.button4);
+            this.groupTicks.Controls.Add(this.textOuterRadius);
+            this.groupTicks.Controls.Add(this.label4);
+            this.groupTicks.Controls.Add(this.textInnerRadius);
+            this.groupTicks.Controls.Add(this.label1);
+            this.groupTicks.Location = new System.Drawing.Point(38, 345);
+            this.groupTicks.Name = "groupTicks";
+            this.groupTicks.Size = new System.Drawing.Size(745, 353);
+            this.groupTicks.TabIndex = 5;
+            this.groupTicks.TabStop = false;
+            this.groupTicks.Text = "Tickmarks";
+            // 
+            // checkTickActive
+            // 
+            this.checkTickActive.AutoSize = true;
+            this.checkTickActive.Checked = true;
+            this.checkTickActive.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkTickActive.Location = new System.Drawing.Point(458, 48);
+            this.checkTickActive.Name = "checkTickActive";
+            this.checkTickActive.Size = new System.Drawing.Size(86, 29);
+            this.checkTickActive.TabIndex = 20;
+            this.checkTickActive.Text = "Active";
+            this.checkTickActive.UseVisualStyleBackColor = true;
+            // 
+            // textTickName
+            // 
+            this.textTickName.Location = new System.Drawing.Point(104, 49);
+            this.textTickName.Name = "textTickName";
+            this.textTickName.Size = new System.Drawing.Size(320, 31);
+            this.textTickName.TabIndex = 18;
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(39, 52);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(59, 25);
+            this.label10.TabIndex = 19;
+            this.label10.Text = "Name";
             // 
             // label9
             // 
@@ -302,34 +340,80 @@
             this.button5.UseVisualStyleBackColor = true;
             this.button5.Click += new System.EventHandler(this.button5_Click_1);
             // 
-            // textTickName
+            // groupBox2
             // 
-            this.textTickName.Location = new System.Drawing.Point(104, 49);
-            this.textTickName.Name = "textTickName";
-            this.textTickName.Size = new System.Drawing.Size(320, 31);
-            this.textTickName.TabIndex = 18;
+            this.groupBox2.Controls.Add(this.button6);
+            this.groupBox2.Controls.Add(this.listTickLayers);
+            this.groupBox2.Location = new System.Drawing.Point(38, 114);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(346, 207);
+            this.groupBox2.TabIndex = 32;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "Tick layers";
             // 
-            // label10
+            // button6
             // 
-            this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(39, 52);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(59, 25);
-            this.label10.TabIndex = 19;
-            this.label10.Text = "Name";
+            this.button6.Location = new System.Drawing.Point(218, 156);
+            this.button6.Name = "button6";
+            this.button6.Size = new System.Drawing.Size(108, 34);
+            this.button6.TabIndex = 22;
+            this.button6.Text = "Delete";
+            this.button6.UseVisualStyleBackColor = true;
+            this.button6.Click += new System.EventHandler(this.button6_Click);
+            // 
+            // listTickLayers
+            // 
+            this.listTickLayers.FormattingEnabled = true;
+            this.listTickLayers.ItemHeight = 25;
+            this.listTickLayers.Location = new System.Drawing.Point(19, 30);
+            this.listTickLayers.Name = "listTickLayers";
+            this.listTickLayers.Size = new System.Drawing.Size(307, 104);
+            this.listTickLayers.TabIndex = 0;
+            this.listTickLayers.SelectedIndexChanged += new System.EventHandler(this.listTickLayers_SelectedIndexChanged);
+            // 
+            // groupBox3
+            // 
+            this.groupBox3.Controls.Add(this.button1);
+            this.groupBox3.Controls.Add(this.listTextLayers);
+            this.groupBox3.Location = new System.Drawing.Point(432, 114);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(351, 207);
+            this.groupBox3.TabIndex = 33;
+            this.groupBox3.TabStop = false;
+            this.groupBox3.Text = "Text layers";
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(220, 156);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(108, 34);
+            this.button1.TabIndex = 21;
+            this.button1.Text = "Delete";
+            this.button1.UseVisualStyleBackColor = true;
+            // 
+            // listTextLayers
+            // 
+            this.listTextLayers.FormattingEnabled = true;
+            this.listTextLayers.ItemHeight = 25;
+            this.listTextLayers.Location = new System.Drawing.Point(21, 30);
+            this.listTextLayers.Name = "listTextLayers";
+            this.listTextLayers.Size = new System.Drawing.Size(307, 104);
+            this.listTextLayers.TabIndex = 1;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1334, 583);
+            this.ClientSize = new System.Drawing.Size(1334, 1103);
+            this.Controls.Add(this.groupBox3);
+            this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.button5);
             this.Controls.Add(this.button3);
             this.Controls.Add(this.textImageH);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.textImageW);
             this.Controls.Add(this.label2);
-            this.Controls.Add(this.groupBox1);
+            this.Controls.Add(this.groupTicks);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.picturePreview);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -338,8 +422,10 @@
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
             this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.picturePreview)).EndInit();
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
+            this.groupTicks.ResumeLayout(false);
+            this.groupTicks.PerformLayout();
+            this.groupBox2.ResumeLayout(false);
+            this.groupBox3.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -351,7 +437,7 @@
         private Button button2;
         private TextBox textInnerRadius;
         private Label label1;
-        private GroupBox groupBox1;
+        private GroupBox groupTicks;
         private TextBox textImageW;
         private Label label2;
         private TextBox textImageH;
@@ -374,5 +460,12 @@
         private Button button5;
         private TextBox textTickName;
         private Label label10;
+        private GroupBox groupBox2;
+        private GroupBox groupBox3;
+        private ListBox listTickLayers;
+        private ListBox listTextLayers;
+        private CheckBox checkTickActive;
+        private Button button6;
+        private Button button1;
     }
 }
