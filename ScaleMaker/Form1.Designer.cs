@@ -47,9 +47,10 @@
             // 
             // picturePreview
             // 
-            this.picturePreview.Location = new System.Drawing.Point(430, 22);
+            this.picturePreview.BackColor = System.Drawing.Color.Black;
+            this.picturePreview.Location = new System.Drawing.Point(735, 12);
             this.picturePreview.Name = "picturePreview";
-            this.picturePreview.Size = new System.Drawing.Size(800, 800);
+            this.picturePreview.Size = new System.Drawing.Size(512, 512);
             this.picturePreview.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.picturePreview.TabIndex = 1;
             this.picturePreview.TabStop = false;
@@ -61,7 +62,7 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(1067, 828);
+            this.button2.Location = new System.Drawing.Point(1084, 539);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(163, 34);
             this.button2.TabIndex = 2;

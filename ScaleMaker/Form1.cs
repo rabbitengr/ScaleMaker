@@ -20,6 +20,7 @@ namespace ScaleMaker
         private Graphics g;
         private Bitmap bmp;
         private string regPath = "software\\Rabbit Engineering\\ScaleMaker";
+        private string appTitle = "ScaleMaker build 8/31/2022";
 
 
         private void DrawLine(Color col, int linew, float angle, float radius_outer, float radius_inner)
@@ -87,6 +88,11 @@ namespace ScaleMaker
             g = Graphics.FromImage(bmp);
             g.Clear(Color.Transparent);
             g.SmoothingMode = SmoothingMode.HighQuality;
+            using (SolidBrush b = new SolidBrush(Color.Red))
+            {
+                Rectangle r = new Rectangle(CX, CY, 1, 1);
+                g.FillRectangle(b, r);
+            }
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -130,6 +136,7 @@ namespace ScaleMaker
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            this.Text = appTitle;
             string s = ReadRegKey("pngpath");
             if (!string.IsNullOrEmpty(s)) this.saveFileDialog1.FileName = s;
         }
