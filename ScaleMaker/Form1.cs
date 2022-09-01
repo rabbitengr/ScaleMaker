@@ -102,8 +102,16 @@ namespace ScaleMaker
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if (g != null) g.Dispose();
-            if (bmp != null) bmp.Dispose();
+            if (ConfirmExit())
+            {
+                if (g != null) g.Dispose();
+                if (bmp != null) bmp.Dispose();
+                Environment.Exit(0);
+            }
+            else
+            {
+                e.Cancel = true;
+            }
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -159,6 +167,14 @@ namespace ScaleMaker
 
             bmp = (Bitmap)undoBmp.Clone();
             g = Graphics.FromImage(bmp);
+        }
+
+        private bool ConfirmExit()
+        {
+            if (MessageBox.Show("Unsaved data will be lost", "Exit", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning) == DialogResult.Cancel) 
+                return false;
+
+            return true;
         }
 
         private bool CheckTickMarkData()
@@ -286,6 +302,11 @@ namespace ScaleMaker
             tick_layers.Remove(tl);
             RefreshListboxes();
             PreviewRedraw();
+        }
+
+        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
         }
     }
 
