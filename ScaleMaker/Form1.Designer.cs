@@ -30,7 +30,7 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.picturePreview = new System.Windows.Forms.PictureBox();
-            this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
+            this.saveExportPng = new System.Windows.Forms.SaveFileDialog();
             this.button2 = new System.Windows.Forms.Button();
             this.textInnerRadius = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
@@ -69,6 +69,8 @@
             this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.saveScaleDialog = new System.Windows.Forms.SaveFileDialog();
+            this.openScaleDialog = new System.Windows.Forms.OpenFileDialog();
             ((System.ComponentModel.ISupportInitialize)(this.picturePreview)).BeginInit();
             this.groupTicks.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -86,10 +88,10 @@
             this.picturePreview.TabIndex = 1;
             this.picturePreview.TabStop = false;
             // 
-            // saveFileDialog1
+            // saveExportPng
             // 
-            this.saveFileDialog1.DefaultExt = "png";
-            this.saveFileDialog1.Filter = "PNG files|*.png|All files|*.*";
+            this.saveExportPng.DefaultExt = "png";
+            this.saveExportPng.Filter = "PNG files|*.png|All files|*.*";
             // 
             // button2
             // 
@@ -432,12 +434,14 @@
             this.openToolStripMenuItem.Name = "openToolStripMenuItem";
             this.openToolStripMenuItem.Size = new System.Drawing.Size(270, 34);
             this.openToolStripMenuItem.Text = "&Open";
+            this.openToolStripMenuItem.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
             // 
             // saveToolStripMenuItem
             // 
             this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
             this.saveToolStripMenuItem.Size = new System.Drawing.Size(270, 34);
             this.saveToolStripMenuItem.Text = "&Save";
+            this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
             // 
             // exitToolStripMenuItem
             // 
@@ -445,6 +449,17 @@
             this.exitToolStripMenuItem.Size = new System.Drawing.Size(270, 34);
             this.exitToolStripMenuItem.Text = "E&xit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
+            // 
+            // saveScaleDialog
+            // 
+            this.saveScaleDialog.DefaultExt = "*.scl";
+            this.saveScaleDialog.Filter = "Scale files|*.scl|All files|*.*";
+            // 
+            // openScaleDialog
+            // 
+            this.openScaleDialog.DefaultExt = "*.scl";
+            this.openScaleDialog.FileName = "openFileDialog1";
+            this.openScaleDialog.Filter = "Scale files|*.sc|All files|*.*";
             // 
             // Form1
             // 
@@ -483,7 +498,7 @@
 
         #endregion
         private PictureBox picturePreview;
-        private SaveFileDialog saveFileDialog1;
+        private SaveFileDialog saveExportPng;
         private Button button2;
         private TextBox textInnerRadius;
         private Label label1;
@@ -522,5 +537,7 @@
         private ToolStripMenuItem openToolStripMenuItem;
         private ToolStripMenuItem saveToolStripMenuItem;
         private ToolStripMenuItem exitToolStripMenuItem;
+        private SaveFileDialog saveScaleDialog;
+        private OpenFileDialog openScaleDialog;
     }
 }

@@ -118,10 +118,10 @@ namespace ScaleMaker
         {
             if (bmp == null) return;
 
-            if (this.saveFileDialog1.ShowDialog() != DialogResult.OK) return;
+            if (this.saveExportPng.ShowDialog() != DialogResult.OK) return;
 
-            bmp.Save(this.saveFileDialog1.FileName);
-            WriteRegKey("pngpath", this.saveFileDialog1.FileName);            
+            bmp.Save(this.saveExportPng.FileName);
+            WriteRegKey("pngpath", this.saveExportPng.FileName);            
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -129,7 +129,14 @@ namespace ScaleMaker
             picturePreview.Image = System.Drawing.SystemIcons.Question.ToBitmap();
             this.Text = appTitle;
             string s = ReadRegKey("pngpath");
-            if (!string.IsNullOrEmpty(s)) this.saveFileDialog1.FileName = s;
+            if (!string.IsNullOrEmpty(s)) this.saveExportPng.FileName = s;
+            s = ReadRegKey("sclpath");
+            if (!string.IsNullOrEmpty(s))
+            {
+                this.saveScaleDialog.FileName = s;
+                this.openScaleDialog.FileName = s;
+            }
+            
             tick_layers = new List<tick_layer>();
             groupTicks.Enabled = false;
         }
@@ -227,6 +234,67 @@ namespace ScaleMaker
             textTickWidth.Text = Convert.ToString(tl.width);            
         }
 
+        private void SaveScale()
+        {
+            if (saveScaleDialog.ShowDialog() == DialogResult.Cancel) return;
+            WriteRegKey("sclpath", this.saveScaleDialog.FileName);
+            openScaleDialog.FileName = saveScaleDialog.FileName;
+
+            using(TextWriter write = new StreamWriter(saveScaleDialog.FileName))
+            {
+                write.WriteLine("v1");
+                write.WriteLine("{0},{1}", W, H);
+                write.WriteLine("{0}", tick_layers.Count);
+                foreach (tick_layer tl in tick_layers)
+                {
+                    tl.write(write);
+                }
+                /*
+                write.WriteLine("{0}", number_layers.Count);
+                foreach (number_layer nl in number_layers)
+                {
+                    nl.write(write);
+                }
+                */
+            }
+        }
+
+        private void OpenScale()
+        {
+            if (openScaleDialog.ShowDialog() == DialogResult.Cancel) return;            
+            saveScaleDialog.FileName = openScaleDialog.FileName;
+
+            char[] comma = { ',' };
+
+            using (TextReader read = new StreamReader(openScaleDialog.FileName))
+            {
+                string magic = read.ReadLine(); // "v1");
+                if (magic != "v1")
+                {
+                    MessageBox.Show(String.Format("{0} is not a valid SCL file.", openScaleDialog.FileName), "Invalid file", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+                string s = read.ReadLine();//write.WriteLine("{0},{1}", W, H);
+                string[] parts = s.Split(comma);
+                PrepScale(Convert.ToInt32(parts[0]), Convert.ToInt32(parts[1]));
+                int num_ticks = Convert.ToInt32(read.ReadLine());//write.WriteLine("{0}", tick_layers.Count);
+                tick_layers = new List<tick_layer>();
+                for (int t = 0; t < num_ticks; t++)
+                {
+                    tick_layer tl = new tick_layer();
+                    tl.read(read);
+                    tick_layers.Add(tl);
+                }
+                /*
+                write.WriteLine("{0}", number_layers.Count);
+                foreach (number_layer nl in number_layers)
+                {
+                    nl.write(write);
+                }
+                */
+            }
+        }
+
         private void button4_Click(object sender, EventArgs e)
         {
             if (!CheckTickMarkData()) return;
@@ -291,6 +359,7 @@ namespace ScaleMaker
 
         private void listTickLayers_SelectedIndexChanged(object sender, EventArgs e)
         {
+            if (listTickLayers.SelectedIndex < 0) return;
             tick_layer tl = tick_layers[listTickLayers.SelectedIndex];
             SetTickLayer(tl);
         }
@@ -308,6 +377,18 @@ namespace ScaleMaker
         {
             Application.Exit();
         }
+
+        private void saveToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SaveScale();
+        }
+
+        private void openToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            OpenScale();
+            RefreshListboxes();
+            PreviewRedraw();
+        }
     }
 
     public class tick_layer
@@ -324,11 +405,31 @@ namespace ScaleMaker
 
         public void read(TextReader read)
         {
-
+            char[] comma = { ',' };
+            
+            name = read.ReadLine(); // WriteLine("{0}", this.name);
+            active = Convert.ToBoolean(read.ReadLine()); //write.WriteLine("{0}", this.active);
+            inner_radius = Convert.ToInt32(read.ReadLine()); //write.WriteLine("{0}", this.inner_radius);
+            outer_radius = Convert.ToInt32(read.ReadLine()); //write.WriteLine("{0}", this.outer_radius);
+            degspertick = Convert.ToDouble(read.ReadLine()); //write.WriteLine("{0}", this.degspertick);
+            startangle = Convert.ToDouble(read.ReadLine()); //write.WriteLine("{0}", this.startangle);
+            numticks = Convert.ToInt32(read.ReadLine()); //write.WriteLine("{0}", this.numticks);
+            width = Convert.ToInt32(read.ReadLine()); //write.WriteLine("{0}", this.width);
+            string s = read.ReadLine(); //write.WriteLine("{0},{1},{2},{3}", this.col.A, this.col.R, this.col.G, this.col.B);
+            string[] parts = s.Split(comma);
+            col = Color.FromArgb(Convert.ToInt32(parts[0]), Convert.ToInt32(parts[1]), Convert.ToInt32(parts[2]), Convert.ToInt32(parts[3]));              
         }
         public void write(TextWriter write)
         {
-
+            write.WriteLine("{0}", this.name);
+            write.WriteLine("{0}", this.active);
+            write.WriteLine("{0}", this.inner_radius);
+            write.WriteLine("{0}", this.outer_radius);
+            write.WriteLine("{0}", this.degspertick);
+            write.WriteLine("{0}", this.startangle);
+            write.WriteLine("{0}", this.numticks);
+            write.WriteLine("{0}", this.width);
+            write.WriteLine("{0},{1},{2},{3}", this.col.A, this.col.R, this.col.G, this.col.B);            
         }
     }
 }
