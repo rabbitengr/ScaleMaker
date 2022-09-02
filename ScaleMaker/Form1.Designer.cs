@@ -71,11 +71,35 @@
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveScaleDialog = new System.Windows.Forms.SaveFileDialog();
             this.openScaleDialog = new System.Windows.Forms.OpenFileDialog();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.textTextStrings = new System.Windows.Forms.TextBox();
+            this.label19 = new System.Windows.Forms.Label();
+            this.textTextFontName = new System.Windows.Forms.TextBox();
+            this.label16 = new System.Windows.Forms.Label();
+            this.checkTextActive = new System.Windows.Forms.CheckBox();
+            this.textTextName = new System.Windows.Forms.TextBox();
+            this.label11 = new System.Windows.Forms.Label();
+            this.label12 = new System.Windows.Forms.Label();
+            this.buttonTextColor = new System.Windows.Forms.Button();
+            this.textTextNumTicks = new System.Windows.Forms.TextBox();
+            this.label13 = new System.Windows.Forms.Label();
+            this.textTextStartAngle = new System.Windows.Forms.TextBox();
+            this.label14 = new System.Windows.Forms.Label();
+            this.textTextDegsPerTick = new System.Windows.Forms.TextBox();
+            this.label15 = new System.Windows.Forms.Label();
+            this.button8 = new System.Windows.Forms.Button();
+            this.textTextSize = new System.Windows.Forms.TextBox();
+            this.label17 = new System.Windows.Forms.Label();
+            this.textTextRadius = new System.Windows.Forms.TextBox();
+            this.label18 = new System.Windows.Forms.Label();
+            this.fontDialog = new System.Windows.Forms.FontDialog();
+            this.colorText = new System.Windows.Forms.ColorDialog();
             ((System.ComponentModel.ISupportInitialize)(this.picturePreview)).BeginInit();
             this.groupTicks.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.menuStrip1.SuspendLayout();
+            this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // picturePreview
@@ -398,6 +422,7 @@
             this.button1.TabIndex = 21;
             this.button1.Text = "Delete";
             this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // listTextLayers
             // 
@@ -407,6 +432,7 @@
             this.listTextLayers.Name = "listTextLayers";
             this.listTextLayers.Size = new System.Drawing.Size(307, 104);
             this.listTextLayers.TabIndex = 1;
+            this.listTextLayers.SelectedIndexChanged += new System.EventHandler(this.listTextLayers_SelectedIndexChanged);
             // 
             // menuStrip1
             // 
@@ -432,21 +458,21 @@
             // openToolStripMenuItem
             // 
             this.openToolStripMenuItem.Name = "openToolStripMenuItem";
-            this.openToolStripMenuItem.Size = new System.Drawing.Size(270, 34);
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(158, 34);
             this.openToolStripMenuItem.Text = "&Open";
             this.openToolStripMenuItem.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
             // 
             // saveToolStripMenuItem
             // 
             this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(270, 34);
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(158, 34);
             this.saveToolStripMenuItem.Text = "&Save";
             this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(270, 34);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(158, 34);
             this.exitToolStripMenuItem.Text = "E&xit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
@@ -461,11 +487,222 @@
             this.openScaleDialog.FileName = "openFileDialog1";
             this.openScaleDialog.Filter = "Scale files|*.sc|All files|*.*";
             // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.textTextStrings);
+            this.groupBox1.Controls.Add(this.label19);
+            this.groupBox1.Controls.Add(this.textTextFontName);
+            this.groupBox1.Controls.Add(this.label16);
+            this.groupBox1.Controls.Add(this.checkTextActive);
+            this.groupBox1.Controls.Add(this.textTextName);
+            this.groupBox1.Controls.Add(this.label11);
+            this.groupBox1.Controls.Add(this.label12);
+            this.groupBox1.Controls.Add(this.buttonTextColor);
+            this.groupBox1.Controls.Add(this.textTextNumTicks);
+            this.groupBox1.Controls.Add(this.label13);
+            this.groupBox1.Controls.Add(this.textTextStartAngle);
+            this.groupBox1.Controls.Add(this.label14);
+            this.groupBox1.Controls.Add(this.textTextDegsPerTick);
+            this.groupBox1.Controls.Add(this.label15);
+            this.groupBox1.Controls.Add(this.button8);
+            this.groupBox1.Controls.Add(this.textTextSize);
+            this.groupBox1.Controls.Add(this.label17);
+            this.groupBox1.Controls.Add(this.textTextRadius);
+            this.groupBox1.Controls.Add(this.label18);
+            this.groupBox1.Location = new System.Drawing.Point(38, 801);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(745, 343);
+            this.groupBox1.TabIndex = 21;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Numbers";
+            // 
+            // textTextStrings
+            // 
+            this.textTextStrings.Location = new System.Drawing.Point(96, 111);
+            this.textTextStrings.Name = "textTextStrings";
+            this.textTextStrings.Size = new System.Drawing.Size(626, 31);
+            this.textTextStrings.TabIndex = 23;
+            this.textTextStrings.Text = "0.1.2.3.4.5.6.7.8.9.10.11";
+            // 
+            // label19
+            // 
+            this.label19.AutoSize = true;
+            this.label19.Location = new System.Drawing.Point(24, 114);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(66, 25);
+            this.label19.TabIndex = 24;
+            this.label19.Text = "Strings";
+            // 
+            // textTextFontName
+            // 
+            this.textTextFontName.Location = new System.Drawing.Point(322, 161);
+            this.textTextFontName.Name = "textTextFontName";
+            this.textTextFontName.Size = new System.Drawing.Size(219, 31);
+            this.textTextFontName.TabIndex = 21;
+            this.textTextFontName.Text = "Arial";
+            // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.Location = new System.Drawing.Point(219, 164);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(97, 25);
+            this.label16.TabIndex = 22;
+            this.label16.Text = "Font name";
+            // 
+            // checkTextActive
+            // 
+            this.checkTextActive.AutoSize = true;
+            this.checkTextActive.Checked = true;
+            this.checkTextActive.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkTextActive.Location = new System.Drawing.Point(458, 49);
+            this.checkTextActive.Name = "checkTextActive";
+            this.checkTextActive.Size = new System.Drawing.Size(86, 29);
+            this.checkTextActive.TabIndex = 20;
+            this.checkTextActive.Text = "Active";
+            this.checkTextActive.UseVisualStyleBackColor = true;
+            // 
+            // textTextName
+            // 
+            this.textTextName.Location = new System.Drawing.Point(104, 50);
+            this.textTextName.Name = "textTextName";
+            this.textTextName.Size = new System.Drawing.Size(320, 31);
+            this.textTextName.TabIndex = 18;
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(39, 53);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(59, 25);
+            this.label11.TabIndex = 19;
+            this.label11.Text = "Name";
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(43, 164);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(55, 25);
+            this.label12.TabIndex = 17;
+            this.label12.Text = "Color";
+            // 
+            // buttonTextColor
+            // 
+            this.buttonTextColor.BackColor = System.Drawing.Color.White;
+            this.buttonTextColor.Location = new System.Drawing.Point(104, 159);
+            this.buttonTextColor.Name = "buttonTextColor";
+            this.buttonTextColor.Size = new System.Drawing.Size(97, 34);
+            this.buttonTextColor.TabIndex = 7;
+            this.buttonTextColor.UseVisualStyleBackColor = false;
+            this.buttonTextColor.Click += new System.EventHandler(this.button7_Click);
+            // 
+            // textTextNumTicks
+            // 
+            this.textTextNumTicks.Location = new System.Drawing.Point(625, 215);
+            this.textTextNumTicks.Name = "textTextNumTicks";
+            this.textTextNumTicks.Size = new System.Drawing.Size(97, 31);
+            this.textTextNumTicks.TabIndex = 10;
+            this.textTextNumTicks.Text = "12";
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(529, 218);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(94, 25);
+            this.label13.TabIndex = 15;
+            this.label13.Text = "Num Ticks";
+            // 
+            // textTextStartAngle
+            // 
+            this.textTextStartAngle.Location = new System.Drawing.Point(127, 215);
+            this.textTextStartAngle.Name = "textTextStartAngle";
+            this.textTextStartAngle.Size = new System.Drawing.Size(97, 31);
+            this.textTextStartAngle.TabIndex = 8;
+            this.textTextStartAngle.Text = "0";
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Location = new System.Drawing.Point(19, 218);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(99, 25);
+            this.label14.TabIndex = 13;
+            this.label14.Text = "Start Angle";
+            // 
+            // textTextDegsPerTick
+            // 
+            this.textTextDegsPerTick.Location = new System.Drawing.Point(376, 215);
+            this.textTextDegsPerTick.Name = "textTextDegsPerTick";
+            this.textTextDegsPerTick.Size = new System.Drawing.Size(97, 31);
+            this.textTextDegsPerTick.TabIndex = 9;
+            this.textTextDegsPerTick.Text = "30";
+            // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Location = new System.Drawing.Point(280, 218);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(90, 25);
+            this.label15.TabIndex = 11;
+            this.label15.Text = "Degs/Tick";
+            // 
+            // button8
+            // 
+            this.button8.Location = new System.Drawing.Point(559, 285);
+            this.button8.Name = "button8";
+            this.button8.Size = new System.Drawing.Size(163, 34);
+            this.button8.TabIndex = 11;
+            this.button8.Text = "Add";
+            this.button8.UseVisualStyleBackColor = true;
+            this.button8.Click += new System.EventHandler(this.button8_Click);
+            // 
+            // textTextSize
+            // 
+            this.textTextSize.Location = new System.Drawing.Point(332, 268);
+            this.textTextSize.Name = "textTextSize";
+            this.textTextSize.Size = new System.Drawing.Size(75, 31);
+            this.textTextSize.TabIndex = 5;
+            this.textTextSize.Text = "63";
+            // 
+            // label17
+            // 
+            this.label17.AutoSize = true;
+            this.label17.Location = new System.Drawing.Point(244, 271);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(82, 25);
+            this.label17.TabIndex = 6;
+            this.label17.Text = "Font size";
+            // 
+            // textTextRadius
+            // 
+            this.textTextRadius.Location = new System.Drawing.Point(136, 268);
+            this.textTextRadius.Name = "textTextRadius";
+            this.textTextRadius.Size = new System.Drawing.Size(91, 31);
+            this.textTextRadius.TabIndex = 4;
+            this.textTextRadius.Text = "58";
+            // 
+            // label18
+            // 
+            this.label18.AutoSize = true;
+            this.label18.Location = new System.Drawing.Point(65, 271);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(65, 25);
+            this.label18.TabIndex = 4;
+            this.label18.Text = "Radius";
+            // 
+            // colorText
+            // 
+            this.colorText.AnyColor = true;
+            this.colorText.FullOpen = true;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1334, 1103);
+            this.ClientSize = new System.Drawing.Size(1334, 1171);
+            this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.button5);
@@ -491,6 +728,8 @@
             this.groupBox3.ResumeLayout(false);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -539,5 +778,28 @@
         private ToolStripMenuItem exitToolStripMenuItem;
         private SaveFileDialog saveScaleDialog;
         private OpenFileDialog openScaleDialog;
+        private GroupBox groupBox1;
+        private CheckBox checkTextActive;
+        private TextBox textTextName;
+        private Label label11;
+        private Label label12;
+        private Button buttonTextColor;
+        private TextBox textTextNumTicks;
+        private Label label13;
+        private TextBox textTextStartAngle;
+        private Label label14;
+        private TextBox textTextDegsPerTick;
+        private Label label15;
+        private Button button8;
+        private TextBox textTextSize;
+        private Label label17;
+        private TextBox textTextRadius;
+        private Label label18;
+        private FontDialog fontDialog;
+        private TextBox textTextFontName;
+        private Label label16;
+        private ColorDialog colorText;
+        private TextBox textTextStrings;
+        private Label label19;
     }
 }

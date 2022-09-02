@@ -24,6 +24,7 @@ namespace ScaleMaker
         private string regPath = "software\\Rabbit Engineering\\ScaleMaker";
         private string appTitle = "ScaleMaker build 8/31/2022";
         List<tick_layer> tick_layers;
+        List<text_layer> text_layers;
 
         private void DrawLine(Color col, int linew, double angle, float radius_outer, float radius_inner)
         {
@@ -36,7 +37,7 @@ namespace ScaleMaker
             }
         }
 
-        private void DrawNumber(Color col, float angle, float radius, string fontname, int fontsize, string num)
+        private void DrawNumber(Color col, double angle, float radius, string fontname, int fontsize, string num)
         {
             double rads = (double)(angle) * 0.01745329;
             Point pf = new Point((int)(radius * Math.Sin(rads)) + CX, -(int)(radius * Math.Cos(rads)) + CY);
@@ -138,6 +139,7 @@ namespace ScaleMaker
             }
             
             tick_layers = new List<tick_layer>();
+            text_layers = new List<text_layer>();
             groupTicks.Enabled = false;
         }
 
@@ -154,7 +156,20 @@ namespace ScaleMaker
                 }
             }
         }
+        private void RenderTextLayers()
+        {
 
+            foreach (text_layer tl in text_layers)
+            {
+                if (!tl.active) continue;
+
+                for (int t = 0; t < tl.numticks; t++)
+                {
+                    //DrawLine(tl.col, tl.width, tl.startangle + (double)t * tl.degspertick, tl.outer_radius, tl.inner_radius);
+                    DrawNumber(tl.col, tl.startangle + (double)t * tl.degspertick, tl.radius, tl.fontname, tl.size, tl.strings[t]);
+                }
+            }
+        }
         private void button3_Click(object sender, EventArgs e)
         {
             if (string.IsNullOrEmpty(textImageW.Text)) return;
@@ -198,6 +213,22 @@ namespace ScaleMaker
             return true;
         }
 
+        private bool CheckTextData()
+        {
+            if (bmp == null) return false;
+            if (g == null) return false;
+            if (string.IsNullOrEmpty(textTextRadius.Text)) return false;            
+            if (string.IsNullOrEmpty(textTextDegsPerTick.Text)) return false;
+            if (string.IsNullOrEmpty(textTextStartAngle.Text)) return false;            
+            if (string.IsNullOrEmpty(textTextNumTicks.Text)) return false;
+            if (string.IsNullOrEmpty(textTextFontName.Text)) return false;
+            if (string.IsNullOrEmpty(textTextName.Text)) return false;
+            if (string.IsNullOrEmpty(textTextSize.Text)) return false;
+            if (string.IsNullOrEmpty(textTextStrings.Text)) return false;                        
+
+            return true;
+        }
+
         void RefreshListboxes()
         {
             listTickLayers.Items.Clear();
@@ -208,9 +239,9 @@ namespace ScaleMaker
             listTickLayers.Invalidate();
 
             listTextLayers.Items.Clear();
-            //foreach (tick_layer tl in tick_layers)
+            foreach (text_layer tl in text_layers)
             {
-              //  listTickLayers.Items.Add(tl.name);
+              listTickLayers.Items.Add(tl.name);
             }
             listTextLayers.Invalidate();
         }
@@ -234,6 +265,27 @@ namespace ScaleMaker
             textTickWidth.Text = Convert.ToString(tl.width);            
         }
 
+        private void SetTextLayer(text_layer tl)
+        {
+            textTextName.Text = tl.name;
+            if (tl.active)
+            {
+                checkTextActive.Checked = true;
+            }
+            else
+            {
+                checkTextActive.Checked = false;
+            }
+            textTextRadius.Text = Convert.ToString(tl.radius);            
+            textTextStartAngle.Text = Convert.ToString(tl.startangle);
+            buttonTextColor.BackColor = tl.col;
+            textTextNumTicks.Text = Convert.ToString(tl.numticks);
+            textTextDegsPerTick.Text = Convert.ToString(tl.degspertick);
+            textTextSize.Text = Convert.ToString(tl.size);
+            textTextStrings.Text = tl.raw_strings;
+            textTextFontName.Text = tl.fontname;
+        }
+
         private void SaveScale()
         {
             if (saveScaleDialog.ShowDialog() == DialogResult.Cancel) return;
@@ -248,14 +300,12 @@ namespace ScaleMaker
                 foreach (tick_layer tl in tick_layers)
                 {
                     tl.write(write);
-                }
-                /*
-                write.WriteLine("{0}", number_layers.Count);
-                foreach (number_layer nl in number_layers)
+                }                
+                write.WriteLine("{0}", text_layers.Count);
+                foreach (text_layer nl in text_layers)
                 {
                     nl.write(write);
-                }
-                */
+                }                
             }
         }
 
@@ -285,13 +335,13 @@ namespace ScaleMaker
                     tl.read(read);
                     tick_layers.Add(tl);
                 }
-                /*
-                write.WriteLine("{0}", number_layers.Count);
-                foreach (number_layer nl in number_layers)
+                text_layers = new List<text_layer>();
+                for (int t = 0; t < num_ticks; t++)
                 {
-                    nl.write(write);
+                    text_layer tl = new text_layer();
+                    tl.read(read);
+                    text_layers.Add(tl);
                 }
-                */
             }
         }
 
@@ -347,6 +397,7 @@ namespace ScaleMaker
         {
             g.Clear(Color.Transparent);
             RenderTickLayers();
+            RenderTextLayers();
             picturePreview.Image = bmp;
             picturePreview.Invalidate();
         }
@@ -388,6 +439,68 @@ namespace ScaleMaker
             OpenScale();
             RefreshListboxes();
             PreviewRedraw();
+        }
+
+        private void button7_Click(object sender, EventArgs e)
+        {
+            if (colorText.ShowDialog() == DialogResult.Cancel) return;
+            buttonTextColor.BackColor = colorText.Color;
+        }
+
+        private void button8_Click(object sender, EventArgs e)
+        {
+            if (!CheckTextData()) return;
+
+            //PrepUndo();
+            char[] comma = { ',' };
+            int rad = Convert.ToInt32(textTextRadius.Text);            
+            int s = Convert.ToInt32(textTextSize.Text);
+            int numticks = Convert.ToInt32(textTextNumTicks.Text);
+            double degspertick = Convert.ToDouble(textTextDegsPerTick.Text);
+            double startangle = Convert.ToDouble(textTextStartAngle.Text);
+
+            text_layer t = new text_layer();
+            if (string.IsNullOrEmpty(textTextName.Text))
+            {
+                t.name = string.Format("Text Layer {0}", text_layers.Count);
+            }
+            else
+            {
+                t.name = textTickName.Text;
+            }
+            t.radius = rad;            
+            t.size = s;
+            t.numticks = numticks;
+            t.degspertick = degspertick;
+            t.startangle = startangle;
+            t.active = checkTickActive.Checked;
+            t.col = buttonTickColor.BackColor;
+            t.fontname = textTextFontName.Text;
+            t.strings = textTextStrings.Text.Split(comma);
+            text_layers.Add(t);
+            RefreshListboxes();
+
+            g.Clear(Color.Transparent);
+            RenderTextLayers();
+
+            picturePreview.Image = bmp;
+            picturePreview.Invalidate();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            if (listTextLayers.SelectedIndex < 0) return;
+            text_layer tl = text_layers[listTextLayers.SelectedIndex];
+            text_layers.Remove(tl);
+            RefreshListboxes();
+            PreviewRedraw();
+        }
+
+        private void listTextLayers_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (listTextLayers.SelectedIndex < 0) return;
+            text_layer tl = text_layers[listTextLayers.SelectedIndex];
+            SetTextLayer(tl);
         }
     }
 
@@ -431,5 +544,50 @@ namespace ScaleMaker
             write.WriteLine("{0}", this.width);
             write.WriteLine("{0},{1},{2},{3}", this.col.A, this.col.R, this.col.G, this.col.B);            
         }
+    }
+}
+
+public class text_layer
+{
+    public string name;
+    public bool active;
+    public int radius;
+    public int size;
+    public Color col;
+    public double startangle;
+    public double degspertick;
+    public int numticks;
+    public string[] strings;
+    public string raw_strings;
+    public string fontname;
+
+    public void read(TextReader read)
+    {
+        char[] comma = { ',' };
+
+        name = read.ReadLine(); // WriteLine("{0}", this.name);
+        active = Convert.ToBoolean(read.ReadLine()); //write.WriteLine("{0}", this.active);
+        radius = Convert.ToInt32(read.ReadLine()); //write.WriteLine("{0}", this.inner_radius);
+        degspertick = Convert.ToDouble(read.ReadLine()); //write.WriteLine("{0}", this.degspertick);
+        startangle = Convert.ToDouble(read.ReadLine()); //write.WriteLine("{0}", this.startangle);
+        numticks = Convert.ToInt32(read.ReadLine()); //write.WriteLine("{0}", this.numticks);
+        size = Convert.ToInt32(read.ReadLine()); //write.WriteLine("{0}", this.width);
+        raw_strings = read.ReadLine(); //write.WriteLine("{0},{1},{2},{3}", this.col.A, this.col.R, this.col.G, this.col.B);
+        string[] parts = raw_strings.Split(comma);
+        fontname = read.ReadLine();
+        col = Color.FromArgb(Convert.ToInt32(parts[0]), Convert.ToInt32(parts[1]), Convert.ToInt32(parts[2]), Convert.ToInt32(parts[3]));
+    }
+    public void write(TextWriter write)
+    {
+        write.WriteLine("{0}", this.name);
+        write.WriteLine("{0}", this.active);
+        write.WriteLine("{0}", this.radius);        
+        write.WriteLine("{0}", this.degspertick);
+        write.WriteLine("{0}", this.startangle);
+        write.WriteLine("{0}", this.numticks);
+        write.WriteLine("{0}", this.size);
+        write.WriteLine("{0}", this.raw_strings);
+        write.WriteLine("{0}", this.fontname);
+        write.WriteLine("{0},{1},{2},{3}", this.col.A, this.col.R, this.col.G, this.col.B);
     }
 }
