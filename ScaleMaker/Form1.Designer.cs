@@ -71,7 +71,7 @@
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveScaleDialog = new System.Windows.Forms.SaveFileDialog();
             this.openScaleDialog = new System.Windows.Forms.OpenFileDialog();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.groupTexts = new System.Windows.Forms.GroupBox();
             this.textTextStrings = new System.Windows.Forms.TextBox();
             this.label19 = new System.Windows.Forms.Label();
             this.textTextFontName = new System.Windows.Forms.TextBox();
@@ -94,18 +94,39 @@
             this.label18 = new System.Windows.Forms.Label();
             this.fontDialog = new System.Windows.Forms.FontDialog();
             this.colorText = new System.Windows.Forms.ColorDialog();
+            this.groupArcs = new System.Windows.Forms.GroupBox();
+            this.textArcSweepAngle = new System.Windows.Forms.TextBox();
+            this.label22 = new System.Windows.Forms.Label();
+            this.checkArcActive = new System.Windows.Forms.CheckBox();
+            this.textArcName = new System.Windows.Forms.TextBox();
+            this.label20 = new System.Windows.Forms.Label();
+            this.label21 = new System.Windows.Forms.Label();
+            this.buttonArcColor = new System.Windows.Forms.Button();
+            this.textArcStartAngle = new System.Windows.Forms.TextBox();
+            this.label23 = new System.Windows.Forms.Label();
+            this.textArcWidth = new System.Windows.Forms.TextBox();
+            this.label25 = new System.Windows.Forms.Label();
+            this.button9 = new System.Windows.Forms.Button();
+            this.textArcRadius = new System.Windows.Forms.TextBox();
+            this.label27 = new System.Windows.Forms.Label();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.button7 = new System.Windows.Forms.Button();
+            this.listArcLayers = new System.Windows.Forms.ListBox();
+            this.colorArcs = new System.Windows.Forms.ColorDialog();
             ((System.ComponentModel.ISupportInitialize)(this.picturePreview)).BeginInit();
             this.groupTicks.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.menuStrip1.SuspendLayout();
+            this.groupTexts.SuspendLayout();
+            this.groupArcs.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // picturePreview
             // 
             this.picturePreview.BackColor = System.Drawing.Color.Black;
-            this.picturePreview.Location = new System.Drawing.Point(810, 49);
+            this.picturePreview.Location = new System.Drawing.Point(1191, 47);
             this.picturePreview.Name = "picturePreview";
             this.picturePreview.Size = new System.Drawing.Size(512, 512);
             this.picturePreview.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -119,7 +140,7 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(1159, 567);
+            this.button2.Location = new System.Drawing.Point(1540, 565);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(163, 34);
             this.button2.TabIndex = 31;
@@ -364,7 +385,7 @@
             // 
             // button5
             // 
-            this.button5.Location = new System.Drawing.Point(810, 567);
+            this.button5.Location = new System.Drawing.Point(1191, 565);
             this.button5.Name = "button5";
             this.button5.Size = new System.Drawing.Size(163, 34);
             this.button5.TabIndex = 30;
@@ -441,7 +462,7 @@
             this.fileToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1334, 33);
+            this.menuStrip1.Size = new System.Drawing.Size(1737, 33);
             this.menuStrip1.TabIndex = 34;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -487,34 +508,34 @@
             this.openScaleDialog.FileName = "openFileDialog1";
             this.openScaleDialog.Filter = "Scale files|*.sc|All files|*.*";
             // 
-            // groupBox1
+            // groupTexts
             // 
-            this.groupBox1.Controls.Add(this.textTextStrings);
-            this.groupBox1.Controls.Add(this.label19);
-            this.groupBox1.Controls.Add(this.textTextFontName);
-            this.groupBox1.Controls.Add(this.label16);
-            this.groupBox1.Controls.Add(this.checkTextActive);
-            this.groupBox1.Controls.Add(this.textTextName);
-            this.groupBox1.Controls.Add(this.label11);
-            this.groupBox1.Controls.Add(this.label12);
-            this.groupBox1.Controls.Add(this.buttonTextColor);
-            this.groupBox1.Controls.Add(this.textTextNumTicks);
-            this.groupBox1.Controls.Add(this.label13);
-            this.groupBox1.Controls.Add(this.textTextStartAngle);
-            this.groupBox1.Controls.Add(this.label14);
-            this.groupBox1.Controls.Add(this.textTextDegsPerTick);
-            this.groupBox1.Controls.Add(this.label15);
-            this.groupBox1.Controls.Add(this.button8);
-            this.groupBox1.Controls.Add(this.textTextSize);
-            this.groupBox1.Controls.Add(this.label17);
-            this.groupBox1.Controls.Add(this.textTextRadius);
-            this.groupBox1.Controls.Add(this.label18);
-            this.groupBox1.Location = new System.Drawing.Point(38, 801);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(745, 343);
-            this.groupBox1.TabIndex = 21;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Numbers";
+            this.groupTexts.Controls.Add(this.textTextStrings);
+            this.groupTexts.Controls.Add(this.label19);
+            this.groupTexts.Controls.Add(this.textTextFontName);
+            this.groupTexts.Controls.Add(this.label16);
+            this.groupTexts.Controls.Add(this.checkTextActive);
+            this.groupTexts.Controls.Add(this.textTextName);
+            this.groupTexts.Controls.Add(this.label11);
+            this.groupTexts.Controls.Add(this.label12);
+            this.groupTexts.Controls.Add(this.buttonTextColor);
+            this.groupTexts.Controls.Add(this.textTextNumTicks);
+            this.groupTexts.Controls.Add(this.label13);
+            this.groupTexts.Controls.Add(this.textTextStartAngle);
+            this.groupTexts.Controls.Add(this.label14);
+            this.groupTexts.Controls.Add(this.textTextDegsPerTick);
+            this.groupTexts.Controls.Add(this.label15);
+            this.groupTexts.Controls.Add(this.button8);
+            this.groupTexts.Controls.Add(this.textTextSize);
+            this.groupTexts.Controls.Add(this.label17);
+            this.groupTexts.Controls.Add(this.textTextRadius);
+            this.groupTexts.Controls.Add(this.label18);
+            this.groupTexts.Location = new System.Drawing.Point(38, 801);
+            this.groupTexts.Name = "groupTexts";
+            this.groupTexts.Size = new System.Drawing.Size(745, 343);
+            this.groupTexts.TabIndex = 21;
+            this.groupTexts.TabStop = false;
+            this.groupTexts.Text = "Numbers";
             // 
             // textTextStrings
             // 
@@ -697,12 +718,198 @@
             this.colorText.AnyColor = true;
             this.colorText.FullOpen = true;
             // 
+            // groupArcs
+            // 
+            this.groupArcs.Controls.Add(this.textArcSweepAngle);
+            this.groupArcs.Controls.Add(this.label22);
+            this.groupArcs.Controls.Add(this.checkArcActive);
+            this.groupArcs.Controls.Add(this.textArcName);
+            this.groupArcs.Controls.Add(this.label20);
+            this.groupArcs.Controls.Add(this.label21);
+            this.groupArcs.Controls.Add(this.buttonArcColor);
+            this.groupArcs.Controls.Add(this.textArcStartAngle);
+            this.groupArcs.Controls.Add(this.label23);
+            this.groupArcs.Controls.Add(this.textArcWidth);
+            this.groupArcs.Controls.Add(this.label25);
+            this.groupArcs.Controls.Add(this.button9);
+            this.groupArcs.Controls.Add(this.textArcRadius);
+            this.groupArcs.Controls.Add(this.label27);
+            this.groupArcs.Location = new System.Drawing.Point(811, 638);
+            this.groupArcs.Name = "groupArcs";
+            this.groupArcs.Size = new System.Drawing.Size(628, 275);
+            this.groupArcs.TabIndex = 21;
+            this.groupArcs.TabStop = false;
+            this.groupArcs.Text = "Arcs";
+            // 
+            // textArcSweepAngle
+            // 
+            this.textArcSweepAngle.Location = new System.Drawing.Point(371, 161);
+            this.textArcSweepAngle.Name = "textArcSweepAngle";
+            this.textArcSweepAngle.Size = new System.Drawing.Size(97, 31);
+            this.textArcSweepAngle.TabIndex = 21;
+            this.textArcSweepAngle.Text = "360";
+            // 
+            // label22
+            // 
+            this.label22.AutoSize = true;
+            this.label22.Location = new System.Drawing.Point(250, 164);
+            this.label22.Name = "label22";
+            this.label22.Size = new System.Drawing.Size(115, 25);
+            this.label22.TabIndex = 22;
+            this.label22.Text = "Sweep Angle";
+            // 
+            // checkArcActive
+            // 
+            this.checkArcActive.AutoSize = true;
+            this.checkArcActive.Checked = true;
+            this.checkArcActive.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkArcActive.Location = new System.Drawing.Point(458, 49);
+            this.checkArcActive.Name = "checkArcActive";
+            this.checkArcActive.Size = new System.Drawing.Size(86, 29);
+            this.checkArcActive.TabIndex = 20;
+            this.checkArcActive.Text = "Active";
+            this.checkArcActive.UseVisualStyleBackColor = true;
+            // 
+            // textArcName
+            // 
+            this.textArcName.Location = new System.Drawing.Point(104, 50);
+            this.textArcName.Name = "textArcName";
+            this.textArcName.Size = new System.Drawing.Size(320, 31);
+            this.textArcName.TabIndex = 18;
+            // 
+            // label20
+            // 
+            this.label20.AutoSize = true;
+            this.label20.Location = new System.Drawing.Point(39, 53);
+            this.label20.Name = "label20";
+            this.label20.Size = new System.Drawing.Size(59, 25);
+            this.label20.TabIndex = 19;
+            this.label20.Text = "Name";
+            // 
+            // label21
+            // 
+            this.label21.AutoSize = true;
+            this.label21.Location = new System.Drawing.Point(280, 112);
+            this.label21.Name = "label21";
+            this.label21.Size = new System.Drawing.Size(55, 25);
+            this.label21.TabIndex = 17;
+            this.label21.Text = "Color";
+            // 
+            // buttonArcColor
+            // 
+            this.buttonArcColor.BackColor = System.Drawing.Color.White;
+            this.buttonArcColor.Location = new System.Drawing.Point(341, 107);
+            this.buttonArcColor.Name = "buttonArcColor";
+            this.buttonArcColor.Size = new System.Drawing.Size(97, 34);
+            this.buttonArcColor.TabIndex = 7;
+            this.buttonArcColor.UseVisualStyleBackColor = false;
+            this.buttonArcColor.Click += new System.EventHandler(this.buttonArcColor_Click);
+            // 
+            // textArcStartAngle
+            // 
+            this.textArcStartAngle.Location = new System.Drawing.Point(129, 161);
+            this.textArcStartAngle.Name = "textArcStartAngle";
+            this.textArcStartAngle.Size = new System.Drawing.Size(97, 31);
+            this.textArcStartAngle.TabIndex = 8;
+            this.textArcStartAngle.Text = "0";
+            // 
+            // label23
+            // 
+            this.label23.AutoSize = true;
+            this.label23.Location = new System.Drawing.Point(21, 164);
+            this.label23.Name = "label23";
+            this.label23.Size = new System.Drawing.Size(99, 25);
+            this.label23.TabIndex = 13;
+            this.label23.Text = "Start Angle";
+            // 
+            // textArcWidth
+            // 
+            this.textArcWidth.Location = new System.Drawing.Point(536, 109);
+            this.textArcWidth.Name = "textArcWidth";
+            this.textArcWidth.Size = new System.Drawing.Size(68, 31);
+            this.textArcWidth.TabIndex = 6;
+            this.textArcWidth.Text = "1";
+            // 
+            // label25
+            // 
+            this.label25.AutoSize = true;
+            this.label25.Location = new System.Drawing.Point(467, 112);
+            this.label25.Name = "label25";
+            this.label25.Size = new System.Drawing.Size(60, 25);
+            this.label25.TabIndex = 9;
+            this.label25.Text = "Width";
+            // 
+            // button9
+            // 
+            this.button9.Location = new System.Drawing.Point(441, 219);
+            this.button9.Name = "button9";
+            this.button9.Size = new System.Drawing.Size(163, 34);
+            this.button9.TabIndex = 11;
+            this.button9.Text = "Add";
+            this.button9.UseVisualStyleBackColor = true;
+            this.button9.Click += new System.EventHandler(this.button9_Click);
+            // 
+            // textArcRadius
+            // 
+            this.textArcRadius.Location = new System.Drawing.Point(110, 109);
+            this.textArcRadius.Name = "textArcRadius";
+            this.textArcRadius.Size = new System.Drawing.Size(150, 31);
+            this.textArcRadius.TabIndex = 4;
+            this.textArcRadius.Text = "58";
+            // 
+            // label27
+            // 
+            this.label27.AutoSize = true;
+            this.label27.Location = new System.Drawing.Point(39, 112);
+            this.label27.Name = "label27";
+            this.label27.Size = new System.Drawing.Size(65, 25);
+            this.label27.TabIndex = 4;
+            this.label27.Text = "Radius";
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.button7);
+            this.groupBox1.Controls.Add(this.listArcLayers);
+            this.groupBox1.Location = new System.Drawing.Point(811, 151);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(351, 244);
+            this.groupBox1.TabIndex = 34;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Arc layers";
+            // 
+            // button7
+            // 
+            this.button7.Location = new System.Drawing.Point(220, 193);
+            this.button7.Name = "button7";
+            this.button7.Size = new System.Drawing.Size(108, 34);
+            this.button7.TabIndex = 21;
+            this.button7.Text = "Delete";
+            this.button7.UseVisualStyleBackColor = true;
+            this.button7.Click += new System.EventHandler(this.button7_Click_1);
+            // 
+            // listArcLayers
+            // 
+            this.listArcLayers.FormattingEnabled = true;
+            this.listArcLayers.ItemHeight = 25;
+            this.listArcLayers.Location = new System.Drawing.Point(21, 67);
+            this.listArcLayers.Name = "listArcLayers";
+            this.listArcLayers.Size = new System.Drawing.Size(307, 104);
+            this.listArcLayers.TabIndex = 1;
+            this.listArcLayers.SelectedIndexChanged += new System.EventHandler(this.listArcLayers_SelectedIndexChanged);
+            // 
+            // colorArcs
+            // 
+            this.colorArcs.AnyColor = true;
+            this.colorArcs.FullOpen = true;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1334, 1171);
+            this.ClientSize = new System.Drawing.Size(1737, 1163);
             this.Controls.Add(this.groupBox1);
+            this.Controls.Add(this.groupArcs);
+            this.Controls.Add(this.groupTexts);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.button5);
@@ -728,8 +935,11 @@
             this.groupBox3.ResumeLayout(false);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
+            this.groupTexts.ResumeLayout(false);
+            this.groupTexts.PerformLayout();
+            this.groupArcs.ResumeLayout(false);
+            this.groupArcs.PerformLayout();
             this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -778,7 +988,7 @@
         private ToolStripMenuItem exitToolStripMenuItem;
         private SaveFileDialog saveScaleDialog;
         private OpenFileDialog openScaleDialog;
-        private GroupBox groupBox1;
+        private GroupBox groupTexts;
         private CheckBox checkTextActive;
         private TextBox textTextName;
         private Label label11;
@@ -801,5 +1011,24 @@
         private ColorDialog colorText;
         private TextBox textTextStrings;
         private Label label19;
+        private GroupBox groupArcs;
+        private CheckBox checkArcActive;
+        private TextBox textArcName;
+        private Label label20;
+        private Label label21;
+        private Button buttonArcColor;
+        private TextBox textArcStartAngle;
+        private Label label23;
+        private TextBox textArcWidth;
+        private Label label25;
+        private Button button9;
+        private TextBox textArcRadius;
+        private Label label27;
+        private TextBox textArcSweepAngle;
+        private Label label22;
+        private GroupBox groupBox1;
+        private Button button7;
+        private ListBox listArcLayers;
+        private ColorDialog colorArcs;
     }
 }

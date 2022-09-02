@@ -25,6 +25,7 @@ namespace ScaleMaker
         private string appTitle = "ScaleMaker build 8/31/2022";
         List<tick_layer> tick_layers;
         List<text_layer> text_layers;
+        List<arc_layer> arc_layers;
 
         private void DrawLine(Color col, int linew, double angle, float radius_outer, float radius_inner)
         {
@@ -61,6 +62,21 @@ namespace ScaleMaker
             }
         }
 
+        private void DrawArc(Color col, int width, float _radius, double _start_angle, double _sweep_angle)
+        {
+            int radius = (int)_radius;
+            float start_angle = (float)_start_angle - 90;
+            float sweep_angle = (float)_sweep_angle;
+
+            using (Pen p = new Pen(col, width))
+            {
+                Point c = new Point(CX-radius, CY-radius);
+                Size s = new Size(radius * 2, radius * 2);
+                Rectangle r = new Rectangle(c, s);
+                g.DrawArc(p, r, start_angle, sweep_angle);
+            }
+        }
+
         private string ReadRegKey(string prop)
         {
             using (RegistryKey key = Registry.CurrentUser.CreateSubKey(regPath))
@@ -84,6 +100,8 @@ namespace ScaleMaker
             if (bmp != null) bmp.Dispose();
 
             groupTicks.Enabled = true;
+            groupArcs.Enabled = true;
+            groupTexts.Enabled = true;
 
             W = _w; 
             H = _h;
@@ -140,12 +158,24 @@ namespace ScaleMaker
             
             tick_layers = new List<tick_layer>();
             text_layers = new List<text_layer>();
+            arc_layers = new List<arc_layer>();
             groupTicks.Enabled = false;
+            groupTexts.Enabled = false;
+            groupArcs.Enabled = false;
+        }
+
+        private void RenderArcLayers()
+        {
+            foreach (arc_layer tl in arc_layers)
+            {
+                if (!tl.active) continue;
+
+                DrawArc(tl.col, tl.width, tl.radius, tl.startangle, tl.sweepangle);                
+            }
         }
 
         private void RenderTickLayers()
         {
-
             foreach (tick_layer tl in tick_layers)
             {
                 if (!tl.active) continue;
@@ -200,6 +230,18 @@ namespace ScaleMaker
             return true;
         }
 
+        private bool CheckArcData()
+        {
+            if (bmp == null) return false;
+            if (g == null) return false;
+            if (string.IsNullOrEmpty(textArcRadius.Text)) return false;
+            if (string.IsNullOrEmpty(textArcWidth.Text)) return false;
+            if (string.IsNullOrEmpty(textArcStartAngle.Text)) return false;
+            if (string.IsNullOrEmpty(textArcSweepAngle.Text)) return false;            
+
+            return true;
+        }
+
         private bool CheckTextData()
         {
             if (bmp == null) return false;
@@ -230,6 +272,13 @@ namespace ScaleMaker
               listTextLayers.Items.Add(tl.name);
             }
             listTextLayers.Invalidate();
+
+            listArcLayers.Items.Clear();
+            foreach (arc_layer tl in arc_layers)
+            {
+                listArcLayers.Items.Add(tl.name);
+            }
+            listArcLayers.Invalidate();
         }
         private void SetTickLayer(tick_layer tl)
         {
@@ -249,6 +298,24 @@ namespace ScaleMaker
             textNumTicks.Text = Convert.ToString(tl.numticks);
             textDegsPerTick.Text = Convert.ToString(tl.degspertick);
             textTickWidth.Text = Convert.ToString(tl.width);            
+        }
+
+        private void SetArcLayer(arc_layer tl)
+        {
+            textArcName.Text = tl.name;
+            if (tl.active)
+            {
+                checkArcActive.Checked = true;
+            }
+            else
+            {
+                checkArcActive.Checked = false;
+            }
+            textArcRadius.Text = Convert.ToString(tl.radius);
+            textArcStartAngle.Text = Convert.ToString(tl.startangle);
+            textArcWidth.Text = Convert.ToString(tl.width);
+            textArcSweepAngle.Text = Convert.ToString(tl.sweepangle);
+            buttonArcColor.BackColor = tl.col;
         }
 
         private void SetTextLayer(text_layer tl)
@@ -291,7 +358,12 @@ namespace ScaleMaker
                 foreach (text_layer nl in text_layers)
                 {
                     nl.write(write);
-                }                
+                }
+                write.WriteLine("{0}", arc_layers.Count);
+                foreach (arc_layer nl in arc_layers)
+                {
+                    nl.write(write);
+                }
             }
         }
 
@@ -329,7 +401,23 @@ namespace ScaleMaker
                     tl.read(read);
                     text_layers.Add(tl);
                 }
+                int num_arc = Convert.ToInt32(read.ReadLine());//write.WriteLine("{0}", tick_layers.Count);
+                arc_layers = new List<arc_layer>();
+                for (int t = 0; t < num_arc; t++)
+                {
+                    arc_layer tl = new arc_layer();
+                    tl.read(read);
+                    arc_layers.Add(tl);
+                }
             }
+        }
+
+        private void RefreshAndRender()
+        {
+            g.Clear(Color.Transparent);
+            RenderArcLayers();
+            RenderTextLayers();
+            RenderTickLayers();
         }
 
         private void button4_Click(object sender, EventArgs e)
@@ -366,7 +454,8 @@ namespace ScaleMaker
             RefreshListboxes();
 
             //g.Clear(Color.Transparent);
-            RenderTickLayers();
+            RefreshAndRender();
+            //RenderTickLayers();
 
             picturePreview.Image = bmp;
             picturePreview.Invalidate();
@@ -385,6 +474,7 @@ namespace ScaleMaker
             g.Clear(Color.Transparent);
             RenderTickLayers();
             RenderTextLayers();
+            RenderArcLayers();
             picturePreview.Image = bmp;
             picturePreview.Invalidate();
         }
@@ -466,10 +556,12 @@ namespace ScaleMaker
             t.strings = textTextStrings.Text.Split(comma);
             t.raw_strings = textTextStrings.Text;
             text_layers.Add(t);
+            
             RefreshListboxes();
 
             //g.Clear(Color.Transparent);
-            RenderTextLayers();
+            RefreshAndRender();
+            //RenderTextLayers();
 
             picturePreview.Image = bmp;
             picturePreview.Invalidate();
@@ -489,6 +581,66 @@ namespace ScaleMaker
             if (listTextLayers.SelectedIndex < 0) return;
             text_layer tl = text_layers[listTextLayers.SelectedIndex];
             SetTextLayer(tl);
+        }
+
+        private void button9_Click(object sender, EventArgs e)
+        {
+            if (!CheckArcData()) return;
+
+            //PrepUndo();
+
+            int rad = Convert.ToInt32(textArcRadius.Text);            
+            int lw = Convert.ToInt32(textArcWidth.Text);                        
+            double startangle = Convert.ToDouble(textArcStartAngle.Text);
+            double sweepangle = Convert.ToDouble(textArcSweepAngle.Text);
+
+            arc_layer t = new arc_layer();
+            if (string.IsNullOrEmpty(textArcName.Text))
+            {
+                t.name = string.Format("Arc Layer {0}", arc_layers.Count);
+            }
+            else
+            {
+                t.name = textArcName.Text;
+            }
+            t.radius = rad;            
+            t.width = lw;            
+            t.startangle = startangle;
+            t.sweepangle = sweepangle;
+            t.active = checkArcActive.Checked;
+            t.col = buttonArcColor.BackColor;
+            arc_layers.Add(t);
+                        
+            RefreshListboxes();
+
+            //g.Clear(Color.Transparent);
+            RefreshAndRender();
+            //RenderArcLayers();
+
+            picturePreview.Image = bmp;
+            picturePreview.Invalidate();            
+        }
+
+        private void button7_Click_1(object sender, EventArgs e)
+        {
+            if (listArcLayers.SelectedIndex < 0) return;
+            arc_layer tl = arc_layers[listArcLayers.SelectedIndex];
+            arc_layers.Remove(tl);
+            RefreshListboxes();
+            PreviewRedraw();
+        }
+
+        private void listArcLayers_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (listArcLayers.SelectedIndex < 0) return;
+            arc_layer tl = arc_layers[listArcLayers.SelectedIndex];
+            SetArcLayer(tl);
+        }
+
+        private void buttonArcColor_Click(object sender, EventArgs e)
+        {
+            if (colorArcs.ShowDialog() == DialogResult.Cancel) return;
+            buttonArcColor.BackColor = colorArcs.Color;
         }
     }
 
@@ -578,6 +730,41 @@ public class text_layer
         write.WriteLine("{0}", this.size);
         write.WriteLine("{0}", this.raw_strings);
         write.WriteLine("{0}", this.fontname);
+        write.WriteLine("{0},{1},{2},{3}", this.col.A, this.col.R, this.col.G, this.col.B);
+    }
+}
+
+public class arc_layer
+{
+    public string name;
+    public bool active;
+    public int radius;
+    public int width;
+    public Color col;
+    public double startangle;
+    public double sweepangle;
+    
+    public void read(TextReader read)
+    {
+        char[] comma = { ',' };
+        name = read.ReadLine(); // WriteLine("{0}", this.name);
+        active = Convert.ToBoolean(read.ReadLine()); //write.WriteLine("{0}", this.active);
+        radius = Convert.ToInt32(read.ReadLine()); //write.WriteLine("{0}", this.inner_radius);
+        width = Convert.ToInt32(read.ReadLine()); //write.WriteLine("{0}", this.inner_radius);        
+        startangle = Convert.ToDouble(read.ReadLine()); //write.WriteLine("{0}", this.startangle);
+        sweepangle = Convert.ToDouble(read.ReadLine()); //write.WriteLine("{0}", this.startangle);        
+        string s = read.ReadLine();
+        string[] parts = s.Split(comma);
+        col = Color.FromArgb(Convert.ToInt32(parts[0]), Convert.ToInt32(parts[1]), Convert.ToInt32(parts[2]), Convert.ToInt32(parts[3]));
+    }
+    public void write(TextWriter write)
+    {
+        write.WriteLine("{0}", this.name);
+        write.WriteLine("{0}", this.active);
+        write.WriteLine("{0}", this.radius);
+        write.WriteLine("{0}", this.width);
+        write.WriteLine("{0}", this.startangle);
+        write.WriteLine("{0}", this.sweepangle);        
         write.WriteLine("{0},{1},{2},{3}", this.col.A, this.col.R, this.col.G, this.col.B);
     }
 }
