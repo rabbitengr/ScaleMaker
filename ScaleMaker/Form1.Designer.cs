@@ -522,7 +522,7 @@
             this.textTextStrings.Name = "textTextStrings";
             this.textTextStrings.Size = new System.Drawing.Size(626, 31);
             this.textTextStrings.TabIndex = 23;
-            this.textTextStrings.Text = "0.1.2.3.4.5.6.7.8.9.10.11";
+            this.textTextStrings.Text = "0,1,2,3,4,5,6,7,8,9,10,11";
             // 
             // label19
             // 
@@ -664,7 +664,7 @@
             this.textTextSize.Name = "textTextSize";
             this.textTextSize.Size = new System.Drawing.Size(75, 31);
             this.textTextSize.TabIndex = 5;
-            this.textTextSize.Text = "63";
+            this.textTextSize.Text = "10";
             // 
             // label17
             // 

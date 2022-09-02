@@ -178,19 +178,6 @@ namespace ScaleMaker
             PrepScale(Convert.ToInt32(textImageW.Text), Convert.ToInt32(textImageH.Text));
         }
 
-        private void PrepUndo()
-        {
-            if (bmp == null) return;
-            undoBmp = (Bitmap)bmp.Clone();
-        }
-        private void Undo()
-        {
-            if (undoBmp == null) return;
-
-            bmp = (Bitmap)undoBmp.Clone();
-            g = Graphics.FromImage(bmp);
-        }
-
         private bool ConfirmExit()
         {
             if (MessageBox.Show("Unsaved data will be lost", "Exit", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning) == DialogResult.Cancel) 
@@ -221,8 +208,7 @@ namespace ScaleMaker
             if (string.IsNullOrEmpty(textTextDegsPerTick.Text)) return false;
             if (string.IsNullOrEmpty(textTextStartAngle.Text)) return false;            
             if (string.IsNullOrEmpty(textTextNumTicks.Text)) return false;
-            if (string.IsNullOrEmpty(textTextFontName.Text)) return false;
-            if (string.IsNullOrEmpty(textTextName.Text)) return false;
+            if (string.IsNullOrEmpty(textTextFontName.Text)) return false;            
             if (string.IsNullOrEmpty(textTextSize.Text)) return false;
             if (string.IsNullOrEmpty(textTextStrings.Text)) return false;                        
 
@@ -241,7 +227,7 @@ namespace ScaleMaker
             listTextLayers.Items.Clear();
             foreach (text_layer tl in text_layers)
             {
-              listTickLayers.Items.Add(tl.name);
+              listTextLayers.Items.Add(tl.name);
             }
             listTextLayers.Invalidate();
         }
@@ -378,7 +364,7 @@ namespace ScaleMaker
             tick_layers.Add(t);
             RefreshListboxes();
 
-            g.Clear(Color.Transparent);
+            //g.Clear(Color.Transparent);
             RenderTickLayers();
 
             picturePreview.Image = bmp;
@@ -477,10 +463,11 @@ namespace ScaleMaker
             t.col = buttonTickColor.BackColor;
             t.fontname = textTextFontName.Text;
             t.strings = textTextStrings.Text.Split(comma);
+            t.raw_strings = textTextStrings.Text;
             text_layers.Add(t);
             RefreshListboxes();
 
-            g.Clear(Color.Transparent);
+            //g.Clear(Color.Transparent);
             RenderTextLayers();
 
             picturePreview.Image = bmp;
@@ -572,9 +559,11 @@ public class text_layer
         startangle = Convert.ToDouble(read.ReadLine()); //write.WriteLine("{0}", this.startangle);
         numticks = Convert.ToInt32(read.ReadLine()); //write.WriteLine("{0}", this.numticks);
         size = Convert.ToInt32(read.ReadLine()); //write.WriteLine("{0}", this.width);
-        raw_strings = read.ReadLine(); //write.WriteLine("{0},{1},{2},{3}", this.col.A, this.col.R, this.col.G, this.col.B);
-        string[] parts = raw_strings.Split(comma);
+        raw_strings = read.ReadLine(); //write.WriteLine("{0},{1},{2},{3}", this.col.A, this.col.R, this.col.G, this.col.B);        
+        strings = raw_strings.Split(comma);
         fontname = read.ReadLine();
+        string s = read.ReadLine();
+        string[] parts = s.Split(comma);
         col = Color.FromArgb(Convert.ToInt32(parts[0]), Convert.ToInt32(parts[1]), Convert.ToInt32(parts[2]), Convert.ToInt32(parts[3]));
     }
     public void write(TextWriter write)
