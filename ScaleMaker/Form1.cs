@@ -321,8 +321,9 @@ namespace ScaleMaker
                     tl.read(read);
                     tick_layers.Add(tl);
                 }
+                int num_texts = Convert.ToInt32(read.ReadLine());//write.WriteLine("{0}", tick_layers.Count);
                 text_layers = new List<text_layer>();
-                for (int t = 0; t < num_ticks; t++)
+                for (int t = 0; t < num_texts; t++)
                 {
                     text_layer tl = new text_layer();
                     tl.read(read);
@@ -452,7 +453,7 @@ namespace ScaleMaker
             }
             else
             {
-                t.name = textTickName.Text;
+                t.name = textTextName.Text;
             }
             t.radius = rad;            
             t.size = s;
@@ -460,7 +461,7 @@ namespace ScaleMaker
             t.degspertick = degspertick;
             t.startangle = startangle;
             t.active = checkTickActive.Checked;
-            t.col = buttonTickColor.BackColor;
+            t.col = buttonTextColor.BackColor;
             t.fontname = textTextFontName.Text;
             t.strings = textTextStrings.Text.Split(comma);
             t.raw_strings = textTextStrings.Text;
