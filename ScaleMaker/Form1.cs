@@ -19,10 +19,9 @@ namespace ScaleMaker
         private int CX;
         private int CY;
         private Graphics g;
-        private Bitmap bmp;
-        private Bitmap undoBmp;
+        private Bitmap bmp;        
         private string regPath = "software\\Rabbit Engineering\\ScaleMaker";
-        private string appTitle = "ScaleMaker build 8/31/2022";
+        private string appTitle = "ScaleMaker build 9/1/2022";
         List<tick_layer> tick_layers;
         List<text_layer> text_layers;
         List<arc_layer> arc_layers;
@@ -341,6 +340,8 @@ namespace ScaleMaker
 
         private void SaveScale()
         {
+            if (g == null) return;
+            if (bmp == null) return;
             if (saveScaleDialog.ShowDialog() == DialogResult.Cancel) return;
             WriteRegKey("sclpath", this.saveScaleDialog.FileName);
             openScaleDialog.FileName = saveScaleDialog.FileName;
@@ -641,6 +642,22 @@ namespace ScaleMaker
         {
             if (colorArcs.ShowDialog() == DialogResult.Cancel) return;
             buttonArcColor.BackColor = colorArcs.Color;
+        }
+
+        private void newToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            arc_layers = new List<arc_layer>();
+            text_layers = new List<text_layer>();
+            tick_layers = new List<tick_layer>();
+            RefreshListboxes();
+            RefreshAndRender();
+            if (bmp != null) bmp.Dispose();
+            if (g != null) g.Dispose();
+            groupArcs.Enabled = false;
+            groupTexts.Enabled = false;
+            groupTicks.Enabled = false;
+            picturePreview.Image = System.Drawing.SystemIcons.Question.ToBitmap();
+            picturePreview.Invalidate();
         }
     }
 
