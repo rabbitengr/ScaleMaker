@@ -130,6 +130,7 @@
             this.button10 = new System.Windows.Forms.Button();
             this.openBackdrop = new System.Windows.Forms.OpenFileDialog();
             this.labelCenter = new System.Windows.Forms.Label();
+            this.checkShowCenter = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.picturePreview)).BeginInit();
             this.groupTicks.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -1068,16 +1069,28 @@
             // labelCenter
             // 
             this.labelCenter.AutoSize = true;
-            this.labelCenter.Location = new System.Drawing.Point(453, 73);
+            this.labelCenter.Location = new System.Drawing.Point(628, 68);
             this.labelCenter.Name = "labelCenter";
             this.labelCenter.Size = new System.Drawing.Size(0, 25);
             this.labelCenter.TabIndex = 25;
+            // 
+            // checkShowCenter
+            // 
+            this.checkShowCenter.AutoSize = true;
+            this.checkShowCenter.Location = new System.Drawing.Point(1380, 569);
+            this.checkShowCenter.Name = "checkShowCenter";
+            this.checkShowCenter.Size = new System.Drawing.Size(138, 29);
+            this.checkShowCenter.TabIndex = 40;
+            this.checkShowCenter.Text = "Show Center";
+            this.checkShowCenter.UseVisualStyleBackColor = true;
+            this.checkShowCenter.CheckedChanged += new System.EventHandler(this.checkShowCenter_CheckedChanged);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1737, 1197);
+            this.Controls.Add(this.checkShowCenter);
             this.Controls.Add(this.labelCenter);
             this.Controls.Add(this.button10);
             this.Controls.Add(this.groupBox1);
@@ -1220,5 +1233,6 @@
         private Label label31;
         private TextBox textTextCY;
         private Label label32;
+        private CheckBox checkShowCenter;
     }
 }

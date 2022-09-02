@@ -462,6 +462,14 @@ namespace ScaleMaker
             RenderArcLayers();
             RenderTextLayers();
             RenderTickLayers();
+
+            if (checkShowCenter.Checked)
+            {
+                Pen p = new Pen(Color.Red);
+                g.DrawLine(p, 0, H / 2, W, H / 2);
+                g.DrawLine(p, W / 2, 0, W / 2, H);
+            }
+
             picturePreview.Image = bmp;
             picturePreview.Invalidate();
         }
@@ -518,8 +526,7 @@ namespace ScaleMaker
         private void button5_Click_1(object sender, EventArgs e)
         {
             //Undo();
-            RefreshAndRender();
-            RefreshAndRender();
+            RefreshAndRender();            
         }
 
         private void listTickLayers_SelectedIndexChanged(object sender, EventArgs e)
@@ -770,6 +777,11 @@ namespace ScaleMaker
 
         private void textImageH_TextChanged(object sender, EventArgs e)
         {            
+        }
+
+        private void checkShowCenter_CheckedChanged(object sender, EventArgs e)
+        {
+            RefreshAndRender();
         }
     }
 
