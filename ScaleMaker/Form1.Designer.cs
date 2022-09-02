@@ -115,6 +115,13 @@
             this.button7 = new System.Windows.Forms.Button();
             this.listArcLayers = new System.Windows.Forms.ListBox();
             this.colorArcs = new System.Windows.Forms.ColorDialog();
+            this.textCenterX = new System.Windows.Forms.TextBox();
+            this.label24 = new System.Windows.Forms.Label();
+            this.textCenterY = new System.Windows.Forms.TextBox();
+            this.label26 = new System.Windows.Forms.Label();
+            this.button10 = new System.Windows.Forms.Button();
+            this.openBackdrop = new System.Windows.Forms.OpenFileDialog();
+            this.button11 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.picturePreview)).BeginInit();
             this.groupTicks.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -340,9 +347,10 @@
             // 
             this.textImageW.Location = new System.Drawing.Point(104, 70);
             this.textImageW.Name = "textImageW";
-            this.textImageW.Size = new System.Drawing.Size(150, 31);
+            this.textImageW.Size = new System.Drawing.Size(77, 31);
             this.textImageW.TabIndex = 1;
             this.textImageW.Text = "128";
+            this.textImageW.TextChanged += new System.EventHandler(this.textImageW_TextChanged);
             // 
             // label2
             // 
@@ -355,16 +363,17 @@
             // 
             // textImageH
             // 
-            this.textImageH.Location = new System.Drawing.Point(385, 70);
+            this.textImageH.Location = new System.Drawing.Point(266, 70);
             this.textImageH.Name = "textImageH";
-            this.textImageH.Size = new System.Drawing.Size(150, 31);
+            this.textImageH.Size = new System.Drawing.Size(77, 31);
             this.textImageH.TabIndex = 2;
             this.textImageH.Text = "128";
+            this.textImageH.TextChanged += new System.EventHandler(this.textImageH_TextChanged);
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(319, 73);
+            this.label3.Location = new System.Drawing.Point(200, 73);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(65, 25);
             this.label3.TabIndex = 9;
@@ -372,9 +381,9 @@
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(588, 68);
+            this.button3.Location = new System.Drawing.Point(349, 68);
             this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(121, 34);
+            this.button3.Size = new System.Drawing.Size(84, 34);
             this.button3.TabIndex = 10;
             this.button3.Text = "New!";
             this.button3.UseVisualStyleBackColor = true;
@@ -483,33 +492,33 @@
             // newToolStripMenuItem
             // 
             this.newToolStripMenuItem.Name = "newToolStripMenuItem";
-            this.newToolStripMenuItem.Size = new System.Drawing.Size(270, 34);
+            this.newToolStripMenuItem.Size = new System.Drawing.Size(158, 34);
             this.newToolStripMenuItem.Text = "&New";
             this.newToolStripMenuItem.Click += new System.EventHandler(this.newToolStripMenuItem_Click);
             // 
             // openToolStripMenuItem
             // 
             this.openToolStripMenuItem.Name = "openToolStripMenuItem";
-            this.openToolStripMenuItem.Size = new System.Drawing.Size(270, 34);
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(158, 34);
             this.openToolStripMenuItem.Text = "&Open";
             this.openToolStripMenuItem.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
             // 
             // saveToolStripMenuItem
             // 
             this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(270, 34);
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(158, 34);
             this.saveToolStripMenuItem.Text = "&Save";
             this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(267, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(155, 6);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(270, 34);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(158, 34);
             this.exitToolStripMenuItem.Text = "E&xit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
@@ -918,11 +927,79 @@
             this.colorArcs.AnyColor = true;
             this.colorArcs.FullOpen = true;
             // 
+            // textCenterX
+            // 
+            this.textCenterX.Location = new System.Drawing.Point(578, 70);
+            this.textCenterX.Name = "textCenterX";
+            this.textCenterX.Size = new System.Drawing.Size(77, 31);
+            this.textCenterX.TabIndex = 35;
+            this.textCenterX.Text = "64";
+            this.textCenterX.TextChanged += new System.EventHandler(this.textCenterX_TextChanged);
+            // 
+            // label24
+            // 
+            this.label24.AutoSize = true;
+            this.label24.Location = new System.Drawing.Point(496, 73);
+            this.label24.Name = "label24";
+            this.label24.Size = new System.Drawing.Size(76, 25);
+            this.label24.TabIndex = 36;
+            this.label24.Text = "center X";
+            // 
+            // textCenterY
+            // 
+            this.textCenterY.Location = new System.Drawing.Point(755, 70);
+            this.textCenterY.Name = "textCenterY";
+            this.textCenterY.Size = new System.Drawing.Size(77, 31);
+            this.textCenterY.TabIndex = 37;
+            this.textCenterY.Text = "64";
+            this.textCenterY.TextChanged += new System.EventHandler(this.textCenterY_TextChanged);
+            // 
+            // label26
+            // 
+            this.label26.AutoSize = true;
+            this.label26.Location = new System.Drawing.Point(673, 73);
+            this.label26.Name = "label26";
+            this.label26.Size = new System.Drawing.Size(75, 25);
+            this.label26.TabIndex = 38;
+            this.label26.Text = "center Y";
+            // 
+            // button10
+            // 
+            this.button10.Location = new System.Drawing.Point(1025, 68);
+            this.button10.Name = "button10";
+            this.button10.Size = new System.Drawing.Size(121, 34);
+            this.button10.TabIndex = 39;
+            this.button10.Text = "Load...";
+            this.button10.UseVisualStyleBackColor = true;
+            this.button10.Click += new System.EventHandler(this.button10_Click);
+            // 
+            // openBackdrop
+            // 
+            this.openBackdrop.DefaultExt = "*.png";
+            this.openBackdrop.FileName = "openBackdrop";
+            this.openBackdrop.Filter = "Bmp file|*.bmp|PNG files|*.png|All files|*.*";
+            // 
+            // button11
+            // 
+            this.button11.Location = new System.Drawing.Point(838, 68);
+            this.button11.Name = "button11";
+            this.button11.Size = new System.Drawing.Size(84, 34);
+            this.button11.TabIndex = 40;
+            this.button11.Text = "Set";
+            this.button11.UseVisualStyleBackColor = true;
+            this.button11.Click += new System.EventHandler(this.button11_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1737, 1163);
+            this.Controls.Add(this.button11);
+            this.Controls.Add(this.button10);
+            this.Controls.Add(this.textCenterY);
+            this.Controls.Add(this.label26);
+            this.Controls.Add(this.textCenterX);
+            this.Controls.Add(this.label24);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.groupArcs);
             this.Controls.Add(this.groupTexts);
@@ -1048,5 +1125,12 @@
         private ColorDialog colorArcs;
         private ToolStripMenuItem newToolStripMenuItem;
         private ToolStripSeparator toolStripSeparator1;
+        private TextBox textCenterX;
+        private Label label24;
+        private TextBox textCenterY;
+        private Label label26;
+        private Button button10;
+        private OpenFileDialog openBackdrop;
+        private Button button11;
     }
 }

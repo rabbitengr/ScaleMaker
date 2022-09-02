@@ -1,4 +1,5 @@
 using System.Drawing;
+using System.Drawing;
 using static System.Windows.Forms.DataFormats;
 using System.IO;
 using System.Drawing.Drawing2D;
@@ -19,7 +20,9 @@ namespace ScaleMaker
         private int CX;
         private int CY;
         private Graphics g;
-        private Bitmap bmp;        
+        private Bitmap bmp;
+        private Image backdrop;
+        private string backdrop_name;
         private string regPath = "software\\Rabbit Engineering\\ScaleMaker";
         private string appTitle = "ScaleMaker build 9/1/2022";
         List<tick_layer> tick_layers;
@@ -93,10 +96,11 @@ namespace ScaleMaker
             }
         }
 
-        private void PrepScale(int _w, int _h)
+        private void PrepScale(int _w, int _h, int cxa, int cya)
         {
             if (g != null) g.Dispose();
             if (bmp != null) bmp.Dispose();
+            if (backdrop != null) backdrop.Dispose();
 
             groupTicks.Enabled = true;
             groupArcs.Enabled = true;
@@ -104,8 +108,9 @@ namespace ScaleMaker
 
             W = _w; 
             H = _h;
-            CX = W / 2;
-            CY = H / 2;
+            if (cxa < 1) CX = W / 2; else CX = cxa;
+            if (cya < 1) CY = H / 2; else CY = cya;
+            
             bmp = new Bitmap(W, H);
             g = Graphics.FromImage(bmp);            
             g.Clear(Color.Transparent);
@@ -154,7 +159,12 @@ namespace ScaleMaker
                 this.saveScaleDialog.FileName = s;
                 this.openScaleDialog.FileName = s;
             }
-            
+            s = ReadRegKey("backdrop");
+            if (!string.IsNullOrEmpty(s))
+            {
+                this.openBackdrop.FileName = s;
+            }
+
             tick_layers = new List<tick_layer>();
             text_layers = new List<text_layer>();
             arc_layers = new List<arc_layer>();
@@ -204,7 +214,7 @@ namespace ScaleMaker
             if (string.IsNullOrEmpty(textImageW.Text)) return;
             if (string.IsNullOrEmpty(textImageH.Text)) return;
             
-            PrepScale(Convert.ToInt32(textImageW.Text), Convert.ToInt32(textImageH.Text));
+            PrepScale(Convert.ToInt32(textImageW.Text), Convert.ToInt32(textImageH.Text), Convert.ToInt32(textCenterX.Text), Convert.ToInt32(textCenterY.Text));
         }
 
         private bool ConfirmExit()
@@ -350,6 +360,8 @@ namespace ScaleMaker
             {
                 write.WriteLine("v1");
                 write.WriteLine("{0},{1}", W, H);
+                write.WriteLine("{0},{1}", CX, CY);
+                write.WriteLine("{0}", backdrop_name);
                 write.WriteLine("{0}", tick_layers.Count);
                 foreach (tick_layer tl in tick_layers)
                 {
@@ -385,7 +397,9 @@ namespace ScaleMaker
                 }
                 string s = read.ReadLine();//write.WriteLine("{0},{1}", W, H);
                 string[] parts = s.Split(comma);
-                PrepScale(Convert.ToInt32(parts[0]), Convert.ToInt32(parts[1]));
+                string s2 = read.ReadLine();//write.WriteLine("{0},{1}", W, H);
+                string[] parts2 = s2.Split(comma);
+                PrepScale(Convert.ToInt32(parts[0]), Convert.ToInt32(parts[1]), Convert.ToInt32(parts2[0]), Convert.ToInt32(parts2[1]));
                 int num_ticks = Convert.ToInt32(read.ReadLine());//write.WriteLine("{0}", tick_layers.Count);
                 tick_layers = new List<tick_layer>();
                 for (int t = 0; t < num_ticks; t++)
@@ -415,7 +429,9 @@ namespace ScaleMaker
 
         private void RefreshAndRender()
         {
-            g.Clear(Color.Transparent);
+            if (g != null) g.Clear(Color.Transparent);
+            Rectangle r = new Rectangle(0, 0, backdrop.Width, backdrop.Height);
+            if (backdrop != null) g.DrawImage(backdrop, r);
             RenderArcLayers();
             RenderTextLayers();
             RenderTickLayers();
@@ -470,20 +486,11 @@ namespace ScaleMaker
 
         }
 
-        private void PreviewRedraw()
-        {
-            g.Clear(Color.Transparent);
-            RenderTickLayers();
-            RenderTextLayers();
-            RenderArcLayers();
-            picturePreview.Image = bmp;
-            picturePreview.Invalidate();
-        }
-
         private void button5_Click_1(object sender, EventArgs e)
         {
             //Undo();
-            PreviewRedraw();            
+            RefreshAndRender();
+            RefreshAndRender();
         }
 
         private void listTickLayers_SelectedIndexChanged(object sender, EventArgs e)
@@ -499,7 +506,7 @@ namespace ScaleMaker
             tick_layer tl = tick_layers[listTickLayers.SelectedIndex];
             tick_layers.Remove(tl);
             RefreshListboxes();
-            PreviewRedraw();
+            RefreshAndRender();
         }
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
@@ -516,7 +523,7 @@ namespace ScaleMaker
         {
             OpenScale();
             RefreshListboxes();
-            PreviewRedraw();
+            RefreshAndRender();
         }
 
         private void button7_Click(object sender, EventArgs e)
@@ -574,7 +581,7 @@ namespace ScaleMaker
             text_layer tl = text_layers[listTextLayers.SelectedIndex];
             text_layers.Remove(tl);
             RefreshListboxes();
-            PreviewRedraw();
+            RefreshAndRender();
         }
 
         private void listTextLayers_SelectedIndexChanged(object sender, EventArgs e)
@@ -628,7 +635,7 @@ namespace ScaleMaker
             arc_layer tl = arc_layers[listArcLayers.SelectedIndex];
             arc_layers.Remove(tl);
             RefreshListboxes();
-            PreviewRedraw();
+            RefreshAndRender();
         }
 
         private void listArcLayers_SelectedIndexChanged(object sender, EventArgs e)
@@ -644,13 +651,15 @@ namespace ScaleMaker
             buttonArcColor.BackColor = colorArcs.Color;
         }
 
-        private void newToolStripMenuItem_Click(object sender, EventArgs e)
+        private void NewScale()
         {
             arc_layers = new List<arc_layer>();
             text_layers = new List<text_layer>();
             tick_layers = new List<tick_layer>();
             RefreshListboxes();
             RefreshAndRender();
+            backdrop_name = string.Empty;
+            if (backdrop != null) backdrop.Dispose();
             if (bmp != null) bmp.Dispose();
             if (g != null) g.Dispose();
             groupArcs.Enabled = false;
@@ -658,6 +667,61 @@ namespace ScaleMaker
             groupTicks.Enabled = false;
             picturePreview.Image = System.Drawing.SystemIcons.Question.ToBitmap();
             picturePreview.Invalidate();
+        }
+
+        private void newToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            NewScale();
+        }
+
+        private void textCenterX_TextChanged(object sender, EventArgs e)
+        {            
+        }
+
+        private void textCenterY_TextChanged(object sender, EventArgs e)
+        {            
+        }
+
+        private void button10_Click(object sender, EventArgs e)
+        {
+            if (openBackdrop.ShowDialog() == DialogResult.Cancel) return;
+            backdrop_name = openBackdrop.FileName;
+            WriteRegKey("backdrop", openBackdrop.FileName);
+            backdrop = Image.FromFile(openBackdrop.FileName);    
+            textImageW.Text = backdrop.Width.ToString();
+            textImageH.Text = backdrop.Height.ToString();
+            textCenterX.Text = (backdrop.Width / 2).ToString();
+            textCenterY.Text = (backdrop.Height / 2).ToString();
+            CX = backdrop.Width / 2;
+            CY = backdrop.Height / 2;
+            groupArcs.Enabled = true;
+            groupTexts.Enabled = true;
+            groupTicks.Enabled = true;
+            if (g != null) g.Dispose();
+            if (bmp != null) bmp.Dispose();
+            bmp = new Bitmap(backdrop.Width, backdrop.Height);
+            g = Graphics.FromImage(bmp);
+        }
+
+        private void button11_Click(object sender, EventArgs e)
+        {
+            CX = Convert.ToInt32(textCenterX.Text);
+            CY = Convert.ToInt32(textCenterY.Text);
+            arc_layers = new List<arc_layer>();
+            text_layers = new List<text_layer>();
+            tick_layers = new List<tick_layer>();
+            RefreshListboxes();
+            RefreshAndRender();
+        }
+
+        private void textImageW_TextChanged(object sender, EventArgs e)
+        {
+            textCenterX.Text = (Convert.ToInt32(textImageW.Text) / 2).ToString();            
+        }
+
+        private void textImageH_TextChanged(object sender, EventArgs e)
+        {
+            textCenterY.Text = (Convert.ToInt32(textImageH.Text) / 2).ToString();
         }
     }
 
