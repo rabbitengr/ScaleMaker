@@ -95,6 +95,41 @@ namespace ScaleMaker
             }
         }
 
+        private void PrepScale_KeepBackdrop(int _w, int _h)
+        {
+            if (g != null) g.Dispose();
+            if (bmp != null) bmp.Dispose();
+            //if (backdrop != null) backdrop.Dispose();
+
+            groupTicks.Enabled = true;
+            groupArcs.Enabled = true;
+            groupTexts.Enabled = true;
+
+            W = _w;
+            H = _h;
+
+            bmp = new Bitmap(W, H);
+            g = Graphics.FromImage(bmp);
+            g.Clear(Color.Transparent);
+            g.SmoothingMode = SmoothingMode.HighQuality;
+            using (SolidBrush b = new SolidBrush(Color.Red))
+            {
+                Rectangle r = new Rectangle(W / 2, H / 2, 1, 1);
+                g.FillRectangle(b, r);
+            }
+            picturePreview.Image = bmp;
+
+            string cx = (W / 2).ToString();
+            string cy = (H / 2).ToString();
+            textTextCX.Text = cx;
+            textTextCY.Text = cy;
+            textArcCX.Text = cx;
+            textArcCY.Text = cy;
+            textTickCY.Text = cx;
+            textTickCX.Text = cy;
+            labelCenter.Text = String.Format("Center is ({0},{1})", cx, cy);
+        }
+
         private void PrepScale(int _w, int _h)
         {
             if (g != null) g.Dispose();
@@ -418,11 +453,12 @@ namespace ScaleMaker
                 if (bd != "null")
                 {
                     backdrop_name = bd;
-                    backdrop = Image.FromFile(openBackdrop.FileName);
+                    backdrop = Image.FromFile(backdrop_name);
+                    int c = backdrop.Width;
                 }
                 string s = read.ReadLine();//write.WriteLine("{0},{1}", W, H);
                 string[] parts = s.Split(comma);
-                PrepScale(Convert.ToInt32(parts[0]), Convert.ToInt32(parts[1]));
+                PrepScale_KeepBackdrop(Convert.ToInt32(parts[0]), Convert.ToInt32(parts[1]));
                 int num_ticks = Convert.ToInt32(read.ReadLine());//write.WriteLine("{0}", tick_layers.Count);
                 tick_layers = new List<tick_layer>();
                 for (int t = 0; t < num_ticks; t++)
