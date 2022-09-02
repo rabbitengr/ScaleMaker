@@ -107,6 +107,8 @@ namespace ScaleMaker
 
             W = _w;
             H = _h;
+            textImageW.Text = W.ToString();
+            textImageH.Text = H.ToString();
 
             bmp = new Bitmap(W, H);
             g = Graphics.FromImage(bmp);
@@ -142,7 +144,9 @@ namespace ScaleMaker
 
             W = _w; 
             H = _h;
-                        
+            textImageW.Text = W.ToString();
+            textImageH.Text = H.ToString();
+
             bmp = new Bitmap(W, H);
             g = Graphics.FromImage(bmp);            
             g.Clear(Color.Transparent);
@@ -454,7 +458,6 @@ namespace ScaleMaker
                 {
                     backdrop_name = bd;
                     backdrop = Image.FromFile(backdrop_name);
-                    int c = backdrop.Width;
                 }
                 string s = read.ReadLine();//write.WriteLine("{0},{1}", W, H);
                 string[] parts = s.Split(comma);
@@ -769,7 +772,8 @@ namespace ScaleMaker
             textImageH.Text = backdrop.Height.ToString();
             W = backdrop.Width;
             H = backdrop.Height;
-                        
+            textImageW.Text = W.ToString();
+            textImageH.Text = H.ToString();
             groupTicks.Enabled = true;
             groupArcs.Enabled = true;
             groupTexts.Enabled = true;
