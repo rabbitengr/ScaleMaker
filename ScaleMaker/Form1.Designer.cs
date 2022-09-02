@@ -35,6 +35,10 @@
             this.textInnerRadius = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.groupTicks = new System.Windows.Forms.GroupBox();
+            this.textTickCX = new System.Windows.Forms.TextBox();
+            this.label26 = new System.Windows.Forms.Label();
+            this.textTickCY = new System.Windows.Forms.TextBox();
+            this.label24 = new System.Windows.Forms.Label();
             this.checkTickActive = new System.Windows.Forms.CheckBox();
             this.textTickName = new System.Windows.Forms.TextBox();
             this.label10 = new System.Windows.Forms.Label();
@@ -74,6 +78,10 @@
             this.saveScaleDialog = new System.Windows.Forms.SaveFileDialog();
             this.openScaleDialog = new System.Windows.Forms.OpenFileDialog();
             this.groupTexts = new System.Windows.Forms.GroupBox();
+            this.textTextCX = new System.Windows.Forms.TextBox();
+            this.label31 = new System.Windows.Forms.Label();
+            this.textTextCY = new System.Windows.Forms.TextBox();
+            this.label32 = new System.Windows.Forms.Label();
             this.textTextStrings = new System.Windows.Forms.TextBox();
             this.label19 = new System.Windows.Forms.Label();
             this.textTextFontName = new System.Windows.Forms.TextBox();
@@ -97,8 +105,12 @@
             this.fontDialog = new System.Windows.Forms.FontDialog();
             this.colorText = new System.Windows.Forms.ColorDialog();
             this.groupArcs = new System.Windows.Forms.GroupBox();
+            this.textArcCX = new System.Windows.Forms.TextBox();
+            this.label29 = new System.Windows.Forms.Label();
             this.textArcSweepAngle = new System.Windows.Forms.TextBox();
+            this.textArcCY = new System.Windows.Forms.TextBox();
             this.label22 = new System.Windows.Forms.Label();
+            this.label30 = new System.Windows.Forms.Label();
             this.checkArcActive = new System.Windows.Forms.CheckBox();
             this.textArcName = new System.Windows.Forms.TextBox();
             this.label20 = new System.Windows.Forms.Label();
@@ -115,13 +127,9 @@
             this.button7 = new System.Windows.Forms.Button();
             this.listArcLayers = new System.Windows.Forms.ListBox();
             this.colorArcs = new System.Windows.Forms.ColorDialog();
-            this.textCenterX = new System.Windows.Forms.TextBox();
-            this.label24 = new System.Windows.Forms.Label();
-            this.textCenterY = new System.Windows.Forms.TextBox();
-            this.label26 = new System.Windows.Forms.Label();
             this.button10 = new System.Windows.Forms.Button();
             this.openBackdrop = new System.Windows.Forms.OpenFileDialog();
-            this.button11 = new System.Windows.Forms.Button();
+            this.labelCenter = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.picturePreview)).BeginInit();
             this.groupTicks.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -176,6 +184,10 @@
             // 
             // groupTicks
             // 
+            this.groupTicks.Controls.Add(this.textTickCX);
+            this.groupTicks.Controls.Add(this.label26);
+            this.groupTicks.Controls.Add(this.textTickCY);
+            this.groupTicks.Controls.Add(this.label24);
             this.groupTicks.Controls.Add(this.checkTickActive);
             this.groupTicks.Controls.Add(this.textTickName);
             this.groupTicks.Controls.Add(this.label10);
@@ -200,6 +212,40 @@
             this.groupTicks.TabIndex = 5;
             this.groupTicks.TabStop = false;
             this.groupTicks.Text = "Tickmarks";
+            // 
+            // textTickCX
+            // 
+            this.textTickCX.Location = new System.Drawing.Point(166, 273);
+            this.textTickCX.Name = "textTickCX";
+            this.textTickCX.Size = new System.Drawing.Size(97, 31);
+            this.textTickCX.TabIndex = 23;
+            this.textTickCX.Text = "30";
+            // 
+            // label26
+            // 
+            this.label26.AutoSize = true;
+            this.label26.Location = new System.Drawing.Point(70, 276);
+            this.label26.Name = "label26";
+            this.label26.Size = new System.Drawing.Size(79, 25);
+            this.label26.TabIndex = 24;
+            this.label26.Text = "Center X";
+            // 
+            // textTickCY
+            // 
+            this.textTickCY.Location = new System.Drawing.Point(376, 273);
+            this.textTickCY.Name = "textTickCY";
+            this.textTickCY.Size = new System.Drawing.Size(97, 31);
+            this.textTickCY.TabIndex = 21;
+            this.textTickCY.Text = "30";
+            // 
+            // label24
+            // 
+            this.label24.AutoSize = true;
+            this.label24.Location = new System.Drawing.Point(280, 276);
+            this.label24.Name = "label24";
+            this.label24.Size = new System.Drawing.Size(78, 25);
+            this.label24.TabIndex = 22;
+            this.label24.Text = "Center Y";
             // 
             // checkTickActive
             // 
@@ -535,6 +581,10 @@
             // 
             // groupTexts
             // 
+            this.groupTexts.Controls.Add(this.textTextCX);
+            this.groupTexts.Controls.Add(this.label31);
+            this.groupTexts.Controls.Add(this.textTextCY);
+            this.groupTexts.Controls.Add(this.label32);
             this.groupTexts.Controls.Add(this.textTextStrings);
             this.groupTexts.Controls.Add(this.label19);
             this.groupTexts.Controls.Add(this.textTextFontName);
@@ -557,10 +607,44 @@
             this.groupTexts.Controls.Add(this.label18);
             this.groupTexts.Location = new System.Drawing.Point(38, 801);
             this.groupTexts.Name = "groupTexts";
-            this.groupTexts.Size = new System.Drawing.Size(745, 343);
+            this.groupTexts.Size = new System.Drawing.Size(745, 370);
             this.groupTexts.TabIndex = 21;
             this.groupTexts.TabStop = false;
             this.groupTexts.Text = "Numbers";
+            // 
+            // textTextCX
+            // 
+            this.textTextCX.Location = new System.Drawing.Point(127, 318);
+            this.textTextCX.Name = "textTextCX";
+            this.textTextCX.Size = new System.Drawing.Size(97, 31);
+            this.textTextCX.TabIndex = 27;
+            this.textTextCX.Text = "30";
+            // 
+            // label31
+            // 
+            this.label31.AutoSize = true;
+            this.label31.Location = new System.Drawing.Point(31, 321);
+            this.label31.Name = "label31";
+            this.label31.Size = new System.Drawing.Size(79, 25);
+            this.label31.TabIndex = 28;
+            this.label31.Text = "Center X";
+            // 
+            // textTextCY
+            // 
+            this.textTextCY.Location = new System.Drawing.Point(337, 318);
+            this.textTextCY.Name = "textTextCY";
+            this.textTextCY.Size = new System.Drawing.Size(97, 31);
+            this.textTextCY.TabIndex = 25;
+            this.textTextCY.Text = "30";
+            // 
+            // label32
+            // 
+            this.label32.AutoSize = true;
+            this.label32.Location = new System.Drawing.Point(241, 321);
+            this.label32.Name = "label32";
+            this.label32.Size = new System.Drawing.Size(78, 25);
+            this.label32.TabIndex = 26;
+            this.label32.Text = "Center Y";
             // 
             // textTextStrings
             // 
@@ -696,7 +780,7 @@
             // 
             // button8
             // 
-            this.button8.Location = new System.Drawing.Point(559, 285);
+            this.button8.Location = new System.Drawing.Point(559, 316);
             this.button8.Name = "button8";
             this.button8.Size = new System.Drawing.Size(163, 34);
             this.button8.TabIndex = 11;
@@ -745,8 +829,12 @@
             // 
             // groupArcs
             // 
+            this.groupArcs.Controls.Add(this.textArcCX);
+            this.groupArcs.Controls.Add(this.label29);
             this.groupArcs.Controls.Add(this.textArcSweepAngle);
+            this.groupArcs.Controls.Add(this.textArcCY);
             this.groupArcs.Controls.Add(this.label22);
+            this.groupArcs.Controls.Add(this.label30);
             this.groupArcs.Controls.Add(this.checkArcActive);
             this.groupArcs.Controls.Add(this.textArcName);
             this.groupArcs.Controls.Add(this.label20);
@@ -766,6 +854,23 @@
             this.groupArcs.TabStop = false;
             this.groupArcs.Text = "Arcs";
             // 
+            // textArcCX
+            // 
+            this.textArcCX.Location = new System.Drawing.Point(110, 221);
+            this.textArcCX.Name = "textArcCX";
+            this.textArcCX.Size = new System.Drawing.Size(97, 31);
+            this.textArcCX.TabIndex = 27;
+            this.textArcCX.Text = "30";
+            // 
+            // label29
+            // 
+            this.label29.AutoSize = true;
+            this.label29.Location = new System.Drawing.Point(14, 224);
+            this.label29.Name = "label29";
+            this.label29.Size = new System.Drawing.Size(79, 25);
+            this.label29.TabIndex = 28;
+            this.label29.Text = "Center X";
+            // 
             // textArcSweepAngle
             // 
             this.textArcSweepAngle.Location = new System.Drawing.Point(371, 161);
@@ -773,6 +878,14 @@
             this.textArcSweepAngle.Size = new System.Drawing.Size(97, 31);
             this.textArcSweepAngle.TabIndex = 21;
             this.textArcSweepAngle.Text = "360";
+            // 
+            // textArcCY
+            // 
+            this.textArcCY.Location = new System.Drawing.Point(320, 221);
+            this.textArcCY.Name = "textArcCY";
+            this.textArcCY.Size = new System.Drawing.Size(97, 31);
+            this.textArcCY.TabIndex = 25;
+            this.textArcCY.Text = "30";
             // 
             // label22
             // 
@@ -782,6 +895,15 @@
             this.label22.Size = new System.Drawing.Size(115, 25);
             this.label22.TabIndex = 22;
             this.label22.Text = "Sweep Angle";
+            // 
+            // label30
+            // 
+            this.label30.AutoSize = true;
+            this.label30.Location = new System.Drawing.Point(224, 224);
+            this.label30.Name = "label30";
+            this.label30.Size = new System.Drawing.Size(78, 25);
+            this.label30.TabIndex = 26;
+            this.label30.Text = "Center Y";
             // 
             // checkArcActive
             // 
@@ -927,42 +1049,6 @@
             this.colorArcs.AnyColor = true;
             this.colorArcs.FullOpen = true;
             // 
-            // textCenterX
-            // 
-            this.textCenterX.Location = new System.Drawing.Point(578, 70);
-            this.textCenterX.Name = "textCenterX";
-            this.textCenterX.Size = new System.Drawing.Size(77, 31);
-            this.textCenterX.TabIndex = 35;
-            this.textCenterX.Text = "64";
-            this.textCenterX.TextChanged += new System.EventHandler(this.textCenterX_TextChanged);
-            // 
-            // label24
-            // 
-            this.label24.AutoSize = true;
-            this.label24.Location = new System.Drawing.Point(496, 73);
-            this.label24.Name = "label24";
-            this.label24.Size = new System.Drawing.Size(76, 25);
-            this.label24.TabIndex = 36;
-            this.label24.Text = "center X";
-            // 
-            // textCenterY
-            // 
-            this.textCenterY.Location = new System.Drawing.Point(755, 70);
-            this.textCenterY.Name = "textCenterY";
-            this.textCenterY.Size = new System.Drawing.Size(77, 31);
-            this.textCenterY.TabIndex = 37;
-            this.textCenterY.Text = "64";
-            this.textCenterY.TextChanged += new System.EventHandler(this.textCenterY_TextChanged);
-            // 
-            // label26
-            // 
-            this.label26.AutoSize = true;
-            this.label26.Location = new System.Drawing.Point(673, 73);
-            this.label26.Name = "label26";
-            this.label26.Size = new System.Drawing.Size(75, 25);
-            this.label26.TabIndex = 38;
-            this.label26.Text = "center Y";
-            // 
             // button10
             // 
             this.button10.Location = new System.Drawing.Point(1025, 68);
@@ -979,27 +1065,22 @@
             this.openBackdrop.FileName = "openBackdrop";
             this.openBackdrop.Filter = "Bmp file|*.bmp|PNG files|*.png|All files|*.*";
             // 
-            // button11
+            // labelCenter
             // 
-            this.button11.Location = new System.Drawing.Point(838, 68);
-            this.button11.Name = "button11";
-            this.button11.Size = new System.Drawing.Size(84, 34);
-            this.button11.TabIndex = 40;
-            this.button11.Text = "Set";
-            this.button11.UseVisualStyleBackColor = true;
-            this.button11.Click += new System.EventHandler(this.button11_Click);
+            this.labelCenter.AutoSize = true;
+            this.labelCenter.Location = new System.Drawing.Point(453, 73);
+            this.labelCenter.Name = "labelCenter";
+            this.labelCenter.Size = new System.Drawing.Size(103, 25);
+            this.labelCenter.TabIndex = 25;
+            this.labelCenter.Text = "Center: (x,y)";
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1737, 1163);
-            this.Controls.Add(this.button11);
+            this.ClientSize = new System.Drawing.Size(1737, 1197);
+            this.Controls.Add(this.labelCenter);
             this.Controls.Add(this.button10);
-            this.Controls.Add(this.textCenterY);
-            this.Controls.Add(this.label26);
-            this.Controls.Add(this.textCenterX);
-            this.Controls.Add(this.label24);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.groupArcs);
             this.Controls.Add(this.groupTexts);
@@ -1125,12 +1206,20 @@
         private ColorDialog colorArcs;
         private ToolStripMenuItem newToolStripMenuItem;
         private ToolStripSeparator toolStripSeparator1;
-        private TextBox textCenterX;
-        private Label label24;
-        private TextBox textCenterY;
-        private Label label26;
         private Button button10;
         private OpenFileDialog openBackdrop;
-        private Button button11;
+        private TextBox textTickCX;
+        private Label label26;
+        private TextBox textTickCY;
+        private Label label24;
+        private Label labelCenter;
+        private TextBox textArcCX;
+        private Label label29;
+        private TextBox textArcCY;
+        private Label label30;
+        private TextBox textTextCX;
+        private Label label31;
+        private TextBox textTextCY;
+        private Label label32;
     }
 }

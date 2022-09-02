@@ -5,6 +5,7 @@ using System.IO;
 using System.Drawing.Drawing2D;
 using Microsoft.Win32;
 using System.Runtime.CompilerServices;
+using System.Configuration;
 
 namespace ScaleMaker
 {
@@ -17,8 +18,6 @@ namespace ScaleMaker
 
         private int W;
         private int H;
-        private int CX;
-        private int CY;
         private Graphics g;
         private Bitmap bmp;
         private Image backdrop;
@@ -29,7 +28,7 @@ namespace ScaleMaker
         List<text_layer> text_layers;
         List<arc_layer> arc_layers;
 
-        private void DrawLine(Color col, int linew, double angle, float radius_outer, float radius_inner)
+        private void DrawLine(Color col, int linew, double angle, float radius_outer, float radius_inner, int CX, int CY)
         {
             using (Pen p = new Pen(col, linew))
             {
@@ -40,7 +39,7 @@ namespace ScaleMaker
             }
         }
 
-        private void DrawNumber(Color col, double angle, float radius, string fontname, int fontsize, string num)
+        private void DrawNumber(Color col, double angle, float radius, string fontname, int fontsize, string num, int CX, int CY)
         {
             double rads = (double)(angle) * 0.01745329;
             Point pf = new Point((int)(radius * Math.Sin(rads)) + CX, -(int)(radius * Math.Cos(rads)) + CY);
@@ -64,7 +63,7 @@ namespace ScaleMaker
             }
         }
 
-        private void DrawArc(Color col, int width, float _radius, double _start_angle, double _sweep_angle)
+        private void DrawArc(Color col, int width, float _radius, double _start_angle, double _sweep_angle, int CX, int CY)
         {
             int radius = (int)_radius;
             float start_angle = (float)_start_angle - 90;
@@ -96,7 +95,7 @@ namespace ScaleMaker
             }
         }
 
-        private void PrepScale(int _w, int _h, int cxa, int cya)
+        private void PrepScale(int _w, int _h)
         {
             if (g != null) g.Dispose();
             if (bmp != null) bmp.Dispose();
@@ -108,19 +107,27 @@ namespace ScaleMaker
 
             W = _w; 
             H = _h;
-            if (cxa < 1) CX = W / 2; else CX = cxa;
-            if (cya < 1) CY = H / 2; else CY = cya;
-            
+                        
             bmp = new Bitmap(W, H);
             g = Graphics.FromImage(bmp);            
             g.Clear(Color.Transparent);
             g.SmoothingMode = SmoothingMode.HighQuality;
             using (SolidBrush b = new SolidBrush(Color.Red))
             {
-                Rectangle r = new Rectangle(CX, CY, 1, 1);
+                Rectangle r = new Rectangle(W/2, H/2, 1, 1);
                 g.FillRectangle(b, r);
             }
             picturePreview.Image = bmp;
+
+            string cx = (W / 2).ToString();
+            string cy = (H / 2).ToString();
+            textTextCX.Text = cx;
+            textTextCY.Text = cy;
+            textArcCX.Text = cx;
+            textArcCY.Text = cy;
+            textTickCY.Text = cx;
+            textTickCX.Text = cy;
+            labelCenter.Text = String.Format("Center is ({0},{1})", cx, cy);
         }
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
@@ -179,7 +186,7 @@ namespace ScaleMaker
             {
                 if (!tl.active) continue;
 
-                DrawArc(tl.col, tl.width, tl.radius, tl.startangle, tl.sweepangle);                
+                DrawArc(tl.col, tl.width, tl.radius, tl.startangle, tl.sweepangle, tl.cx, tl.cy);                
             }
         }
 
@@ -191,7 +198,7 @@ namespace ScaleMaker
 
                 for (int t = 0; t < tl.numticks; t++)
                 {
-                    DrawLine(tl.col, tl.width, tl.startangle + (double)t * tl.degspertick, tl.outer_radius, tl.inner_radius);
+                    DrawLine(tl.col, tl.width, tl.startangle + (double)t * tl.degspertick, tl.outer_radius, tl.inner_radius, tl.cx, tl.cy);
                 }
             }
         }
@@ -205,7 +212,7 @@ namespace ScaleMaker
                 for (int t = 0; t < tl.numticks; t++)
                 {
                     //DrawLine(tl.col, tl.width, tl.startangle + (double)t * tl.degspertick, tl.outer_radius, tl.inner_radius);
-                    DrawNumber(tl.col, tl.startangle + (double)t * tl.degspertick, tl.radius, tl.fontname, tl.size, tl.strings[t]);
+                    DrawNumber(tl.col, tl.startangle + (double)t * tl.degspertick, tl.radius, tl.fontname, tl.size, tl.strings[t], tl.cx, tl.cy);
                 }
             }
         }
@@ -214,7 +221,7 @@ namespace ScaleMaker
             if (string.IsNullOrEmpty(textImageW.Text)) return;
             if (string.IsNullOrEmpty(textImageH.Text)) return;
             
-            PrepScale(Convert.ToInt32(textImageW.Text), Convert.ToInt32(textImageH.Text), Convert.ToInt32(textCenterX.Text), Convert.ToInt32(textCenterY.Text));
+            PrepScale(Convert.ToInt32(textImageW.Text), Convert.ToInt32(textImageH.Text));
         }
 
         private bool ConfirmExit()
@@ -235,6 +242,8 @@ namespace ScaleMaker
             if (string.IsNullOrEmpty(textStartAngle.Text)) return false;
             if (string.IsNullOrEmpty(textDegsPerTick.Text)) return false;
             if (string.IsNullOrEmpty(textNumTicks.Text)) return false;
+            if (string.IsNullOrEmpty(textTickCY.Text)) return false;
+            if (string.IsNullOrEmpty(textTickCX.Text)) return false;
 
             return true;
         }
@@ -246,7 +255,9 @@ namespace ScaleMaker
             if (string.IsNullOrEmpty(textArcRadius.Text)) return false;
             if (string.IsNullOrEmpty(textArcWidth.Text)) return false;
             if (string.IsNullOrEmpty(textArcStartAngle.Text)) return false;
-            if (string.IsNullOrEmpty(textArcSweepAngle.Text)) return false;            
+            if (string.IsNullOrEmpty(textArcSweepAngle.Text)) return false;
+            if (string.IsNullOrEmpty(textArcCX.Text)) return false;
+            if (string.IsNullOrEmpty(textArcCY.Text)) return false;
 
             return true;
         }
@@ -261,7 +272,9 @@ namespace ScaleMaker
             if (string.IsNullOrEmpty(textTextNumTicks.Text)) return false;
             if (string.IsNullOrEmpty(textTextFontName.Text)) return false;            
             if (string.IsNullOrEmpty(textTextSize.Text)) return false;
-            if (string.IsNullOrEmpty(textTextStrings.Text)) return false;                        
+            if (string.IsNullOrEmpty(textTextStrings.Text)) return false;
+            if (string.IsNullOrEmpty(textTextCX.Text)) return false;
+            if (string.IsNullOrEmpty(textTextCY.Text)) return false;
 
             return true;
         }
@@ -367,8 +380,7 @@ namespace ScaleMaker
                 {
                     write.WriteLine("{0}", backdrop_name);
                 }
-                write.WriteLine("{0},{1}", W, H);
-                write.WriteLine("{0},{1}", CX, CY);                
+                write.WriteLine("{0},{1}", W, H);                      
                 write.WriteLine("{0}", tick_layers.Count);
                 foreach (tick_layer tl in tick_layers)
                 {
@@ -410,9 +422,7 @@ namespace ScaleMaker
                 }
                 string s = read.ReadLine();//write.WriteLine("{0},{1}", W, H);
                 string[] parts = s.Split(comma);
-                string s2 = read.ReadLine();//write.WriteLine("{0},{1}", W, H);
-                string[] parts2 = s2.Split(comma);
-                PrepScale(Convert.ToInt32(parts[0]), Convert.ToInt32(parts[1]), Convert.ToInt32(parts2[0]), Convert.ToInt32(parts2[1]));
+                PrepScale(Convert.ToInt32(parts[0]), Convert.ToInt32(parts[1]));
                 int num_ticks = Convert.ToInt32(read.ReadLine());//write.WriteLine("{0}", tick_layers.Count);
                 tick_layers = new List<tick_layer>();
                 for (int t = 0; t < num_ticks; t++)
@@ -468,6 +478,8 @@ namespace ScaleMaker
             int numticks = Convert.ToInt32(textNumTicks.Text);
             double degspertick = Convert.ToDouble(textDegsPerTick.Text);
             double startangle = Convert.ToDouble(textStartAngle.Text);
+            int _cx = Convert.ToInt32(textTickCX.Text);
+            int _cy = Convert.ToInt32(textTickCY.Text);
 
             tick_layer t = new tick_layer();
             if (string.IsNullOrEmpty(textTickName.Text))
@@ -478,6 +490,8 @@ namespace ScaleMaker
             {
                 t.name = textTickName.Text;
             }
+            t.cx = _cx;
+            t.cy = _cy;
             t.inner_radius = inrad;
             t.outer_radius = outrad;
             t.width = lw;
@@ -558,7 +572,8 @@ namespace ScaleMaker
             int numticks = Convert.ToInt32(textTextNumTicks.Text);
             double degspertick = Convert.ToDouble(textTextDegsPerTick.Text);
             double startangle = Convert.ToDouble(textTextStartAngle.Text);
-
+            int _cx = Convert.ToInt32(textTextCX.Text);
+            int _cy = Convert.ToInt32(textTextCY.Text);
             text_layer t = new text_layer();
             if (string.IsNullOrEmpty(textTextName.Text))
             {
@@ -568,6 +583,8 @@ namespace ScaleMaker
             {
                 t.name = textTextName.Text;
             }
+            t.cx = _cx;
+            t.cy = _cy;
             t.radius = rad;            
             t.size = s;
             t.numticks = numticks;
@@ -613,6 +630,8 @@ namespace ScaleMaker
             int lw = Convert.ToInt32(textArcWidth.Text);                        
             double startangle = Convert.ToDouble(textArcStartAngle.Text);
             double sweepangle = Convert.ToDouble(textArcSweepAngle.Text);
+            int _cx = Convert.ToInt32(textArcCX.Text);
+            int _cy = Convert.ToInt32(textArcCY.Text);
 
             arc_layer t = new arc_layer();
             if (string.IsNullOrEmpty(textArcName.Text))
@@ -623,6 +642,8 @@ namespace ScaleMaker
             {
                 t.name = textArcName.Text;
             }
+            t.cx = _cx;
+            t.cy = _cy;
             t.radius = rad;            
             t.width = lw;            
             t.startangle = startangle;
@@ -694,29 +715,48 @@ namespace ScaleMaker
         private void button10_Click(object sender, EventArgs e)
         {
             if (openBackdrop.ShowDialog() == DialogResult.Cancel) return;
+            if (g != null) g.Dispose();
+            if (bmp != null) bmp.Dispose();
+            if (backdrop != null) backdrop.Dispose();
+
             backdrop_name = openBackdrop.FileName;
             WriteRegKey("backdrop", openBackdrop.FileName);
             backdrop = Image.FromFile(openBackdrop.FileName);    
             textImageW.Text = backdrop.Width.ToString();
             textImageH.Text = backdrop.Height.ToString();
-            textCenterX.Text = (backdrop.Width / 2).ToString();
-            textCenterY.Text = (backdrop.Height / 2).ToString();
-            CX = backdrop.Width / 2;
-            CY = backdrop.Height / 2;
+            W = backdrop.Width;
+            H = backdrop.Height;
+                        
+            groupTicks.Enabled = true;
             groupArcs.Enabled = true;
             groupTexts.Enabled = true;
-            groupTicks.Enabled = true;
-            if (g != null) g.Dispose();
-            if (bmp != null) bmp.Dispose();
-            bmp = new Bitmap(backdrop.Width, backdrop.Height);
+
+            bmp = new Bitmap(W, H);
             g = Graphics.FromImage(bmp);
+            g.Clear(Color.Transparent);
+            g.SmoothingMode = SmoothingMode.HighQuality;
+            using (SolidBrush b = new SolidBrush(Color.Red))
+            {
+                Rectangle r = new Rectangle(W / 2, H / 2, 1, 1);
+                g.FillRectangle(b, r);
+            }
+            picturePreview.Image = bmp;
+
+            string cx = (W / 2).ToString();
+            string cy = (H / 2).ToString();
+            textTextCX.Text = cx;
+            textTextCY.Text = cy;
+            textArcCX.Text = cx;
+            textArcCY.Text = cy;
+            textTickCX.Text = cx;
+            textTickCY.Text = cy;
+            labelCenter.Text = String.Format("Center is ({0},{1})", cx, cy);
+
             RefreshAndRender();
         }
 
         private void button11_Click(object sender, EventArgs e)
         {
-            CX = Convert.ToInt32(textCenterX.Text);
-            CY = Convert.ToInt32(textCenterY.Text);
             arc_layers = new List<arc_layer>();
             text_layers = new List<text_layer>();
             tick_layers = new List<tick_layer>();
@@ -725,15 +765,11 @@ namespace ScaleMaker
         }
 
         private void textImageW_TextChanged(object sender, EventArgs e)
-        {
-            if (string.IsNullOrEmpty(textImageW.Text)) return;
-            textCenterX.Text = (Convert.ToInt32(textImageW.Text) / 2).ToString();            
+        {         
         }
 
         private void textImageH_TextChanged(object sender, EventArgs e)
-        {
-            if (string.IsNullOrEmpty(textImageH.Text)) return;
-            textCenterY.Text = (Convert.ToInt32(textImageH.Text) / 2).ToString();
+        {            
         }
     }
 
@@ -744,6 +780,8 @@ namespace ScaleMaker
         public int inner_radius;
         public int outer_radius;
         public int width;
+        public int cx;
+        public int cy;
         public Color col;
         public double startangle;
         public double degspertick;
@@ -755,27 +793,32 @@ namespace ScaleMaker
             
             name = read.ReadLine(); // WriteLine("{0}", this.name);
             active = Convert.ToBoolean(read.ReadLine()); //write.WriteLine("{0}", this.active);
+            string s = read.ReadLine();
+            string[] parts = s.Split(comma);
+            cx = Convert.ToInt32(parts[0]);
+            cy = Convert.ToInt32(parts[1]);
             inner_radius = Convert.ToInt32(read.ReadLine()); //write.WriteLine("{0}", this.inner_radius);
             outer_radius = Convert.ToInt32(read.ReadLine()); //write.WriteLine("{0}", this.outer_radius);
             degspertick = Convert.ToDouble(read.ReadLine()); //write.WriteLine("{0}", this.degspertick);
             startangle = Convert.ToDouble(read.ReadLine()); //write.WriteLine("{0}", this.startangle);
             numticks = Convert.ToInt32(read.ReadLine()); //write.WriteLine("{0}", this.numticks);
             width = Convert.ToInt32(read.ReadLine()); //write.WriteLine("{0}", this.width);
-            string s = read.ReadLine(); //write.WriteLine("{0},{1},{2},{3}", this.col.A, this.col.R, this.col.G, this.col.B);
-            string[] parts = s.Split(comma);
+            s = read.ReadLine(); //write.WriteLine("{0},{1},{2},{3}", this.col.A, this.col.R, this.col.G, this.col.B);
+            parts = s.Split(comma);
             col = Color.FromArgb(Convert.ToInt32(parts[0]), Convert.ToInt32(parts[1]), Convert.ToInt32(parts[2]), Convert.ToInt32(parts[3]));              
         }
         public void write(TextWriter write)
         {
             write.WriteLine("{0}", this.name);
             write.WriteLine("{0}", this.active);
+            write.WriteLine("{0},{1}", this.cx, this.cy);
             write.WriteLine("{0}", this.inner_radius);
             write.WriteLine("{0}", this.outer_radius);
             write.WriteLine("{0}", this.degspertick);
             write.WriteLine("{0}", this.startangle);
             write.WriteLine("{0}", this.numticks);
             write.WriteLine("{0}", this.width);
-            write.WriteLine("{0},{1},{2},{3}", this.col.A, this.col.R, this.col.G, this.col.B);            
+            write.WriteLine("{0},{1},{2},{3}", this.col.A, this.col.R, this.col.G, this.col.B);                        
         }
     }
 }
@@ -787,6 +830,8 @@ public class text_layer
     public int radius;
     public int size;
     public Color col;
+    public int cx;
+    public int cy;
     public double startangle;
     public double degspertick;
     public int numticks;
@@ -800,6 +845,10 @@ public class text_layer
 
         name = read.ReadLine(); // WriteLine("{0}", this.name);
         active = Convert.ToBoolean(read.ReadLine()); //write.WriteLine("{0}", this.active);
+        string s = read.ReadLine();
+        string[] parts = s.Split(comma);
+        cx = Convert.ToInt32(parts[0]);
+        cy = Convert.ToInt32(parts[1]);
         radius = Convert.ToInt32(read.ReadLine()); //write.WriteLine("{0}", this.inner_radius);
         degspertick = Convert.ToDouble(read.ReadLine()); //write.WriteLine("{0}", this.degspertick);
         startangle = Convert.ToDouble(read.ReadLine()); //write.WriteLine("{0}", this.startangle);
@@ -808,14 +857,15 @@ public class text_layer
         raw_strings = read.ReadLine(); //write.WriteLine("{0},{1},{2},{3}", this.col.A, this.col.R, this.col.G, this.col.B);        
         strings = raw_strings.Split(comma);
         fontname = read.ReadLine();
-        string s = read.ReadLine();
-        string[] parts = s.Split(comma);
+        s = read.ReadLine();
+        parts = s.Split(comma);
         col = Color.FromArgb(Convert.ToInt32(parts[0]), Convert.ToInt32(parts[1]), Convert.ToInt32(parts[2]), Convert.ToInt32(parts[3]));
     }
     public void write(TextWriter write)
     {
         write.WriteLine("{0}", this.name);
         write.WriteLine("{0}", this.active);
+        write.WriteLine("{0},{1}", this.cx, this.cy);
         write.WriteLine("{0}", this.radius);        
         write.WriteLine("{0}", this.degspertick);
         write.WriteLine("{0}", this.startangle);
@@ -834,6 +884,8 @@ public class arc_layer
     public int radius;
     public int width;
     public Color col;
+    public int cx;
+    public int cy;
     public double startangle;
     public double sweepangle;
     
@@ -842,18 +894,23 @@ public class arc_layer
         char[] comma = { ',' };
         name = read.ReadLine(); // WriteLine("{0}", this.name);
         active = Convert.ToBoolean(read.ReadLine()); //write.WriteLine("{0}", this.active);
+        string s = read.ReadLine();
+        string[] parts = s.Split(comma);
+        cx = Convert.ToInt32(parts[0]);
+        cy = Convert.ToInt32(parts[1]);
         radius = Convert.ToInt32(read.ReadLine()); //write.WriteLine("{0}", this.inner_radius);
         width = Convert.ToInt32(read.ReadLine()); //write.WriteLine("{0}", this.inner_radius);        
         startangle = Convert.ToDouble(read.ReadLine()); //write.WriteLine("{0}", this.startangle);
         sweepangle = Convert.ToDouble(read.ReadLine()); //write.WriteLine("{0}", this.startangle);        
-        string s = read.ReadLine();
-        string[] parts = s.Split(comma);
+        s = read.ReadLine();
+        parts = s.Split(comma);
         col = Color.FromArgb(Convert.ToInt32(parts[0]), Convert.ToInt32(parts[1]), Convert.ToInt32(parts[2]), Convert.ToInt32(parts[3]));
     }
     public void write(TextWriter write)
     {
         write.WriteLine("{0}", this.name);
         write.WriteLine("{0}", this.active);
+        write.WriteLine("{0},{1}", this.cx, this.cy);
         write.WriteLine("{0}", this.radius);
         write.WriteLine("{0}", this.width);
         write.WriteLine("{0}", this.startangle);
