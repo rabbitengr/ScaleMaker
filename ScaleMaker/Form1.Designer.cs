@@ -1070,9 +1070,8 @@
             this.labelCenter.AutoSize = true;
             this.labelCenter.Location = new System.Drawing.Point(453, 73);
             this.labelCenter.Name = "labelCenter";
-            this.labelCenter.Size = new System.Drawing.Size(103, 25);
+            this.labelCenter.Size = new System.Drawing.Size(0, 25);
             this.labelCenter.TabIndex = 25;
-            this.labelCenter.Text = "Center: (x,y)";
             // 
             // Form1
             // 
