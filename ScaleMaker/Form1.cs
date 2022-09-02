@@ -359,9 +359,16 @@ namespace ScaleMaker
             using(TextWriter write = new StreamWriter(saveScaleDialog.FileName))
             {
                 write.WriteLine("v1");
+                if (string.IsNullOrEmpty(backdrop_name))
+                {
+                    write.WriteLine("null");                 
+                }
+                else
+                {
+                    write.WriteLine("{0}", backdrop_name);
+                }
                 write.WriteLine("{0},{1}", W, H);
-                write.WriteLine("{0},{1}", CX, CY);
-                write.WriteLine("{0}", backdrop_name);
+                write.WriteLine("{0},{1}", CX, CY);                
                 write.WriteLine("{0}", tick_layers.Count);
                 foreach (tick_layer tl in tick_layers)
                 {
@@ -394,6 +401,12 @@ namespace ScaleMaker
                 {
                     MessageBox.Show(String.Format("{0} is not a valid SCL file.", openScaleDialog.FileName), "Invalid file", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
+                }
+                string bd = read.ReadLine();
+                if (bd != "null")
+                {
+                    backdrop_name = bd;
+                    backdrop = Image.FromFile(openBackdrop.FileName);
                 }
                 string s = read.ReadLine();//write.WriteLine("{0},{1}", W, H);
                 string[] parts = s.Split(comma);
@@ -430,11 +443,17 @@ namespace ScaleMaker
         private void RefreshAndRender()
         {
             if (g != null) g.Clear(Color.Transparent);
-            Rectangle r = new Rectangle(0, 0, backdrop.Width, backdrop.Height);
-            if (backdrop != null) g.DrawImage(backdrop, r);
+            
+            if (backdrop != null)
+            {
+                Rectangle r = new Rectangle(0, 0, backdrop.Width, backdrop.Height);
+                g.DrawImage(backdrop, r);
+            }
             RenderArcLayers();
             RenderTextLayers();
             RenderTickLayers();
+            picturePreview.Image = bmp;
+            picturePreview.Invalidate();
         }
 
         private void button4_Click(object sender, EventArgs e)
@@ -472,11 +491,7 @@ namespace ScaleMaker
 
             //g.Clear(Color.Transparent);
             RefreshAndRender();
-            //RenderTickLayers();
-
-            picturePreview.Image = bmp;
-            picturePreview.Invalidate();
-
+            //RenderTickLayers();            
         }
 
         private void button5_Click(object sender, EventArgs e)
@@ -570,9 +585,6 @@ namespace ScaleMaker
             //g.Clear(Color.Transparent);
             RefreshAndRender();
             //RenderTextLayers();
-
-            picturePreview.Image = bmp;
-            picturePreview.Invalidate();
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -624,9 +636,6 @@ namespace ScaleMaker
             //g.Clear(Color.Transparent);
             RefreshAndRender();
             //RenderArcLayers();
-
-            picturePreview.Image = bmp;
-            picturePreview.Invalidate();            
         }
 
         private void button7_Click_1(object sender, EventArgs e)
@@ -659,7 +668,7 @@ namespace ScaleMaker
             RefreshListboxes();
             RefreshAndRender();
             backdrop_name = string.Empty;
-            if (backdrop != null) backdrop.Dispose();
+            if (backdrop != null) { backdrop.Dispose(); backdrop = null; }
             if (bmp != null) bmp.Dispose();
             if (g != null) g.Dispose();
             groupArcs.Enabled = false;
@@ -701,6 +710,7 @@ namespace ScaleMaker
             if (bmp != null) bmp.Dispose();
             bmp = new Bitmap(backdrop.Width, backdrop.Height);
             g = Graphics.FromImage(bmp);
+            RefreshAndRender();
         }
 
         private void button11_Click(object sender, EventArgs e)
@@ -716,11 +726,13 @@ namespace ScaleMaker
 
         private void textImageW_TextChanged(object sender, EventArgs e)
         {
+            if (string.IsNullOrEmpty(textImageW.Text)) return;
             textCenterX.Text = (Convert.ToInt32(textImageW.Text) / 2).ToString();            
         }
 
         private void textImageH_TextChanged(object sender, EventArgs e)
         {
+            if (string.IsNullOrEmpty(textImageH.Text)) return;
             textCenterY.Text = (Convert.ToInt32(textImageH.Text) / 2).ToString();
         }
     }
