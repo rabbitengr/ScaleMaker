@@ -959,7 +959,7 @@ namespace ScaleMaker
             t.fontsize = Convert.ToInt32(textLabelSize.Text);
             
             t.active = checkArcActive.Checked;
-            t.col = buttonArcColor.BackColor;
+            t.col = buttonLabelColor.BackColor;
             label_layers.Add(t);
 
             RefreshListboxes();
@@ -993,6 +993,12 @@ namespace ScaleMaker
         private void saveasToolStripMenuItem_Click(object sender, EventArgs e)
         {
             SaveAsScale();
+        }
+
+        private void buttonLabelColor_Click(object sender, EventArgs e)
+        {
+            if (colorLabels.ShowDialog() == DialogResult.Cancel) return;
+            buttonLabelColor.BackColor = colorLabels.Color;
         }
     }
 
