@@ -40,6 +40,30 @@ namespace ScaleMaker
             }
         }
 
+        private void DrawLabel(Color col, string fontname, int fontsize, string text, int X, int Y)
+        {
+            
+            Point pf = new Point(X, Y);
+
+            using (StringFormat sf = new StringFormat())
+            {
+                sf.Alignment = StringAlignment.Center;
+                sf.LineAlignment = StringAlignment.Center;
+
+                using (FontFamily ff = new FontFamily(fontname))
+                {
+                    using (SolidBrush br = new SolidBrush(col))
+                    {
+                        using (GraphicsPath path = new GraphicsPath())
+                        {
+                            path.AddString(text, ff, 0, fontsize, pf, sf);
+                            g.FillPath(br, path);
+                        }
+                    }
+                }
+            }
+        }
+
         private void DrawNumber(Color col, double angle, float radius, string fontname, int fontsize, string num, int CX, int CY)
         {
             double rads = (double)(angle) * 0.01745329;
@@ -131,6 +155,8 @@ namespace ScaleMaker
             textArcCY.Text = cy;
             textTickCY.Text = cx;
             textTickCX.Text = cy;
+            textLabelX.Text = cx;
+            textLabelY.Text = cy;
             labelCenter.Text = String.Format("Center is ({0},{1})", cx, cy);
         }
 
@@ -169,6 +195,8 @@ namespace ScaleMaker
             textArcCY.Text = cy;
             textTickCY.Text = cx;
             textTickCX.Text = cy;
+            textLabelX.Text = cx;
+            textLabelY.Text = cy;
             labelCenter.Text = String.Format("Center is ({0},{1})", cx, cy);
         }
 
@@ -240,6 +268,7 @@ namespace ScaleMaker
             {
                 if (!tl.active) continue;
 
+                DrawLabel(tl.col, tl.fontname, tl.fontsize, tl.text, tl.x, tl.y);
                 //DrawArc(tl.col, tl.width, tl.radius, tl.startangle, tl.sweepangle, tl.cx, tl.cy);
             }
         }
@@ -568,6 +597,7 @@ namespace ScaleMaker
             RenderArcLayers();
             RenderTextLayers();
             RenderTickLayers();
+            RenderLabelLayers();
 
             if (checkShowCenter.Checked)
             {
@@ -867,6 +897,8 @@ namespace ScaleMaker
             textArcCY.Text = cy;
             textTickCX.Text = cx;
             textTickCY.Text = cy;
+            textLabelX.Text = cx;
+            textLabelY.Text = cy;
             labelCenter.Text = String.Format("Center is ({0},{1})", cx, cy);
 
             RefreshAndRender();
