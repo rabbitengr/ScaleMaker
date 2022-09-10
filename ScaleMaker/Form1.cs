@@ -23,10 +23,11 @@ namespace ScaleMaker
         private Image backdrop;
         private string backdrop_name;
         private string regPath = "software\\Rabbit Engineering\\ScaleMaker";
-        private string appTitle = "ScaleMaker build 9/1/2022";
+        private string appTitle = "ScaleMaker build 9/10/2022";
         List<tick_layer> tick_layers;
         List<text_layer> text_layers;
         List<arc_layer> arc_layers;
+        List<label_layer> label_layers;
 
         private void DrawLine(Color col, int linew, double angle, float radius_outer, float radius_inner, int CX, int CY)
         {
@@ -104,6 +105,7 @@ namespace ScaleMaker
             groupTicks.Enabled = true;
             groupArcs.Enabled = true;
             groupTexts.Enabled = true;
+            groupLabels.Enabled = true;
 
             W = _w;
             H = _h;
@@ -141,6 +143,7 @@ namespace ScaleMaker
             groupTicks.Enabled = true;
             groupArcs.Enabled = true;
             groupTexts.Enabled = true;
+            groupLabels.Enabled = true;
 
             W = _w; 
             H = _h;
@@ -214,9 +217,11 @@ namespace ScaleMaker
             tick_layers = new List<tick_layer>();
             text_layers = new List<text_layer>();
             arc_layers = new List<arc_layer>();
+            label_layers = new List<label_layer>();
             groupTicks.Enabled = false;
             groupTexts.Enabled = false;
             groupArcs.Enabled = false;
+            groupLabels.Enabled = false;
         }
 
         private void RenderArcLayers()
@@ -226,6 +231,16 @@ namespace ScaleMaker
                 if (!tl.active) continue;
 
                 DrawArc(tl.col, tl.width, tl.radius, tl.startangle, tl.sweepangle, tl.cx, tl.cy);                
+            }
+        }
+
+        private void RenderLabelLayers()
+        {
+            foreach (label_layer tl in label_layers)
+            {
+                if (!tl.active) continue;
+
+                //DrawArc(tl.col, tl.width, tl.radius, tl.startangle, tl.sweepangle, tl.cx, tl.cy);
             }
         }
 
@@ -267,6 +282,19 @@ namespace ScaleMaker
         {
             if (MessageBox.Show("Unsaved data will be lost", "Exit", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning) == DialogResult.Cancel) 
                 return false;
+
+            return true;
+        }
+
+        private bool CheckLabelData()
+        {
+            if (bmp == null) return false;
+            if (g == null) return false;
+            if (string.IsNullOrEmpty(textLabelFont.Text)) return false;
+            if (string.IsNullOrEmpty(textLabelSize.Text)) return false;
+            if (string.IsNullOrEmpty(textLabelText.Text)) return false;
+            if (string.IsNullOrEmpty(textLabelX.Text)) return false;
+            if (string.IsNullOrEmpty(textLabelY.Text)) return false;
 
             return true;
         }
@@ -340,6 +368,13 @@ namespace ScaleMaker
                 listArcLayers.Items.Add(tl.name);
             }
             listArcLayers.Invalidate();
+
+            listLabelLayers.Items.Clear();
+            foreach (label_layer tl in label_layers)
+            {
+                listLabelLayers.Items.Add(tl.name);
+            }
+            listLabelLayers.Invalidate();
         }
         private void SetTickLayer(tick_layer tl)
         {
@@ -400,6 +435,25 @@ namespace ScaleMaker
             textTextFontName.Text = tl.fontname;
         }
 
+        private void SetLabelLayer(label_layer tl)
+        {
+            textLabelName.Text = tl.name;
+            if (tl.active)
+            {
+                checkLabelActive.Checked = true;
+            }
+            else
+            {
+                checkLabelActive.Checked = false;
+            }
+            textLabelX.Text = Convert.ToString(tl.x);
+            textLabelY.Text = Convert.ToString(tl.y);
+            textLabelSize.Text = Convert.ToString(tl.fontsize);
+            textLabelFont.Text = tl.fontname;
+            textLabelText.Text = tl.text;
+            buttonLabelColor.BackColor = tl.col;                                
+        }
+
         private void SaveScale()
         {
             if (g == null) return;
@@ -432,6 +486,11 @@ namespace ScaleMaker
                 }
                 write.WriteLine("{0}", arc_layers.Count);
                 foreach (arc_layer nl in arc_layers)
+                {
+                    nl.write(write);
+                }
+                write.WriteLine("{0}", label_layers.Count);
+                foreach (label_layer nl in label_layers)
                 {
                     nl.write(write);
                 }
@@ -485,6 +544,14 @@ namespace ScaleMaker
                     arc_layer tl = new arc_layer();
                     tl.read(read);
                     arc_layers.Add(tl);
+                }
+                int num_label = Convert.ToInt32(read.ReadLine());//write.WriteLine("{0}", tick_layers.Count);
+                label_layers = new List<label_layer>();
+                for (int t = 0; t < num_arc; t++)
+                {
+                    label_layer tl = new label_layer();
+                    tl.read(read);
+                    label_layers.Add(tl);
                 }
             }
         }
@@ -732,6 +799,7 @@ namespace ScaleMaker
             arc_layers = new List<arc_layer>();
             text_layers = new List<text_layer>();
             tick_layers = new List<tick_layer>();
+            label_layers = new List<label_layer>();
             RefreshListboxes();
             RefreshAndRender();
             backdrop_name = string.Empty;
@@ -741,6 +809,7 @@ namespace ScaleMaker
             groupArcs.Enabled = false;
             groupTexts.Enabled = false;
             groupTicks.Enabled = false;
+            groupLabels.Enabled = false;
             picturePreview.Image = System.Drawing.SystemIcons.Question.ToBitmap();
             picturePreview.Invalidate();
         }
@@ -777,6 +846,7 @@ namespace ScaleMaker
             groupTicks.Enabled = true;
             groupArcs.Enabled = true;
             groupTexts.Enabled = true;
+            groupLabels.Enabled = true; 
 
             bmp = new Bitmap(W, H);
             g = Graphics.FromImage(bmp);
@@ -807,6 +877,7 @@ namespace ScaleMaker
             arc_layers = new List<arc_layer>();
             text_layers = new List<text_layer>();
             tick_layers = new List<tick_layer>();
+            label_layers = new List<label_layer>();
             RefreshListboxes();
             RefreshAndRender();
         }
@@ -821,6 +892,55 @@ namespace ScaleMaker
 
         private void checkShowCenter_CheckedChanged(object sender, EventArgs e)
         {
+            RefreshAndRender();
+        }
+
+        private void button12_Click(object sender, EventArgs e)
+        {
+            if (!CheckLabelData()) return;            
+           
+            int _x = Convert.ToInt32(textLabelX.Text);
+            int _y = Convert.ToInt32(textLabelY.Text);
+
+            label_layer t = new label_layer();
+            if (string.IsNullOrEmpty(textLabelName.Text))
+            {
+                t.name = string.Format("Label Layer {0}", label_layers.Count);
+            }
+            else
+            {
+                t.name = textLabelName.Text;
+            }
+            t.x = _x;
+            t.y = _y;
+            t.text = textLabelText.Text;
+            t.fontname = textLabelFont.Text;
+            t.fontsize = Convert.ToInt32(textLabelSize.Text);
+            
+            t.active = checkArcActive.Checked;
+            t.col = buttonArcColor.BackColor;
+            label_layers.Add(t);
+
+            RefreshListboxes();
+
+            //g.Clear(Color.Transparent);
+            RefreshAndRender();
+            //RenderArcLayers();
+        }
+
+        private void listLabelLayers_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (listLabelLayers.SelectedIndex < 0) return;
+            label_layer tl = label_layers[listLabelLayers.SelectedIndex];
+            SetLabelLayer(tl);
+        }
+
+        private void button11_Click_1(object sender, EventArgs e)
+        {
+            if (listLabelLayers.SelectedIndex < 0) return;
+            label_layer tl = label_layers[listLabelLayers.SelectedIndex];
+            label_layers.Remove(tl);
+            RefreshListboxes();
             RefreshAndRender();
         }
     }
@@ -929,6 +1049,44 @@ public class text_layer
     }
 }
 
+public class label_layer
+{
+    public string name;
+    public bool active;
+    public string fontname;
+    public int fontsize;
+    public string text;
+    public int x;
+    public int y;
+    public Color col;
+
+    public void read(TextReader read)
+    {
+        char[] comma = { ',' };
+        name = read.ReadLine(); // WriteLine("{0}", this.name);
+        active = Convert.ToBoolean(read.ReadLine()); //write.WriteLine("{0}", this.active);
+        string s = read.ReadLine();
+        string[] parts = s.Split(comma);
+        x = Convert.ToInt32(parts[0]);
+        y = Convert.ToInt32(parts[1]);
+        fontname = read.ReadLine(); // WriteLine("{0}", this.name);
+        fontsize = Convert.ToInt32(read.ReadLine()); //write.WriteLine("{0}", this.inner_radius);
+        text = read.ReadLine(); // WriteLine("{0}", this.name);
+        s = read.ReadLine();
+        parts = s.Split(comma);
+        col = Color.FromArgb(Convert.ToInt32(parts[0]), Convert.ToInt32(parts[1]), Convert.ToInt32(parts[2]), Convert.ToInt32(parts[3]));
+    }
+    public void write(TextWriter write)
+    {
+        write.WriteLine("{0}", this.name);
+        write.WriteLine("{0}", this.active);
+        write.WriteLine("{0},{1}", this.x, this.y);
+        write.WriteLine("{0}", this.fontname);
+        write.WriteLine("{0}", this.fontsize);
+        write.WriteLine("{0}", this.text);
+        write.WriteLine("{0},{1},{2},{3}", this.col.A, this.col.R, this.col.G, this.col.B);
+    }
+}
 public class arc_layer
 {
     public string name;
