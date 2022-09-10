@@ -6,6 +6,7 @@ using System.Drawing.Drawing2D;
 using Microsoft.Win32;
 using System.Runtime.CompilerServices;
 using System.Configuration;
+using System.Web;
 
 namespace ScaleMaker
 {
@@ -15,6 +16,8 @@ namespace ScaleMaker
         {
             InitializeComponent();
         }
+
+        private string filename;
 
         private int W;
         private int H;
@@ -483,15 +486,20 @@ namespace ScaleMaker
             buttonLabelColor.BackColor = tl.col;                                
         }
 
-        private void SaveScale()
+        private void SaveAsScale()
         {
             if (g == null) return;
             if (bmp == null) return;
             if (saveScaleDialog.ShowDialog() == DialogResult.Cancel) return;
             WriteRegKey("sclpath", this.saveScaleDialog.FileName);
+            filename = this.saveScaleDialog.FileName;
             openScaleDialog.FileName = saveScaleDialog.FileName;
+            DoSave();
+        }
 
-            using(TextWriter write = new StreamWriter(saveScaleDialog.FileName))
+        private void DoSave()
+        { 
+            using(TextWriter write = new StreamWriter(filename))
             {
                 write.WriteLine("v1");
                 if (string.IsNullOrEmpty(backdrop_name))
@@ -530,7 +538,7 @@ namespace ScaleMaker
         {
             if (openScaleDialog.ShowDialog() == DialogResult.Cancel) return;            
             saveScaleDialog.FileName = openScaleDialog.FileName;
-
+            filename = openScaleDialog.FileName;
             char[] comma = { ',' };
 
             using (TextReader read = new StreamReader(openScaleDialog.FileName))
@@ -576,7 +584,7 @@ namespace ScaleMaker
                 }
                 int num_label = Convert.ToInt32(read.ReadLine());//write.WriteLine("{0}", tick_layers.Count);
                 label_layers = new List<label_layer>();
-                for (int t = 0; t < num_arc; t++)
+                for (int t = 0; t < num_label; t++)
                 {
                     label_layer tl = new label_layer();
                     tl.read(read);
@@ -688,7 +696,8 @@ namespace ScaleMaker
 
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            SaveScale();
+            if (string.IsNullOrEmpty(filename)) return;
+            DoSave();
         }
 
         private void openToolStripMenuItem_Click(object sender, EventArgs e)
@@ -974,6 +983,16 @@ namespace ScaleMaker
             label_layers.Remove(tl);
             RefreshListboxes();
             RefreshAndRender();
+        }
+
+        private void toolStripSeparator1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void saveasToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SaveAsScale();
         }
     }
 
