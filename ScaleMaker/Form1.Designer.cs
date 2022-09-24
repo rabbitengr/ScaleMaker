@@ -153,6 +153,7 @@
             this.button11 = new System.Windows.Forms.Button();
             this.listLabelLayers = new System.Windows.Forms.ListBox();
             this.colorLabels = new System.Windows.Forms.ColorDialog();
+            this.checkSolid = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.picturePreview)).BeginInit();
             this.groupTicks.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -862,6 +863,7 @@
             // 
             // groupArcs
             // 
+            this.groupArcs.Controls.Add(this.checkSolid);
             this.groupArcs.Controls.Add(this.textArcCX);
             this.groupArcs.Controls.Add(this.label29);
             this.groupArcs.Controls.Add(this.textArcSweepAngle);
@@ -1320,6 +1322,18 @@
             this.colorLabels.AnyColor = true;
             this.colorLabels.FullOpen = true;
             // 
+            // checkSolid
+            // 
+            this.checkSolid.AutoSize = true;
+            this.checkSolid.Checked = true;
+            this.checkSolid.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkSolid.Location = new System.Drawing.Point(500, 163);
+            this.checkSolid.Name = "checkSolid";
+            this.checkSolid.Size = new System.Drawing.Size(78, 29);
+            this.checkSolid.TabIndex = 29;
+            this.checkSolid.Text = "Solid";
+            this.checkSolid.UseVisualStyleBackColor = true;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 25F);
@@ -1496,5 +1510,6 @@
         private ToolStripMenuItem saveasToolStripMenuItem;
         private ToolStripSeparator toolStripSeparator1;
         private ColorDialog colorLabels;
+        private CheckBox checkSolid;
     }
 }

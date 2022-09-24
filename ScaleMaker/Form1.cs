@@ -91,7 +91,7 @@ namespace ScaleMaker
             }
         }
 
-        private void DrawArc(Color col, int width, float _radius, double _start_angle, double _sweep_angle, int CX, int CY)
+        private void DrawArc(Color col, int width, float _radius, double _start_angle, double _sweep_angle, int CX, int CY, int solid)
         {
             int radius = (int)_radius;
             float start_angle = (float)_start_angle - 90;
@@ -99,10 +99,20 @@ namespace ScaleMaker
 
             using (Pen p = new Pen(col, width))
             {
-                Point c = new Point(CX-radius, CY-radius);
-                Size s = new Size(radius * 2, radius * 2);
-                Rectangle r = new Rectangle(c, s);
-                g.DrawArc(p, r, start_angle, sweep_angle);
+                using (SolidBrush b = new SolidBrush(col))
+                {
+                    Point c = new Point(CX - radius, CY - radius);
+                    Size s = new Size(radius * 2, radius * 2);
+                    Rectangle r = new Rectangle(c, s);
+                    if (solid > 0)
+                    {
+                        g.FillPie(b, r, start_angle, sweep_angle);
+                    }
+                    else
+                    {
+                        g.DrawArc(p, r, start_angle, sweep_angle);
+                    }
+                }
             }
         }
 
@@ -261,7 +271,7 @@ namespace ScaleMaker
             {
                 if (!tl.active) continue;
 
-                DrawArc(tl.col, tl.width, tl.radius, tl.startangle, tl.sweepangle, tl.cx, tl.cy);                
+                DrawArc(tl.col, tl.width, tl.radius, tl.startangle, tl.sweepangle, tl.cx, tl.cy, tl.solid);                
             }
         }
 
@@ -444,6 +454,10 @@ namespace ScaleMaker
             textArcWidth.Text = Convert.ToString(tl.width);
             textArcSweepAngle.Text = Convert.ToString(tl.sweepangle);
             buttonArcColor.BackColor = tl.col;
+            if (tl.solid > 0)
+                checkSolid.Checked = true;
+            else
+                checkSolid.Checked = false;
         }
 
         private void SetTextLayer(text_layer tl)
@@ -803,6 +817,10 @@ namespace ScaleMaker
             t.active = checkArcActive.Checked;
             t.col = buttonArcColor.BackColor;
             arc_layers.Add(t);
+            if (checkSolid.Checked)
+                t.solid = 1;
+            else
+                t.solid = 0;
                         
             RefreshListboxes();
 
@@ -1155,6 +1173,7 @@ public class arc_layer
     public int cy;
     public double startangle;
     public double sweepangle;
+    public int solid;
     
     public void read(TextReader read)
     {
@@ -1172,6 +1191,7 @@ public class arc_layer
         s = read.ReadLine();
         parts = s.Split(comma);
         col = Color.FromArgb(Convert.ToInt32(parts[0]), Convert.ToInt32(parts[1]), Convert.ToInt32(parts[2]), Convert.ToInt32(parts[3]));
+        solid = Convert.ToInt32(read.ReadLine()); //write.WriteLine("{0}", this.startangle);        
     }
     public void write(TextWriter write)
     {
@@ -1183,5 +1203,6 @@ public class arc_layer
         write.WriteLine("{0}", this.startangle);
         write.WriteLine("{0}", this.sweepangle);        
         write.WriteLine("{0},{1},{2},{3}", this.col.A, this.col.R, this.col.G, this.col.B);
+        write.WriteLine("{0}", this.solid);
     }
 }
