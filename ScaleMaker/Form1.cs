@@ -26,7 +26,7 @@ namespace ScaleMaker
         private Image backdrop;
         private string backdrop_name;
         private string regPath = "software\\Rabbit Engineering\\ScaleMaker";
-        private string appTitle = "ScaleMaker build 9/10/2022";
+        private string appTitle = "ScaleMaker build 9/27/2022";
         List<tick_layer> tick_layers;
         List<text_layer> text_layers;
         List<arc_layer> arc_layers;
