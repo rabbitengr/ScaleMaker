@@ -7,6 +7,7 @@ using Microsoft.Win32;
 using System.Runtime.CompilerServices;
 using System.Configuration;
 using System.Web;
+using System.Security.Policy;
 
 namespace ScaleMaker
 {
@@ -26,7 +27,7 @@ namespace ScaleMaker
         private Image backdrop;
         private string backdrop_name;
         private string regPath = "software\\Rabbit Engineering\\ScaleMaker";
-        private string appTitle = "ScaleMaker build 9/27/2022";
+        private string appTitle = "ScaleMaker build 10/15/2022";
         List<tick_layer> tick_layers;
         List<text_layer> text_layers;
         List<arc_layer> arc_layers;
@@ -887,13 +888,19 @@ namespace ScaleMaker
         private void button10_Click(object sender, EventArgs e)
         {
             if (openBackdrop.ShowDialog() == DialogResult.Cancel) return;
-            if (g != null) g.Dispose();
-            if (bmp != null) bmp.Dispose();
-            if (backdrop != null) backdrop.Dispose();
-
             backdrop_name = openBackdrop.FileName;
             WriteRegKey("backdrop", openBackdrop.FileName);
-            backdrop = Image.FromFile(openBackdrop.FileName);    
+            if (backdrop != null) backdrop.Dispose();
+            backdrop = Image.FromFile(openBackdrop.FileName);
+
+            SetBackground();
+        }
+
+        void SetBackground()
+        { 
+            if (g != null) g.Dispose();
+            if (bmp != null) bmp.Dispose();
+                                              
             textImageW.Text = backdrop.Width.ToString();
             textImageH.Text = backdrop.Height.ToString();
             W = backdrop.Width;

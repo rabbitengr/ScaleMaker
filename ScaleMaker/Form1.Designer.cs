@@ -169,9 +169,9 @@
             // picturePreview
             // 
             this.picturePreview.BackColor = System.Drawing.Color.Black;
-            this.picturePreview.Location = new System.Drawing.Point(1562, 45);
+            this.picturePreview.Location = new System.Drawing.Point(1382, 57);
             this.picturePreview.Name = "picturePreview";
-            this.picturePreview.Size = new System.Drawing.Size(512, 512);
+            this.picturePreview.Size = new System.Drawing.Size(1024, 1024);
             this.picturePreview.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.picturePreview.TabIndex = 1;
             this.picturePreview.TabStop = false;
@@ -183,7 +183,7 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(1911, 563);
+            this.button2.Location = new System.Drawing.Point(1731, 1097);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(163, 34);
             this.button2.TabIndex = 102;
@@ -232,7 +232,7 @@
             this.groupTicks.Controls.Add(this.label4);
             this.groupTicks.Controls.Add(this.textInnerRadius);
             this.groupTicks.Controls.Add(this.label1);
-            this.groupTicks.Location = new System.Drawing.Point(38, 434);
+            this.groupTicks.Location = new System.Drawing.Point(38, 117);
             this.groupTicks.Name = "groupTicks";
             this.groupTicks.Size = new System.Drawing.Size(945, 272);
             this.groupTicks.TabIndex = 5;
@@ -468,7 +468,7 @@
             // 
             // button5
             // 
-            this.button5.Location = new System.Drawing.Point(1562, 563);
+            this.button5.Location = new System.Drawing.Point(1382, 1097);
             this.button5.Name = "button5";
             this.button5.Size = new System.Drawing.Size(163, 34);
             this.button5.TabIndex = 100;
@@ -480,7 +480,7 @@
             // 
             this.groupBox2.Controls.Add(this.button6);
             this.groupBox2.Controls.Add(this.listTickLayers);
-            this.groupBox2.Location = new System.Drawing.Point(38, 151);
+            this.groupBox2.Location = new System.Drawing.Point(1012, 116);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(346, 244);
             this.groupBox2.TabIndex = 32;
@@ -511,9 +511,9 @@
             // 
             this.groupBox3.Controls.Add(this.button1);
             this.groupBox3.Controls.Add(this.listTextLayers);
-            this.groupBox3.Location = new System.Drawing.Point(432, 151);
+            this.groupBox3.Location = new System.Drawing.Point(1012, 383);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(351, 244);
+            this.groupBox3.Size = new System.Drawing.Size(346, 244);
             this.groupBox3.TabIndex = 33;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Text Arcs";
@@ -545,7 +545,7 @@
             this.fileToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(2106, 33);
+            this.menuStrip1.Size = new System.Drawing.Size(2437, 33);
             this.menuStrip1.TabIndex = 34;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -639,7 +639,7 @@
             this.groupTexts.Controls.Add(this.label17);
             this.groupTexts.Controls.Add(this.textTextRadius);
             this.groupTexts.Controls.Add(this.label18);
-            this.groupTexts.Location = new System.Drawing.Point(38, 732);
+            this.groupTexts.Location = new System.Drawing.Point(38, 415);
             this.groupTexts.Name = "groupTexts";
             this.groupTexts.Size = new System.Drawing.Size(951, 328);
             this.groupTexts.TabIndex = 21;
@@ -814,7 +814,7 @@
             // 
             // button8
             // 
-            this.button8.Location = new System.Drawing.Point(746, 266);
+            this.button8.Location = new System.Drawing.Point(761, 271);
             this.button8.Name = "button8";
             this.button8.Size = new System.Drawing.Size(163, 34);
             this.button8.TabIndex = 52;
@@ -882,9 +882,9 @@
             this.groupArcs.Controls.Add(this.button9);
             this.groupArcs.Controls.Add(this.textArcRadius);
             this.groupArcs.Controls.Add(this.label27);
-            this.groupArcs.Location = new System.Drawing.Point(1012, 617);
+            this.groupArcs.Location = new System.Drawing.Point(38, 771);
             this.groupArcs.Name = "groupArcs";
-            this.groupArcs.Size = new System.Drawing.Size(966, 218);
+            this.groupArcs.Size = new System.Drawing.Size(951, 218);
             this.groupArcs.TabIndex = 21;
             this.groupArcs.TabStop = false;
             this.groupArcs.Text = "Arcs";
@@ -1035,7 +1035,7 @@
             // 
             // button9
             // 
-            this.button9.Location = new System.Drawing.Point(782, 159);
+            this.button9.Location = new System.Drawing.Point(761, 164);
             this.button9.Name = "button9";
             this.button9.Size = new System.Drawing.Size(163, 34);
             this.button9.TabIndex = 70;
@@ -1064,9 +1064,9 @@
             // 
             this.groupBox1.Controls.Add(this.button7);
             this.groupBox1.Controls.Add(this.listArcLayers);
-            this.groupBox1.Location = new System.Drawing.Point(811, 151);
+            this.groupBox1.Location = new System.Drawing.Point(1012, 664);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(351, 244);
+            this.groupBox1.Size = new System.Drawing.Size(346, 244);
             this.groupBox1.TabIndex = 34;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Arc layers";
@@ -1123,7 +1123,7 @@
             // checkShowCenter
             // 
             this.checkShowCenter.AutoSize = true;
-            this.checkShowCenter.Location = new System.Drawing.Point(1751, 567);
+            this.checkShowCenter.Location = new System.Drawing.Point(1571, 1101);
             this.checkShowCenter.Name = "checkShowCenter";
             this.checkShowCenter.Size = new System.Drawing.Size(138, 29);
             this.checkShowCenter.TabIndex = 101;
@@ -1149,9 +1149,9 @@
             this.groupLabels.Controls.Add(this.button12);
             this.groupLabels.Controls.Add(this.textLabelFont);
             this.groupLabels.Controls.Add(this.label39);
-            this.groupLabels.Location = new System.Drawing.Point(1012, 853);
+            this.groupLabels.Location = new System.Drawing.Point(38, 1015);
             this.groupLabels.Name = "groupLabels";
-            this.groupLabels.Size = new System.Drawing.Size(975, 207);
+            this.groupLabels.Size = new System.Drawing.Size(951, 207);
             this.groupLabels.TabIndex = 29;
             this.groupLabels.TabStop = false;
             this.groupLabels.Text = "Labels";
@@ -1273,7 +1273,7 @@
             // 
             // button12
             // 
-            this.button12.Location = new System.Drawing.Point(791, 155);
+            this.button12.Location = new System.Drawing.Point(761, 155);
             this.button12.Name = "button12";
             this.button12.Size = new System.Drawing.Size(163, 34);
             this.button12.TabIndex = 99;
@@ -1302,9 +1302,9 @@
             // 
             this.groupBox5.Controls.Add(this.button11);
             this.groupBox5.Controls.Add(this.listLabelLayers);
-            this.groupBox5.Location = new System.Drawing.Point(1182, 151);
+            this.groupBox5.Location = new System.Drawing.Point(1012, 935);
             this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Size = new System.Drawing.Size(351, 244);
+            this.groupBox5.Size = new System.Drawing.Size(346, 244);
             this.groupBox5.TabIndex = 35;
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "Label layers";
@@ -1338,7 +1338,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(2106, 1090);
+            this.ClientSize = new System.Drawing.Size(2437, 1254);
             this.Controls.Add(this.groupBox5);
             this.Controls.Add(this.groupLabels);
             this.Controls.Add(this.checkShowCenter);
