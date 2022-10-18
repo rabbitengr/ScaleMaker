@@ -276,6 +276,18 @@ namespace ScaleMaker
             }
         }
 
+        private void ScaleArcLayers(double f)
+        {
+            for (int i = 0; i < arc_layers.Count; i++)
+            {                
+                //scale here
+                arc_layers[i].radius = (int)((double)arc_layers[i].radius * f);
+                arc_layers[i].width = (int)((double)arc_layers[i].width * f);
+                arc_layers[i].cx = (int)((double)arc_layers[i].cx * f);
+                arc_layers[i].cy = (int)((double)arc_layers[i].cy * f);
+            }            
+        }
+
         private void RenderLabelLayers()
         {
             foreach (label_layer tl in label_layers)
@@ -284,6 +296,16 @@ namespace ScaleMaker
 
                 DrawLabel(tl.col, tl.fontname, tl.fontsize, tl.text, tl.x, tl.y);
                 //DrawArc(tl.col, tl.width, tl.radius, tl.startangle, tl.sweepangle, tl.cx, tl.cy);
+            }
+        }
+        private void ScaleLabelLayers(double f)
+        {
+            for (int i = 0; i < label_layers.Count; i++)
+            {
+                //scale here
+                label_layers[i].fontsize = (int)((double)label_layers[i].fontsize * f);
+                label_layers[i].x = (int)((double)label_layers[i].x * f);
+                label_layers[i].y = (int)((double)label_layers[i].y * f);
             }
         }
 
@@ -299,6 +321,20 @@ namespace ScaleMaker
                 }
             }
         }
+
+        private void ScaleTickLayers(double f)
+        {
+            for (int i = 0; i < tick_layers.Count; i++)
+            {
+                //scale here
+                tick_layers[i].inner_radius = (int)((double)tick_layers[i].inner_radius * f);
+                tick_layers[i].outer_radius = (int)((double)tick_layers[i].outer_radius * f);
+                tick_layers[i].width = (int)((double)tick_layers[i].width * f);
+                tick_layers[i].cx = (int)((double)tick_layers[i].cx * f);
+                tick_layers[i].cy = (int)((double)tick_layers[i].cy * f);
+            }
+        }
+
         private void RenderTextLayers()
         {
 
@@ -313,6 +349,18 @@ namespace ScaleMaker
                 }
             }
         }
+        private void ScaleTextLayers(double f)
+        {
+            for (int i = 0; i < tick_layers.Count; i++)
+            {
+                //scale here
+                text_layers[i].radius = (int)((double)text_layers[i].radius * f);
+                text_layers[i].size = (int)((double)text_layers[i].size * f);
+                text_layers[i].cx = (int)((double)text_layers[i].cx * f);
+                text_layers[i].cy = (int)((double)text_layers[i].cy * f);
+            }
+        }
+
         private void button3_Click(object sender, EventArgs e)
         {
             if (string.IsNullOrEmpty(textImageW.Text)) return;
@@ -430,6 +478,8 @@ namespace ScaleMaker
             {
                 checkTickActive.Checked = false;
             }
+            textTickCX.Text = Convert.ToString(tl.cx);
+            textTickCY.Text = Convert.ToString(tl.cy);
             textInnerRadius.Text = Convert.ToString(tl.inner_radius);
             textOuterRadius.Text = Convert.ToString(tl.outer_radius);
             textStartAngle.Text = Convert.ToString(tl.startangle);
@@ -450,6 +500,8 @@ namespace ScaleMaker
             {
                 checkArcActive.Checked = false;
             }
+            textArcCX.Text = Convert.ToString(tl.cx);
+            textArcCY.Text = Convert.ToString(tl.cy);
             textArcRadius.Text = Convert.ToString(tl.radius);
             textArcStartAngle.Text = Convert.ToString(tl.startangle);
             textArcWidth.Text = Convert.ToString(tl.width);
@@ -472,6 +524,9 @@ namespace ScaleMaker
             {
                 checkTextActive.Checked = false;
             }
+
+            textTextCX.Text = Convert.ToString(tl.cx);
+            textTextCY.Text = Convert.ToString(tl.cy);
             textTextRadius.Text = Convert.ToString(tl.radius);            
             textTextStartAngle.Text = Convert.ToString(tl.startangle);
             buttonTextColor.BackColor = tl.col;
@@ -492,7 +547,7 @@ namespace ScaleMaker
             else
             {
                 checkLabelActive.Checked = false;
-            }
+            }            
             textLabelX.Text = Convert.ToString(tl.x);
             textLabelY.Text = Convert.ToString(tl.y);
             textLabelSize.Text = Convert.ToString(tl.fontsize);
@@ -1024,6 +1079,22 @@ namespace ScaleMaker
         {
             if (colorLabels.ShowDialog() == DialogResult.Cancel) return;
             buttonLabelColor.BackColor = colorLabels.Color;
+        }
+
+        private void button13_Click(object sender, EventArgs e)
+        {
+            if (MessageBox.Show("Resize all?", "Confirm resize", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No) return;            
+            if (string.IsNullOrEmpty(textScaleFactor.Text)) return;
+            if (textScaleFactor.Text == "1") return;
+
+            double sf = Convert.ToDouble(textScaleFactor.Text);
+
+            ScaleArcLayers(sf);
+            ScaleTextLayers(sf);
+            ScaleTickLayers(sf);
+            ScaleLabelLayers(sf);
+
+            RefreshAndRender();
         }
     }
 
