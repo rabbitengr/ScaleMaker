@@ -672,9 +672,9 @@ namespace ScaleMaker
                 Rectangle r = new Rectangle(0, 0, backdrop.Width, backdrop.Height);
                 g.DrawImage(backdrop, r);
             }
-            RenderArcLayers();
-            RenderTextLayers();
             RenderTickLayers();
+            RenderArcLayers();
+            RenderTextLayers();            
             RenderLabelLayers();
 
             if (checkShowCenter.Checked)
