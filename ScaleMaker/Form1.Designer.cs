@@ -35,7 +35,9 @@
             this.textInnerRadius = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.groupTicks = new System.Windows.Forms.GroupBox();
+            this.button6 = new System.Windows.Forms.Button();
             this.textTickCX = new System.Windows.Forms.TextBox();
+            this.listTickLayers = new System.Windows.Forms.ListBox();
             this.label26 = new System.Windows.Forms.Label();
             this.textTickCY = new System.Windows.Forms.TextBox();
             this.label24 = new System.Windows.Forms.Label();
@@ -102,7 +104,9 @@
             this.fontDialog = new System.Windows.Forms.FontDialog();
             this.colorText = new System.Windows.Forms.ColorDialog();
             this.groupArcs = new System.Windows.Forms.GroupBox();
+            this.button7 = new System.Windows.Forms.Button();
             this.checkSolid = new System.Windows.Forms.CheckBox();
+            this.listArcLayers = new System.Windows.Forms.ListBox();
             this.textArcCX = new System.Windows.Forms.TextBox();
             this.label29 = new System.Windows.Forms.Label();
             this.textArcSweepAngle = new System.Windows.Forms.TextBox();
@@ -121,15 +125,15 @@
             this.button9 = new System.Windows.Forms.Button();
             this.textArcRadius = new System.Windows.Forms.TextBox();
             this.label27 = new System.Windows.Forms.Label();
-            this.button7 = new System.Windows.Forms.Button();
-            this.listArcLayers = new System.Windows.Forms.ListBox();
             this.colorArcs = new System.Windows.Forms.ColorDialog();
             this.button10 = new System.Windows.Forms.Button();
             this.openBackdrop = new System.Windows.Forms.OpenFileDialog();
             this.labelCenter = new System.Windows.Forms.Label();
             this.checkShowCenter = new System.Windows.Forms.CheckBox();
             this.groupLabels = new System.Windows.Forms.GroupBox();
+            this.button11 = new System.Windows.Forms.Button();
             this.textLabelX = new System.Windows.Forms.TextBox();
+            this.listLabelLayers = new System.Windows.Forms.ListBox();
             this.label28 = new System.Windows.Forms.Label();
             this.textLabelText = new System.Windows.Forms.TextBox();
             this.textLabelY = new System.Windows.Forms.TextBox();
@@ -145,13 +149,9 @@
             this.button12 = new System.Windows.Forms.Button();
             this.textLabelFont = new System.Windows.Forms.TextBox();
             this.label39 = new System.Windows.Forms.Label();
-            this.button11 = new System.Windows.Forms.Button();
-            this.listLabelLayers = new System.Windows.Forms.ListBox();
             this.colorLabels = new System.Windows.Forms.ColorDialog();
             this.textScaleFactor = new System.Windows.Forms.TextBox();
             this.button13 = new System.Windows.Forms.Button();
-            this.listTickLayers = new System.Windows.Forms.ListBox();
-            this.button6 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.picturePreview)).BeginInit();
             this.groupTicks.SuspendLayout();
             this.menuStrip1.SuspendLayout();
@@ -235,6 +235,16 @@
             this.groupTicks.TabStop = false;
             this.groupTicks.Text = "Tickmarks";
             // 
+            // button6
+            // 
+            this.button6.Location = new System.Drawing.Point(1192, 140);
+            this.button6.Name = "button6";
+            this.button6.Size = new System.Drawing.Size(108, 34);
+            this.button6.TabIndex = 6;
+            this.button6.Text = "Delete";
+            this.button6.UseVisualStyleBackColor = true;
+            this.button6.Click += new System.EventHandler(this.button6_Click);
+            // 
             // textTickCX
             // 
             this.textTickCX.Location = new System.Drawing.Point(614, 163);
@@ -242,6 +252,16 @@
             this.textTickCX.Size = new System.Drawing.Size(61, 31);
             this.textTickCX.TabIndex = 26;
             this.textTickCX.Text = "30";
+            // 
+            // listTickLayers
+            // 
+            this.listTickLayers.FormattingEnabled = true;
+            this.listTickLayers.ItemHeight = 25;
+            this.listTickLayers.Location = new System.Drawing.Point(993, 30);
+            this.listTickLayers.Name = "listTickLayers";
+            this.listTickLayers.Size = new System.Drawing.Size(307, 104);
+            this.listTickLayers.TabIndex = 5;
+            this.listTickLayers.SelectedIndexChanged += new System.EventHandler(this.listTickLayers_SelectedIndexChanged);
             // 
             // label26
             // 
@@ -847,6 +867,16 @@
             this.groupArcs.TabStop = false;
             this.groupArcs.Text = "Arcs";
             // 
+            // button7
+            // 
+            this.button7.Location = new System.Drawing.Point(1192, 140);
+            this.button7.Name = "button7";
+            this.button7.Size = new System.Drawing.Size(108, 34);
+            this.button7.TabIndex = 10;
+            this.button7.Text = "Delete";
+            this.button7.UseVisualStyleBackColor = true;
+            this.button7.Click += new System.EventHandler(this.button7_Click_1);
+            // 
             // checkSolid
             // 
             this.checkSolid.AutoSize = true;
@@ -858,6 +888,16 @@
             this.checkSolid.TabIndex = 69;
             this.checkSolid.Text = "Solid";
             this.checkSolid.UseVisualStyleBackColor = true;
+            // 
+            // listArcLayers
+            // 
+            this.listArcLayers.FormattingEnabled = true;
+            this.listArcLayers.ItemHeight = 25;
+            this.listArcLayers.Location = new System.Drawing.Point(993, 30);
+            this.listArcLayers.Name = "listArcLayers";
+            this.listArcLayers.Size = new System.Drawing.Size(307, 104);
+            this.listArcLayers.TabIndex = 9;
+            this.listArcLayers.SelectedIndexChanged += new System.EventHandler(this.listArcLayers_SelectedIndexChanged);
             // 
             // textArcCX
             // 
@@ -1018,26 +1058,6 @@
             this.label27.TabIndex = 4;
             this.label27.Text = "Radius";
             // 
-            // button7
-            // 
-            this.button7.Location = new System.Drawing.Point(1192, 140);
-            this.button7.Name = "button7";
-            this.button7.Size = new System.Drawing.Size(108, 34);
-            this.button7.TabIndex = 10;
-            this.button7.Text = "Delete";
-            this.button7.UseVisualStyleBackColor = true;
-            this.button7.Click += new System.EventHandler(this.button7_Click_1);
-            // 
-            // listArcLayers
-            // 
-            this.listArcLayers.FormattingEnabled = true;
-            this.listArcLayers.ItemHeight = 25;
-            this.listArcLayers.Location = new System.Drawing.Point(993, 30);
-            this.listArcLayers.Name = "listArcLayers";
-            this.listArcLayers.Size = new System.Drawing.Size(307, 104);
-            this.listArcLayers.TabIndex = 9;
-            this.listArcLayers.SelectedIndexChanged += new System.EventHandler(this.listArcLayers_SelectedIndexChanged);
-            // 
             // colorArcs
             // 
             this.colorArcs.AnyColor = true;
@@ -1105,6 +1125,16 @@
             this.groupLabels.TabStop = false;
             this.groupLabels.Text = "Labels";
             // 
+            // button11
+            // 
+            this.button11.Location = new System.Drawing.Point(1192, 140);
+            this.button11.Name = "button11";
+            this.button11.Size = new System.Drawing.Size(108, 34);
+            this.button11.TabIndex = 12;
+            this.button11.Text = "Delete";
+            this.button11.UseVisualStyleBackColor = true;
+            this.button11.Click += new System.EventHandler(this.button11_Click_1);
+            // 
             // textLabelX
             // 
             this.textLabelX.Location = new System.Drawing.Point(703, 106);
@@ -1112,6 +1142,16 @@
             this.textLabelX.Size = new System.Drawing.Size(56, 31);
             this.textLabelX.TabIndex = 85;
             this.textLabelX.Text = "30";
+            // 
+            // listLabelLayers
+            // 
+            this.listLabelLayers.FormattingEnabled = true;
+            this.listLabelLayers.ItemHeight = 25;
+            this.listLabelLayers.Location = new System.Drawing.Point(993, 30);
+            this.listLabelLayers.Name = "listLabelLayers";
+            this.listLabelLayers.Size = new System.Drawing.Size(307, 104);
+            this.listLabelLayers.TabIndex = 11;
+            this.listLabelLayers.SelectedIndexChanged += new System.EventHandler(this.listLabelLayers_SelectedIndexChanged);
             // 
             // label28
             // 
@@ -1247,26 +1287,6 @@
             this.label39.TabIndex = 4;
             this.label39.Text = "Font";
             // 
-            // button11
-            // 
-            this.button11.Location = new System.Drawing.Point(1192, 140);
-            this.button11.Name = "button11";
-            this.button11.Size = new System.Drawing.Size(108, 34);
-            this.button11.TabIndex = 12;
-            this.button11.Text = "Delete";
-            this.button11.UseVisualStyleBackColor = true;
-            this.button11.Click += new System.EventHandler(this.button11_Click_1);
-            // 
-            // listLabelLayers
-            // 
-            this.listLabelLayers.FormattingEnabled = true;
-            this.listLabelLayers.ItemHeight = 25;
-            this.listLabelLayers.Location = new System.Drawing.Point(993, 30);
-            this.listLabelLayers.Name = "listLabelLayers";
-            this.listLabelLayers.Size = new System.Drawing.Size(307, 104);
-            this.listLabelLayers.TabIndex = 11;
-            this.listLabelLayers.SelectedIndexChanged += new System.EventHandler(this.listLabelLayers_SelectedIndexChanged);
-            // 
             // colorLabels
             // 
             this.colorLabels.AnyColor = true;
@@ -1289,26 +1309,6 @@
             this.button13.Text = "Resize all";
             this.button13.UseVisualStyleBackColor = true;
             this.button13.Click += new System.EventHandler(this.button13_Click);
-            // 
-            // listTickLayers
-            // 
-            this.listTickLayers.FormattingEnabled = true;
-            this.listTickLayers.ItemHeight = 25;
-            this.listTickLayers.Location = new System.Drawing.Point(993, 30);
-            this.listTickLayers.Name = "listTickLayers";
-            this.listTickLayers.Size = new System.Drawing.Size(307, 104);
-            this.listTickLayers.TabIndex = 5;
-            this.listTickLayers.SelectedIndexChanged += new System.EventHandler(this.listTickLayers_SelectedIndexChanged);
-            // 
-            // button6
-            // 
-            this.button6.Location = new System.Drawing.Point(1192, 140);
-            this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(108, 34);
-            this.button6.TabIndex = 6;
-            this.button6.Text = "Delete";
-            this.button6.UseVisualStyleBackColor = true;
-            this.button6.Click += new System.EventHandler(this.button6_Click);
             // 
             // Form1
             // 
@@ -1333,6 +1333,7 @@
             this.Controls.Add(this.button2);
             this.Controls.Add(this.picturePreview);
             this.Controls.Add(this.menuStrip1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "Form1";
