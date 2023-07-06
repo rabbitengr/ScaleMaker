@@ -415,7 +415,7 @@ namespace ScaleMaker
         }
         private void ScaleTextLayers(double f)
         {
-            for (int i = 0; i < tick_layers.Count; i++)
+            for (int i = 0; i < text_layers.Count; i++)
             {
                 //scale here
                 text_layers[i].radius = (int)((double)text_layers[i].radius * f);
