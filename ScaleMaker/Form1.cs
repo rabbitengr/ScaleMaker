@@ -8,6 +8,7 @@ using System.Runtime.CompilerServices;
 using System.Configuration;
 using System.Web;
 using System.Security.Policy;
+using System.Drawing.Imaging;
 
 namespace ScaleMaker
 {
@@ -19,19 +20,82 @@ namespace ScaleMaker
         }
 
         private string filename;
-
+        
         private int W;
         private int H;
         private Graphics g;
         private Bitmap bmp;
         private Image backdrop;
         private string backdrop_name;
+        private string backup_path;
         private string regPath = "software\\Rabbit Engineering\\ScaleMaker";
-        private string appTitle = "ScaleMaker build 2/27/2023";
+        private string appTitle = "ScaleMaker build 7/6/2023";
         List<tick_layer> tick_layers;
         List<text_layer> text_layers;
         List<arc_layer> arc_layers;
         List<label_layer> label_layers;
+
+        private void Backup_Resources()
+        {
+            string resource_path = Path.GetDirectoryName(filename);
+            string ts;
+            int k = -1;
+            do
+            {
+                k++;
+                backup_path = Path.Combine(resource_path, string.Format("backup_{0}", k));
+            } while (Directory.Exists(backup_path));
+            Directory.CreateDirectory(backup_path);
+            string[] files = Directory.GetFiles(resource_path);
+            foreach (string f in files)
+            {
+                File.Copy(f, Path.Combine(backup_path, Path.GetFileName(f)));
+            }
+
+        }
+        public static Bitmap ResizeImage(Image image, int width, int height)
+        {
+            var destRect = new Rectangle(0, 0, width, height);
+            var destImage = new Bitmap(width, height);
+
+            destImage.SetResolution(image.HorizontalResolution, image.VerticalResolution);
+
+            using (var graphics = Graphics.FromImage(destImage))
+            {
+                graphics.CompositingMode = CompositingMode.SourceCopy;
+                graphics.CompositingQuality = CompositingQuality.HighQuality;
+                graphics.InterpolationMode = InterpolationMode.HighQualityBicubic;
+                graphics.SmoothingMode = SmoothingMode.HighQuality;
+                graphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
+
+                using (var wrapMode = new ImageAttributes())
+                {
+                    wrapMode.SetWrapMode(WrapMode.TileFlipXY);
+                    graphics.DrawImage(image, destRect, 0, 0, image.Width, image.Height, GraphicsUnit.Pixel, wrapMode);
+                }
+            }
+
+            return destImage;
+        }
+        private void Resize_Resources(double sf)
+        {
+            //YOU MUST BACKUP RESROUCE BEFORE DOING THIS!
+            string resource_path = Path.GetDirectoryName(filename);
+            string[] bmp = Directory.GetFiles(resource_path, "*.bmp");
+            string[] png = Directory.GetFiles(resource_path, "*.png");
+            string[] files = bmp.Concat(png).ToArray();
+            foreach (string f in files)
+            {
+                string s = Path.Combine(backup_path, Path.GetFileName(f));
+                Image img = Image.FromFile(s);                
+                int w = (int)((double)img.Width * sf);
+                int h = (int)((double)img.Height * sf);
+                Bitmap b = ResizeImage(img, w, h);          
+                b.Save(f);
+                b.Dispose();
+                img.Dispose();
+            }
+        }
 
         private void DrawLine(Color col, int linew, double angle, float radius_outer, float radius_inner, int CX, int CY)
         {
@@ -562,7 +626,7 @@ namespace ScaleMaker
             if (bmp == null) return;
             if (saveScaleDialog.ShowDialog() == DialogResult.Cancel) return;
             WriteRegKey("sclpath", this.saveScaleDialog.FileName);
-            filename = this.saveScaleDialog.FileName;
+            filename = this.saveScaleDialog.FileName;            
             openScaleDialog.FileName = saveScaleDialog.FileName;
             DoSave();
         }
@@ -608,7 +672,7 @@ namespace ScaleMaker
         {
             if (openScaleDialog.ShowDialog() == DialogResult.Cancel) return;            
             saveScaleDialog.FileName = openScaleDialog.FileName;
-            filename = openScaleDialog.FileName;
+            filename = openScaleDialog.FileName;            
             char[] comma = { ',' };
 
             using (TextReader read = new StreamReader(openScaleDialog.FileName))
@@ -1087,8 +1151,15 @@ namespace ScaleMaker
             if (string.IsNullOrEmpty(textScaleFactor.Text)) return;
             if (textScaleFactor.Text == "1") return;
 
+            if (backdrop != null) backdrop.Dispose();
             double sf = Convert.ToDouble(textScaleFactor.Text);
-
+            Backup_Resources();
+            Resize_Resources(sf);
+            if (!string.IsNullOrEmpty(backdrop_name))
+            {
+                backdrop = Image.FromFile(backdrop_name);
+            }
+            PrepScale_KeepBackdrop((int)(W * sf), (int)(H * sf));
             ScaleArcLayers(sf);
             ScaleTextLayers(sf);
             ScaleTickLayers(sf);
