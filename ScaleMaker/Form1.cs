@@ -796,6 +796,7 @@ namespace ScaleMaker
 
         private void button5_Click(object sender, EventArgs e)
         {
+            colorTicks.Color = buttonTickColor.BackColor;
             if (colorTicks.ShowDialog() == DialogResult.Cancel) return;
             buttonTickColor.BackColor = colorTicks.Color;
 
@@ -843,6 +844,7 @@ namespace ScaleMaker
 
         private void button7_Click(object sender, EventArgs e)
         {
+            colorText.Color = buttonTextColor.BackColor;
             if (colorText.ShowDialog() == DialogResult.Cancel) return;
             buttonTextColor.BackColor = colorText.Color;
         }
@@ -967,6 +969,7 @@ namespace ScaleMaker
 
         private void buttonArcColor_Click(object sender, EventArgs e)
         {
+            colorArcs.Color = buttonArcColor.BackColor;
             if (colorArcs.ShowDialog() == DialogResult.Cancel) return;
             buttonArcColor.BackColor = colorArcs.Color;
         }
@@ -1141,6 +1144,7 @@ namespace ScaleMaker
 
         private void buttonLabelColor_Click(object sender, EventArgs e)
         {
+            colorLabels.Color = buttonLabelColor.BackColor;
             if (colorLabels.ShowDialog() == DialogResult.Cancel) return;
             buttonLabelColor.BackColor = colorLabels.Color;
         }
