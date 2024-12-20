@@ -1,14 +1,10 @@
 using System.Drawing;
-using System.Drawing;
-using static System.Windows.Forms.DataFormats;
 using System.IO;
 using System.Drawing.Drawing2D;
 using Microsoft.Win32;
-using System.Runtime.CompilerServices;
 using System.Configuration;
-using System.Web;
-using System.Security.Policy;
 using System.Drawing.Imaging;
+using System.Diagnostics;
 
 namespace ScaleMaker
 {
@@ -29,7 +25,7 @@ namespace ScaleMaker
         private string backdrop_name;
         private string backup_path;
         private string regPath = "software\\Rabbit Engineering\\ScaleMaker";
-        private string appTitle = "ScaleMaker build 7/23/2023";
+        private string appTitle = "ScaleMaker build 12/19/2024";
         List<tick_layer> tick_layers;
         List<text_layer> text_layers;
         List<arc_layer> arc_layers;
@@ -243,6 +239,9 @@ namespace ScaleMaker
             if (g != null) g.Dispose();
             if (bmp != null) bmp.Dispose();
             if (backdrop != null) backdrop.Dispose();
+            bmp = null;
+            g = null;
+            backdrop = null;
 
             groupTicks.Enabled = true;
             groupArcs.Enabled = true;
@@ -506,6 +505,15 @@ namespace ScaleMaker
             listTickLayers.Items.Clear();
             foreach (tick_layer tl in tick_layers)
             {
+                if (listTickLayers.Items.Contains(tl.name))
+                {
+                    string nn;
+                    do
+                    {
+                        nn = string.Format("{0}.1", tl.name);
+                    } while (listTickLayers.Items.Contains(nn));
+                    tl.name = nn;
+                }
                 listTickLayers.Items.Add(tl.name);
             }
             listTickLayers.Invalidate();
@@ -513,6 +521,15 @@ namespace ScaleMaker
             listTextLayers.Items.Clear();
             foreach (text_layer tl in text_layers)
             {
+                if (listTextLayers.Items.Contains(tl.name))
+                {
+                    string nn;
+                    do
+                    {
+                        nn = string.Format("{0}.1", tl.name);
+                    } while (listTextLayers.Items.Contains(nn));
+                    tl.name = nn;
+                }
                 listTextLayers.Items.Add(tl.name);
             }
             listTextLayers.Invalidate();
@@ -520,6 +537,15 @@ namespace ScaleMaker
             listArcLayers.Items.Clear();
             foreach (arc_layer tl in arc_layers)
             {
+                if (listArcLayers.Items.Contains(tl.name))
+                {
+                    string nn;
+                    do
+                    {
+                        nn = string.Format("{0}.1", tl.name);
+                    } while (listArcLayers.Items.Contains(nn));
+                    tl.name = nn;
+                }
                 listArcLayers.Items.Add(tl.name);
             }
             listArcLayers.Invalidate();
@@ -527,6 +553,15 @@ namespace ScaleMaker
             listLabelLayers.Items.Clear();
             foreach (label_layer tl in label_layers)
             {
+                if (listLabelLayers.Items.Contains(tl.name))
+                {
+                    string nn;
+                    do
+                    {
+                        nn = string.Format("{0}.1", tl.name);
+                    } while (listLabelLayers.Items.Contains(nn));
+                    tl.name = nn;
+                }
                 listLabelLayers.Items.Add(tl.name);
             }
             listLabelLayers.Invalidate();
@@ -819,7 +854,7 @@ namespace ScaleMaker
 
         private void button6_Click(object sender, EventArgs e)
         {
-            if (listTickLayers.SelectedIndex < 0) return;            
+            if (listTickLayers.SelectedIndex < 0) return;
             tick_layer tl = tick_layers[listTickLayers.SelectedIndex];
             tick_layers.Remove(tl);
             RefreshListboxes();
@@ -889,8 +924,8 @@ namespace ScaleMaker
             text_layers.Add(t);
 
             RefreshListboxes();
-            
-            listTextLayers.SelectedIndex = listTextLayers.Items.Count -1;            
+
+            listTextLayers.SelectedIndex = listTextLayers.Items.Count - 1;
 
             //g.Clear(Color.Transparent);
             RefreshAndRender();
@@ -1181,6 +1216,17 @@ namespace ScaleMaker
             ScaleLabelLayers(sf);
 
             RefreshAndRender();
+        }
+
+        private void gotToGitRepoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            //
+            ProcessStartInfo processStartInfo = new ProcessStartInfo
+            {
+                UseShellExecute = true,
+                FileName = "https://github.com/rabbitengr/ScaleMaker"
+            };
+            Process.Start(processStartInfo);
         }
     }
 

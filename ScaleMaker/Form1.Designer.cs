@@ -74,6 +74,9 @@
             saveasToolStripMenuItem = new ToolStripMenuItem();
             toolStripSeparator1 = new ToolStripSeparator();
             exitToolStripMenuItem = new ToolStripMenuItem();
+            helpToolStripMenuItem = new ToolStripMenuItem();
+            readDocsToolStripMenuItem = new ToolStripMenuItem();
+            gotToGitRepoToolStripMenuItem = new ToolStripMenuItem();
             saveScaleDialog = new SaveFileDialog();
             openScaleDialog = new OpenFileDialog();
             groupTexts = new GroupBox();
@@ -473,7 +476,7 @@
             button3.Name = "button3";
             button3.Size = new Size(84, 34);
             button3.TabIndex = 3;
-            button3.Text = "New!";
+            button3.Text = "Create";
             button3.UseVisualStyleBackColor = true;
             button3.Click += button3_Click;
             // 
@@ -515,7 +518,7 @@
             // menuStrip1
             // 
             menuStrip1.ImageScalingSize = new Size(24, 24);
-            menuStrip1.Items.AddRange(new ToolStripItem[] { fileToolStripMenuItem });
+            menuStrip1.Items.AddRange(new ToolStripItem[] { fileToolStripMenuItem, helpToolStripMenuItem });
             menuStrip1.Location = new Point(0, 0);
             menuStrip1.Name = "menuStrip1";
             menuStrip1.Size = new Size(2437, 33);
@@ -568,6 +571,26 @@
             exitToolStripMenuItem.Size = new Size(185, 34);
             exitToolStripMenuItem.Text = "E&xit";
             exitToolStripMenuItem.Click += exitToolStripMenuItem_Click;
+            // 
+            // helpToolStripMenuItem
+            // 
+            helpToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { readDocsToolStripMenuItem, gotToGitRepoToolStripMenuItem });
+            helpToolStripMenuItem.Name = "helpToolStripMenuItem";
+            helpToolStripMenuItem.Size = new Size(65, 29);
+            helpToolStripMenuItem.Text = "&Help";
+            // 
+            // readDocsToolStripMenuItem
+            // 
+            readDocsToolStripMenuItem.Name = "readDocsToolStripMenuItem";
+            readDocsToolStripMenuItem.Size = new Size(198, 34);
+            readDocsToolStripMenuItem.Text = "Read &Docs";
+            // 
+            // gotToGitRepoToolStripMenuItem
+            // 
+            gotToGitRepoToolStripMenuItem.Name = "gotToGitRepoToolStripMenuItem";
+            gotToGitRepoToolStripMenuItem.Size = new Size(198, 34);
+            gotToGitRepoToolStripMenuItem.Text = "&Git repo";
+            gotToGitRepoToolStripMenuItem.Click += gotToGitRepoToolStripMenuItem_Click;
             // 
             // saveScaleDialog
             // 
@@ -877,9 +900,9 @@
             checkSolid.CheckState = CheckState.Checked;
             checkSolid.Location = new Point(500, 163);
             checkSolid.Name = "checkSolid";
-            checkSolid.Size = new Size(78, 29);
+            checkSolid.Size = new Size(79, 29);
             checkSolid.TabIndex = 69;
-            checkSolid.Text = "Solid";
+            checkSolid.Text = "Filled";
             checkSolid.UseVisualStyleBackColor = true;
             // 
             // listArcLayers
@@ -1472,5 +1495,8 @@
         private Button button13;
         private Button button6;
         private ListBox listTickLayers;
+        private ToolStripMenuItem helpToolStripMenuItem;
+        private ToolStripMenuItem readDocsToolStripMenuItem;
+        private ToolStripMenuItem gotToGitRepoToolStripMenuItem;
     }
 }
