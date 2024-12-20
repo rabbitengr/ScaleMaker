@@ -722,6 +722,11 @@ namespace ScaleMaker
                 if (bd != "null")
                 {
                     backdrop_name = bd;
+                    if (!File.Exists(backdrop_name))
+                    {
+                        MessageBox.Show(String.Format("{0} cannot be read.", backdrop_name), "Cannot load", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
                     backdrop = Image.FromFile(backdrop_name);
                 }
                 string s = read.ReadLine();//write.WriteLine("{0},{1}", W, H);
@@ -1219,12 +1224,21 @@ namespace ScaleMaker
         }
 
         private void gotToGitRepoToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            //
+        {            
             ProcessStartInfo processStartInfo = new ProcessStartInfo
             {
                 UseShellExecute = true,
                 FileName = "https://github.com/rabbitengr/ScaleMaker"
+            };
+            Process.Start(processStartInfo);
+        }
+
+        private void readDocsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ProcessStartInfo processStartInfo = new ProcessStartInfo
+            {
+                UseShellExecute = true,
+                FileName = "scalemaker.pdf"
             };
             Process.Start(processStartInfo);
         }

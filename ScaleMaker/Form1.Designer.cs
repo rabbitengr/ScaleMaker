@@ -535,40 +535,40 @@
             // newToolStripMenuItem
             // 
             newToolStripMenuItem.Name = "newToolStripMenuItem";
-            newToolStripMenuItem.Size = new Size(185, 34);
+            newToolStripMenuItem.Size = new Size(270, 34);
             newToolStripMenuItem.Text = "&New";
             newToolStripMenuItem.Click += newToolStripMenuItem_Click;
             // 
             // openToolStripMenuItem
             // 
             openToolStripMenuItem.Name = "openToolStripMenuItem";
-            openToolStripMenuItem.Size = new Size(185, 34);
+            openToolStripMenuItem.Size = new Size(270, 34);
             openToolStripMenuItem.Text = "&Open";
             openToolStripMenuItem.Click += openToolStripMenuItem_Click;
             // 
             // saveToolStripMenuItem
             // 
             saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-            saveToolStripMenuItem.Size = new Size(185, 34);
+            saveToolStripMenuItem.Size = new Size(270, 34);
             saveToolStripMenuItem.Text = "&Save";
             saveToolStripMenuItem.Click += saveToolStripMenuItem_Click;
             // 
             // saveasToolStripMenuItem
             // 
             saveasToolStripMenuItem.Name = "saveasToolStripMenuItem";
-            saveasToolStripMenuItem.Size = new Size(185, 34);
+            saveasToolStripMenuItem.Size = new Size(270, 34);
             saveasToolStripMenuItem.Text = "Save &as...";
             saveasToolStripMenuItem.Click += saveasToolStripMenuItem_Click;
             // 
             // toolStripSeparator1
             // 
             toolStripSeparator1.Name = "toolStripSeparator1";
-            toolStripSeparator1.Size = new Size(182, 6);
+            toolStripSeparator1.Size = new Size(267, 6);
             // 
             // exitToolStripMenuItem
             // 
             exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            exitToolStripMenuItem.Size = new Size(185, 34);
+            exitToolStripMenuItem.Size = new Size(270, 34);
             exitToolStripMenuItem.Text = "E&xit";
             exitToolStripMenuItem.Click += exitToolStripMenuItem_Click;
             // 
@@ -582,13 +582,14 @@
             // readDocsToolStripMenuItem
             // 
             readDocsToolStripMenuItem.Name = "readDocsToolStripMenuItem";
-            readDocsToolStripMenuItem.Size = new Size(198, 34);
+            readDocsToolStripMenuItem.Size = new Size(270, 34);
             readDocsToolStripMenuItem.Text = "Read &Docs";
+            readDocsToolStripMenuItem.Click += readDocsToolStripMenuItem_Click;
             // 
             // gotToGitRepoToolStripMenuItem
             // 
             gotToGitRepoToolStripMenuItem.Name = "gotToGitRepoToolStripMenuItem";
-            gotToGitRepoToolStripMenuItem.Size = new Size(198, 34);
+            gotToGitRepoToolStripMenuItem.Size = new Size(270, 34);
             gotToGitRepoToolStripMenuItem.Text = "&Git repo";
             gotToGitRepoToolStripMenuItem.Click += gotToGitRepoToolStripMenuItem_Click;
             // 
